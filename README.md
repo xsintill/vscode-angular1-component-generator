@@ -1,7 +1,7 @@
-# Angular2 Component Generation Extension for VS CODE
+# Angular 1 Component Generation Extension for VS CODE
 
 ## Description
-Extension automatically creates folder for angular2 component containing : 
+Extension automatically creates folder for angular1 component containing : 
 - `component.ts`
 - `module.ts`
 - `component.html`
@@ -9,14 +9,14 @@ Extension automatically creates folder for angular2 component containing :
 
 ## Usage
 
-- Right click on on the file or folder in the explorer
-- Select "New Angular2 Component"
+- Right click on the file or folder in the explorer
+- Select "New Angular 1 Component"
 - Enter component name in the pop up in camelCase 
 
 ![Use Extension](assets/tutorial/createComponent.gif)
 
 ## Configuration
-- create true / false - (controls weather to generate this file or not)
+- create true / false - (controls whether to generate this file or not)
 - extension - extension of generated file (e.g. you might want to change "scss" to just plain "css")
 - template - path to the custom template for the generated file
     - {selector}    -> replaced with `lower case, dash separated string`
@@ -53,4 +53,4 @@ Use the "template" key to override default templates for the extension
 
 ## Bugs
 
-Please report [here](https://github.com/dbaikov/vscode-angular2-component-generator/issues)
+Please report [here](https://github.com/xsintill/vscode-angular1-component-generator/issues)
