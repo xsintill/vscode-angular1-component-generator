@@ -1,25 +1,25 @@
 {
-  "name": "vscode-angular2-component-generator",
-  "displayName": "Angular2 Component Generator",
-  "description": "Generates angular2 component files (html, css, typescript -> template, stylesheet, component.ts + module.ts)",
+  "name": "vscode-angular1-component-generator",
+  "displayName": "Angular 1.5 Component Generator",
+  "description": "Generates angular 1.5(or up) component files (html, css, typescript -> template, stylesheet, component.ts + module.ts)",
   "version": "0.0.1",
-  "publisher": "dbaikov",
+  "publisher": "xsintill",
   "author": {
-    "name": "Dmytro Baikov",
-    "email": "dmitriybaikov@gmail.com"
+    "name": "Luc Neville",
+    "email": "lneville@gmail.com"
   },
-  "homepage": "https://github.com/dbaikov/vscode-angular2-component-generator",
+  "homepage": "https://github.com/xsintill/vscode-angular1-component-generator",
   "galleryBanner": {
       "color": "#0273D4",
       "theme": "dark"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbaikov/vscode-angular2-component-generator.git"
+    "url": "https://github.com/xsintill/vscode-angular1-component-generator.git"
   },
   "bugs": {
-    "url": "https://github.com/dbaikov/vscode-angular2-component-generator/issues",
-    "email": "dmitriybaikov@gmail.com"
+    "url": "https://github.com/xsintill/vscode-angular1-component-generator/issues",
+    "email": "lneville@gmail.com"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "engines": {
@@ -29,28 +29,28 @@
     "Other"
   ],
   "keywords": [
-    "vscode-angular2",
-    "angular2",
-    "angular2 component",
-    "angular2 generate component",
+    "vscode-angular1",
+    "angular1",
+    "angular1 component",
+    "angular1 generate component",
     "typescript"
   ],
   "activationEvents": [
-    "onCommand:extension.genAngular2ComponentFiles"
+    "onCommand:extension.genAngular1ComponentFiles"
   ],
   "main": "./out/src/extension",
   "icon": "assets/images/icon.png",
   "contributes": {
     "commands": [
       {
-        "command": "extension.genAngular2ComponentFiles",
-        "title": "New Angular2 Component"
+        "command": "extension.genAngular1ComponentFiles",
+        "title": "New Angular1 Component"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "extension.genAngular2ComponentFiles",
+          "command": "extension.genAngular1ComponentFiles",
           "group": "navigation"
         }
       ]
