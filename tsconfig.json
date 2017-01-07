@@ -8,7 +8,8 @@
             "dom"
         ],
         "sourceMap": true,
-        "rootDir": "."
+        "rootDir": ".",
+        "alwaysStrict": true
     },
     "exclude": [
         "node_modules",
