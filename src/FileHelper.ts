@@ -1,16 +1,16 @@
-import * as vscode from 'vscode';
-import * as fse from 'fs-extra';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as changeCase from 'change-case';
-import { Observable } from 'rxjs';
+import * as vscode from "vscode";
+import * as fse from "fs-extra";
+import * as fs from "fs";
+import * as path from "path";
+import * as changeCase from "change-case";
+import { Observable } from "rxjs";
 
 export class FileHelper {
     private static createFile = <(file: string, data: string) => Observable<{}>>Observable.bindNodeCallback(fse.outputFile);
-    private static assetRootDir: string = path.join(__dirname, '../../assets');
+    private static assetRootDir: string = path.join(__dirname, "../../assets");
 
     public static createComponent(componentDir: string, componentName: string, config: any): Observable<string> {
-        let templateFileName = this.assetRootDir + '/templates/component.template';
+        let templateFileName = this.assetRootDir + "/templates/component.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
@@ -26,14 +26,13 @@ export class FileHelper {
         if (config.create) {
             return this.createFile(filename, componentContent)
                 .map(result => filename);
-        }
-        else {
-            return Observable.of('');
+        } else {
+            return Observable.of("");
         }
     };
 
     public static createModule(componentDir: string, componentName: string, config: any): Observable<string> {
-        let templateFileName = this.assetRootDir + '/templates/module.template';
+        let templateFileName = this.assetRootDir + "/templates/module.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
@@ -47,14 +46,13 @@ export class FileHelper {
         if (config.create) {
             return this.createFile(filename, moduleContent)
                 .map(result => filename);
-        }
-        else {
-            return Observable.of('');
+        } else {
+            return Observable.of("");
         }
     };
 
     public static createHtml(componentDir: string, componentName: string, config: any): Observable<string> {
-        let templateFileName = this.assetRootDir + '/templates/html.template';
+        let templateFileName = this.assetRootDir + "/templates/html.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
@@ -65,14 +63,13 @@ export class FileHelper {
         if (config.create) {
             return this.createFile(filename, htmlContent)
                 .map(result => filename);
-        }
-        else {
-            return Observable.of('');
+        } else {
+            return Observable.of("");
         }
     };
 
     public static createCss(componentDir: string, componentName: string, config: any): Observable<string> {
-        let templateFileName = this.assetRootDir + '/templates/css.template';
+        let templateFileName = this.assetRootDir + "/templates/css.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
@@ -84,9 +81,8 @@ export class FileHelper {
         if (config.create) {
             return this.createFile(filename, cssContent)
                 .map(result => filename);
-        }
-        else {
-            return Observable.of('');
+        } else {
+            return Observable.of("");
         }
     };
 
@@ -107,13 +103,13 @@ export class FileHelper {
     }
 
     public static getConfig(): any {
-        let content = fs.readFileSync( this.assetRootDir + '/config/config.json' ).toString();
+        let content = fs.readFileSync( this.assetRootDir + "/config/config.json" ).toString();
         content = content.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
         return JSON.parse(content);
     }
 
     public static resolveWorkspaceRoot(path: string): string {
-        return path.replace('${workspaceRoot}', vscode.workspace.rootPath);
+        return path.replace("${workspaceRoot}", vscode.workspace.rootPath);
     }
 
 }
