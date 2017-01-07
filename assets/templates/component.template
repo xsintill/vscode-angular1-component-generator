@@ -1,11 +1,25 @@
-import { Component } from '@angular/core';
+namespace {namespace} {    
 
-@Component({
-    moduleId: module.id,
-    selector: '{selector}',
-    templateUrl: '{templateUrl}',
-    styleUrls: ['{styleUrls}']
-})
-export class {className}Component {
+    export constant TEMPLATE_PATH_{componentNameUpperCasedSnakeCased}: string = "{currentpath}/componentNameKebabCased";
 
+   /**
+    *   Controller for component {componentNameKebabCased}
+    */
+    export class {className}Controller {        
+        public static componentName: string = "{componentNameCamelCased}";
+
+        public static $inject: string[] = [
+
+        ];
+
+        constructor(){
+        }
+
+        public $onInit(): void {            
+        }
+    }
+    angular.module("app").component({className}Controller.componentName, {
+        controller: {className}Controller,
+        templateUrl: 
+    })
 }
