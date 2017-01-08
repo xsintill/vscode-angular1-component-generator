@@ -1,6 +1,6 @@
 namespace {namespace} {    
 
-    export constant TEMPLATE_PATH_{componentNameUpperCasedSnakeCased}: string = "{currentpath}/componentNameKebabCased";
+    export constant TEMPLATE_PATH_{componentNameUpperCasedSnakeCased}: string = "{currentpath}/{componentNameKebabCased}";
 
    /**
     *   Controller for component {componentNameKebabCased}
