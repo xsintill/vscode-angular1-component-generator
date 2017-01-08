@@ -1,5 +1,29 @@
 {
     "files": {
+        "testFile": {
+            "create": true,
+            "extension": "ts"
+        },
+        "filter": {
+            "create": true,
+            "extension": "ts"
+        },
+        "directive": {
+            "create": true,
+            "extension": "ts"
+        },
+        "configRoute": {
+            "create": true,
+            "extension": "ts"
+        },
+        "controller": {
+            "create": true,
+            "extension": "ts"
+        },
+        "service": {
+            "create": true,
+            "extension": "ts"
+        },
         "component": {
             "create": true,
             "extension": "ts"
