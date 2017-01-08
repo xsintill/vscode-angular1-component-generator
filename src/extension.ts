@@ -1,3 +1,4 @@
+import { ObservableInput } from "rxjs/Observable";
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
@@ -10,11 +11,63 @@ import { Config } from "./config.interface";
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    let serviceDisposable = vscode.commands.registerCommand("extension.genAngular1ServiceFiles", (uri) => {
+        let configPrefix: String = "ng1ServiceGenerator";
+        let _workspace = vscode.workspace;
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
+
+        if (!config.files) {
+            config = FileHelper.getConfig();
+        }
+
+        // Display a namespace dialog to the user
+        let enterNamespaceNameDialog$ = Observable.from(
+            vscode.window.showInputBox(
+                {prompt: "Please enter name for the namespace."}
+            )); 
+
+        enterNamespaceNameDialog$
+            .concatMap( val => {
+                    if (val.length === 0) {
+                        throw new Error("namespace name can not be empty!");
+                    }
+                    let serviceName = changeCase.paramCase(val);
+                    //let serviceDir = FileHelper.createObjectDir(uri, serviceName);
+                    let contextMenuDir = FileHelper.getContextMenuDir(uri)
+                    return Observable.forkJoin(
+                        FileHelper.createService(contextMenuDir, serviceName, config.files.service)                      
+                    );
+                }
+            )
+            .concatMap(result => {
+                vscode.window.showInformationMessage(result.join(""));
+                return Observable.from(result);
+            }
+                )
+            .filter(path => path.length > 0)
+            .first()
+            .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+            .concatMap(textDocument => {
+                if (!textDocument) {
+                    throw new Error("Could not open file!");
+                };
+                return Observable.from(vscode.window.showTextDocument(textDocument));
+            })
+            .do(editor => {
+                if (!editor) {
+                    throw new Error("Could not open file!");
+                };
+            })
+            .subscribe(
+                () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
+                err => vscode.window.showErrorMessage(err.message)
+            );
+    });
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand("extension.genAngular1ComponentFiles", (uri) => {
+    let componentDisposable = vscode.commands.registerCommand("extension.genAngular1ComponentFiles", (uri) => {
         // The code you place here will be executed every time your command is executed
 
         let configPrefix: String = "ng1ComponentGenerator";
@@ -24,6 +77,31 @@ export function activate(context: vscode.ExtensionContext) {
         if (!config.files) {
             config = FileHelper.getConfig();
         }
+
+        //  // Display a namespace dialog to the user
+        // let enterNamespaceNameDialog$ = Observable.from(
+        //     vscode.window.showInputBox(
+        //         {prompt: "Please enter name for the namespace."}
+        //     )); 
+            
+        // enterNamespaceNameDialog$
+        //     .concatMap( val => {
+        //             if (val.length === 0) {
+        //                 throw new Error("Service name can not be empty!");
+        //             }
+        //             let serviceName = changeCase.paramCase(val);
+        //             console.log("Service name :" + serviceName);
+        //             // let componentDir = FileHelper.createComponentDir(uri, componentName);
+
+        //             // return Observable.forkJoin(
+        //             //     FileHelper.createComponent(componentDir, componentName, config.files.component),
+        //             //     FileHelper.createHtml(componentDir, componentName, config.files.html),
+        //             //     FileHelper.createCss(componentDir, componentName, config.files.css),
+        //             //     FileHelper.createModule(componentDir, componentName, config.files.module)
+        //             // );
+        //             return <ObservableInput<{}>>"";
+        //         }
+        //     )
 
         // Display a dialog to the user
         let enterComponentNameDialog$ = Observable.from(
@@ -38,7 +116,7 @@ export function activate(context: vscode.ExtensionContext) {
                         throw new Error("Component name can not be empty!");
                     }
                     let componentName = changeCase.paramCase(val);
-                    let componentDir = FileHelper.createComponentDir(uri, componentName);
+                    let componentDir = FileHelper.createObjectDir(uri, componentName);
 
                     return Observable.forkJoin(
                         FileHelper.createComponent(componentDir, componentName, config.files.component),
@@ -70,7 +148,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     });
 
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(serviceDisposable);
+    context.subscriptions.push(componentDisposable);
 }
 
 // this method is called when your extension is deactivated

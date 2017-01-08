@@ -15,8 +15,7 @@ export class FileHelper {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
         
-        let componentContent = fs.readFileSync( templateFileName ).toString()
-            .replace(/{selector}/g, componentName)
+        let componentContent = fs.readFileSync( templateFileName ).toString()          
             .replace(/{templateUrl}/g, `${componentName}.component.html`)
             .replace(/{styleUrls}/g, `${componentName}.component.css`)
             .replace(/{className}/g, changeCase.pascalCase(componentName));
@@ -25,6 +24,28 @@ export class FileHelper {
 
         if (config.create) {
             return this.createFile(filename, componentContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+
+    public static createService(serviceDir: string, serviceName: string, config: any): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/service.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+        
+        let serviceContent = fs.readFileSync( templateFileName ).toString()
+            .replace(/{selector}/g, serviceName)
+            .replace(/{templateUrl}/g, `${serviceName}.component.html`)
+            .replace(/{styleUrls}/g, `${serviceName}.component.css`)
+            .replace(/{className}/g, changeCase.pascalCase(serviceName));
+
+        let filename = `${serviceDir}/${serviceName}.service.${config.extension}`;
+
+        if (config.create) {
+            return this.createFile(filename, serviceContent)
                 .map(result => filename);
         } else {
             return Observable.of("");
@@ -86,7 +107,14 @@ export class FileHelper {
         }
     };
 
-    public static createComponentDir(uri: any, componentName: string): string {
+    public static createObjectDir(uri: any, objectName: string): string { 
+        let contextMenuSourcePath = this.getContextMenuDir(uri);        
+
+        let objectDir = `${contextMenuSourcePath}/${objectName}`;
+        fse.mkdirsSync(objectDir);
+        return objectDir;
+    }
+    public static getContextMenuDir(uri: any): string { 
         let contextMenuSourcePath;
 
         if (uri && fs.lstatSync(uri.fsPath).isDirectory()) {
@@ -97,9 +125,7 @@ export class FileHelper {
             contextMenuSourcePath = vscode.workspace.rootPath;
         }
 
-        let componentDir = `${contextMenuSourcePath}/${componentName}`;
-        fse.mkdirsSync(componentDir);
-        return componentDir;
+        return contextMenuSourcePath;
     }
 
     public static getConfig(): any {
