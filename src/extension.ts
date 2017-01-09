@@ -131,73 +131,57 @@ export function activate(context: vscode.ExtensionContext) {
             config = FileHelper.getConfig();
         }
 
-        //  // Display a namespace dialog to the user
-        // let enterNamespaceNameDialog$ = Observable.from(
-        //     vscode.window.showInputBox(
-        //         {prompt: "Please enter name for the namespace."}
-        //     )); 
-            
-        // enterNamespaceNameDialog$
-        //     .concatMap( val => {
-        //             if (val.length === 0) {
-        //                 throw new Error("Service name can not be empty!");
-        //             }
-        //             let serviceName = changeCase.paramCase(val);
-        //             console.log("Service name :" + serviceName);
-        //             // let componentDir = FileHelper.createComponentDir(uri, componentName);
+        vscode.window.showInputBox({prompt: "Please enter name for the namespace."}).then(
+            (namspaceValue: string) => {                
+                if (namspaceValue.length === 0) {
+                    throw new Error("namespace name can not be empty!");
+                }
 
-        //             // return Observable.forkJoin(
-        //             //     FileHelper.createComponent(componentDir, componentName, config.files.component),
-        //             //     FileHelper.createHtml(componentDir, componentName, config.files.html),
-        //             //     FileHelper.createCss(componentDir, componentName, config.files.css),
-        //             //     FileHelper.createModule(componentDir, componentName, config.files.module)
-        //             // );
-        //             return <ObservableInput<{}>>"";
-        //         }
-        //     )
+                let enterComponentNameDialog$ = Observable.from(
+                    vscode.window.showInputBox(
+                        {prompt: "Please enter component name in camelCase"}
+                    ));
+                    
+
+                enterComponentNameDialog$
+                    .concatMap( val => {
+                            if (val.length === 0) {
+                                throw new Error("Component name can not be empty!");
+                            }
+                            let componentName = changeCase.paramCase(val);
+                            let componentDir = FileHelper.createObjectDir(uri, "llq-" + componentName);
+                            let namespaceName = changeCase.paramCase(namspaceValue);
+
+                            return Observable.forkJoin(
+                                FileHelper.createComponent(componentDir, namespaceName, componentName, config.files.component),
+                                FileHelper.createHtml(componentDir, "llq-"+componentName, config.files.html),
+                                FileHelper.createCss(componentDir, "llq-"+componentName, config.files.css)                                
+                            );
+                        }
+                    )
+                    .concatMap(result => Observable.from(result))
+                    .filter(path => path.length > 0)
+                    .first()
+                    .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+                    .concatMap(textDocument => {
+                        if (!textDocument) {
+                            throw new Error("Could not open file!");
+                        };
+                        return Observable.from(vscode.window.showTextDocument(textDocument));
+                    })
+                    .do(editor => {
+                        if (!editor) {
+                            throw new Error("Could not open file!");
+                        };
+                    })
+                    .subscribe(
+                        () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
+                        err => vscode.window.showErrorMessage(err.message)
+                    );
+
+        })
 
         // Display a dialog to the user
-        let enterComponentNameDialog$ = Observable.from(
-            vscode.window.showInputBox(
-                {prompt: "Please enter component name in camelCase"}
-            ));
-            
-
-        enterComponentNameDialog$
-            .concatMap( val => {
-                    if (val.length === 0) {
-                        throw new Error("Component name can not be empty!");
-                    }
-                    let componentName = changeCase.paramCase(val);
-                    let componentDir = FileHelper.createObjectDir(uri, componentName);
-
-                    return Observable.forkJoin(
-                        FileHelper.createComponent(componentDir, componentName, config.files.component),
-                        FileHelper.createHtml(componentDir, componentName, config.files.html),
-                        FileHelper.createCss(componentDir, componentName, config.files.css),
-                        FileHelper.createModule(componentDir, componentName, config.files.module)
-                    );
-                }
-            )
-            .concatMap(result => Observable.from(result))
-            .filter(path => path.length > 0)
-            .first()
-            .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
-            .concatMap(textDocument => {
-                if (!textDocument) {
-                    throw new Error("Could not open file!");
-                };
-                return Observable.from(vscode.window.showTextDocument(textDocument));
-            })
-            .do(editor => {
-                if (!editor) {
-                    throw new Error("Could not open file!");
-                };
-            })
-            .subscribe(
-                () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
-                err => vscode.window.showErrorMessage(err.message)
-            );
 
     });
 
