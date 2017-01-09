@@ -1,6 +1,15 @@
-# Angular 1 Component Generation Extension for VS CODE
+# Angular 1 File Generation Extension for VS CODE
 
 ## Description
+Extension let's you create the following angular files:
+- `Components`
+- `Directives`
+- `Filters`
+- `Controllers`
+- `Services`
+- `Config Route (angular-ui-router state configuration)`
+- `Tests`
+
 Extension automatically creates folder for angular1 component containing : 
 - `component.ts`
 - `module.ts`
@@ -10,7 +19,7 @@ Extension automatically creates folder for angular1 component containing :
 ## Usage
 
 - Right click on the file or folder in the explorer
-- Select "New Angular 1 Component"
+- Select "Create Component"
 - Enter component name in the pop up in camelCase 
 
 ![Use Extension](assets/tutorial/createComponent.gif)
@@ -29,6 +38,31 @@ Use the "template" key to override default templates for the extension
 ```json
 {
     "files": {
+        "component": {
+            "create": true,
+            "extension": "ts",
+            "template": "${workspaceRoot}/myComponent.template"
+        },
+        "directive": {
+            "create": true,
+            "extension": "ts",
+            "template": "${workspaceRoot}/myDirective.template"
+        },
+        "service": {
+            "create": true,
+            "extension": "ts",
+            "template": "${workspaceRoot}/myService.template"
+        },
+        "filter": {
+            "create": true,
+            "extension": "ts",
+            "template": "${workspaceRoot}/myFilter.template"
+        },
+        "configRoute": {
+            "create": true,
+            "extension": "ts",
+            "template": "${workspaceRoot}/myConfigRoute.template"
+        },
         "component": {
             "create": true,
             "extension": "ts",
