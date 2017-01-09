@@ -54,6 +54,30 @@ export class FileHelper {
             return Observable.of("");
         }
     };
+    public static createDirectivee(directiveDir: string, namespaceName: string, directiveName: string, config: any): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/directive.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+        
+        let relativeDir = this.resolveToRelativePath(directiveDir);
+        
+        let serviceContent = fs.readFileSync( templateFileName ).toString()
+            .replace(/{currentpath}/g, relativeDir)
+            .replace(/{serviceNameKebabCased}/g, changeCase.paramCase(directiveName))
+            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+            .replace(/{serviceName}/g, changeCase.pascalCase(directiveName))
+            .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(directiveName));
+
+        let filename = `${directiveDir}/${directiveName}.directive.${config.extension}`;
+
+        if (config.create) {
+            return this.createFile(filename, serviceContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
 
     public static createModule(componentDir: string, componentName: string, config: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/module.template";

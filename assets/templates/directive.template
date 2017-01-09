@@ -1,0 +1,24 @@
+namespace {namespace} {    
+
+    export constant TEMPLATE_PATH_{directiveNameUpperCasedSnakeCased}: string = "{currentpath}/{directiveNameKebabCased}";
+
+   /**
+    *   Directive for directive {directiveNameKebabCased}
+    */
+    export class {className}Directive {        
+        public static directiveName: string = "{directiveNameCamelCased}";
+
+        public static $inject: string[] = [
+
+        ];
+
+        constructor(){
+        }
+
+
+        public static factory(){
+            return new {className}Directive();
+        }
+    }
+    angular.module("app").directive({className}Directive.directiveName, new{className}Directive())
+}

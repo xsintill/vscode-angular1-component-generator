@@ -65,6 +65,57 @@ export function activate(context: vscode.ExtensionContext) {
                     );
         });                
     });
+    let directiveDisposable = vscode.commands.registerCommand("extension.genAngular1DirectiveFiles", (uri) => {
+        let configPrefix: String = "ng1DirectiveGenerator";
+        let _workspace = vscode.workspace;
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
+
+        if (!config.files) {
+            config = FileHelper.getConfig();
+        }
+
+        vscode.window.showInputBox({prompt: "Please enter name for the namespace."}).then(
+            (namspaceValue: string) => {                
+                if (namspaceValue.length === 0) {
+                    throw new Error("namespace name can not be empty!");
+                }
+
+                //Display a namespace dialog to the user
+                let enterNamespaceNameDialog$ = Observable.from(vscode.window.showInputBox({prompt: "Please enter name for the directive."})); 
+                enterNamespaceNameDialog$            
+                    .concatMap( directiveNameValue => {                
+                        if (directiveNameValue.length === 0) {
+                            throw new Error("Directive name can not be empty!");
+                        }
+
+                        let namespaceName = changeCase.paramCase(namspaceValue);
+                        let directiveName = changeCase.paramCase(directiveNameValue);
+                        let contextMenuDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
+                        return Observable.forkJoin(
+                            FileHelper.createDirective(contextMenuDir, namespaceName, directiveName, config.files.directive)                      
+                        );
+                    })
+                    .concatMap(result => Observable.from(result))
+                    .filter(path => path.length > 0)
+                    .first()
+                    .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+                    .concatMap(textDocument => {
+                        if (!textDocument) {
+                            throw new Error("Could not open file!");
+                        };
+                        return Observable.from(vscode.window.showTextDocument(textDocument));
+                    })
+                    .do(editor => {
+                        if (!editor) {
+                            throw new Error("Could not open file!");
+                        };
+                    })
+                    .subscribe(
+                        () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
+                        err => vscode.window.showErrorMessage(err.message)
+                    );
+        });                
+    });
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with registerCommand
