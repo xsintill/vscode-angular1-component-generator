@@ -20,48 +20,53 @@ export function activate(context: vscode.ExtensionContext) {
             config = FileHelper.getConfig();
         }
 
-        // Display a namespace dialog to the user
-        let enterNamespaceNameDialog$ = Observable.from(
-            vscode.window.showInputBox(
-                {prompt: "Please enter name for the namespace."}
-            )); 
-
-        enterNamespaceNameDialog$
-            .concatMap( val => {
-                    if (val.length === 0) {
-                        throw new Error("namespace name can not be empty!");
-                    }
-                    let serviceName = changeCase.paramCase(val);
-                    //let serviceDir = FileHelper.createObjectDir(uri, serviceName);
-                    let contextMenuDir = FileHelper.getContextMenuDir(uri);
-                    return Observable.forkJoin(
-                        FileHelper.createService(contextMenuDir, serviceName, config.files.service)                      
-                    );
+        vscode.window.showInputBox({prompt: "Please enter name for the namespace."}).then(
+            (namspaceValue: string) => {                
+                if (namspaceValue.length === 0) {
+                    throw new Error("namespace name can not be empty!");
                 }
-            )
-            .concatMap(result => {
-                vscode.window.showInformationMessage(result.join(""));
-                return Observable.from(result);
-            }
-                )
-            .filter(path => path.length > 0)
-            .first()
-            .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
-            .concatMap(textDocument => {
-                if (!textDocument) {
-                    throw new Error("Could not open file!");
-                };
-                return Observable.from(vscode.window.showTextDocument(textDocument));
-            })
-            .do(editor => {
-                if (!editor) {
-                    throw new Error("Could not open file!");
-                };
-            })
-            .subscribe(
-                () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
-                err => vscode.window.showErrorMessage(err.message)
-            );
+
+                //Display a namespace dialog to the user
+                let enterNamespaceNameDialog$ = Observable.from(vscode.window.showInputBox({prompt: "Please enter name for the service."})); 
+                enterNamespaceNameDialog$            
+                    .concatMap( serviceNameValue => {                
+                        if (serviceNameValue.length === 0) {
+                            throw new Error("Service name can not be empty!");
+                        }
+
+                        let namespaceName = changeCase.paramCase(namspaceValue);
+                        let serviceName = changeCase.paramCase(serviceNameValue);
+                        let contextMenuDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
+                        //let relativeDir = FileHelper.resolveRelativePathFromRoot(FileHelper.getContextMenuDir(uri));
+                        return Observable.forkJoin(
+                            FileHelper.createService(contextMenuDir
+                            //, relativeDir
+                            , namespaceName, serviceName, config.files.service)                      
+                        );
+                    })
+                    .concatMap(result => {
+                        vscode.window.showInformationMessage(result.join(""));
+                        return Observable.from(result);
+                    })
+                    .filter(path => path.length > 0)
+                    .first()
+                    .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+                    .concatMap(textDocument => {
+                        if (!textDocument) {
+                            throw new Error("Could not open file!");
+                        };
+                        return Observable.from(vscode.window.showTextDocument(textDocument));
+                    })
+                    .do(editor => {
+                        if (!editor) {
+                            throw new Error("Could not open file!");
+                        };
+                    })
+                    .subscribe(
+                        () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
+                        err => vscode.window.showErrorMessage(err.message)
+                    );
+        });                
     });
 
     // The command has been defined in the package.json file
