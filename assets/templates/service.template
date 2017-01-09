@@ -1,6 +1,6 @@
 namespace {namespace} {    
 
-    export constant TEMPLATE_PATH_{serviceNameUpperCasedSnakeCased}_SERVICE_NAME: string = "{currentpath}/{serviceNameKebabCased}";
+    export constant TEMPLATE_PATH_{serviceNameUpperCasedSnakeCased}: string = "{currentpath}/{serviceNameKebabCased}";
     export constant {serviceNameUpperCasedSnakeCased}_SERVICE_NAME: string = "{serviceName}";
 
    /**
