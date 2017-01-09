@@ -37,11 +37,8 @@ export function activate(context: vscode.ExtensionContext) {
                         let namespaceName = changeCase.paramCase(namspaceValue);
                         let serviceName = changeCase.paramCase(serviceNameValue);
                         let contextMenuDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
-                        //let relativeDir = FileHelper.resolveRelativePathFromRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
-                            FileHelper.createService(contextMenuDir
-                            //, relativeDir
-                            , namespaceName, serviceName, config.files.service)                      
+                            FileHelper.createService(contextMenuDir, namespaceName, serviceName, config.files.service)                      
                         );
                     })
                     .concatMap(result => {
