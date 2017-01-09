@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                     let serviceName = changeCase.paramCase(val);
                     //let serviceDir = FileHelper.createObjectDir(uri, serviceName);
-                    let contextMenuDir = FileHelper.getContextMenuDir(uri)
+                    let contextMenuDir = FileHelper.getContextMenuDir(uri);
                     return Observable.forkJoin(
                         FileHelper.createService(contextMenuDir, serviceName, config.files.service)                      
                     );
