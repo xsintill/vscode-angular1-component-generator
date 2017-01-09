@@ -1,25 +1,32 @@
 namespace {namespace} {    
 
-    export constant TEMPLATE_PATH_{componentNameUpperCasedSnakeCased}: string = "{currentpath}/{componentNameKebabCased}";
+    export const TEMPLATE_PATH_{componentNameConstantCased}: string = "{currentpath}/llq-{componentNameKebabCased}.component.ts";
 
-   /**
-    *   Controller for component {componentNameKebabCased}
-    */
+    /**
+     *   Controller for component llq-{componentNameKebabCased}
+     */
     export class {className}Controller {        
-        public static componentName: string = "{componentNameCamelCased}";
+        /**
+         * Field with value used for registering the component llq-{componentNameKebabCased}
+         */
+        public static componentName: string = "llq{className}";
 
         public static $inject: string[] = [
 
         ];
 
-        constructor(){
+        constructor() {
         }
 
-        public $onInit(): void {            
+        public $onInit(): void { 
+            /*put your code here*/           
         }
     }
-    angular.module("app").component({className}Controller.componentName, {
+    angular.module(Application.LLQAPP_NAME).component({className}Controller.componentName, {
         controller: {className}Controller,
-        templateUrl: 
+        templateUrl: TEMPLATE_PATH_{componentNameConstantCased},
+        bindings: {
+
+        }
     })
 }
