@@ -9,18 +9,23 @@ export class FileHelper {
     private static createFile = <(file: string, data: string) => Observable<{}>>Observable.bindNodeCallback(fse.outputFile);
     private static assetRootDir: string = path.join(__dirname, "../../assets");
 
-    public static createComponent(componentDir: string, componentName: string, config: any): Observable<string> {
+    public static createComponent(componentDir: string, namespaceName: string, componentName: string, config: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
+
+        let relativeDir = this.resolveToRelativePath(componentDir);
         
-        let componentContent = fs.readFileSync( templateFileName ).toString()          
+        let componentContent = fs.readFileSync( templateFileName ).toString()  
+            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+            .replace(/{currentpath}/g, `${relativeDir}`)
             .replace(/{templateUrl}/g, `${componentName}.component.html`)
-            .replace(/{styleUrls}/g, `${componentName}.component.css`)
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+            .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
             .replace(/{className}/g, changeCase.pascalCase(componentName));
 
-        let filename = `${componentDir}/${componentName}.component.${config.extension}`;
+        let filename = `${componentDir}/llq-${componentName}.component.${config.extension}`;
 
         if (config.create) {
             return this.createFile(filename, componentContent)
@@ -54,7 +59,7 @@ export class FileHelper {
             return Observable.of("");
         }
     };
-    public static createDirectivee(directiveDir: string, namespaceName: string, directiveName: string, config: any): Observable<string> {
+    public static createDirective(directiveDir: string, namespaceName: string, directiveName: string, config: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/directive.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -63,11 +68,12 @@ export class FileHelper {
         let relativeDir = this.resolveToRelativePath(directiveDir);
         
         let serviceContent = fs.readFileSync( templateFileName ).toString()
-            .replace(/{currentpath}/g, relativeDir)
-            .replace(/{serviceNameKebabCased}/g, changeCase.paramCase(directiveName))
+            //.replace(/{currentpath}/g, relativeDir)
+            .replace(/{directiveNameKebabCased}/g, changeCase.paramCase(directiveName))
+            //.replace(/{directiveNamePascalCased}/g, changeCase.pascalCase(directiveName))
             .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
-            .replace(/{serviceName}/g, changeCase.pascalCase(directiveName))
-            .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(directiveName));
+            .replace(/{directiveName}/g, changeCase.pascalCase(directiveName))
+            // .replace(/{directiveNameConstantCase}/g, changeCase.constantCase(directiveName));
 
         let filename = `${directiveDir}/${directiveName}.directive.${config.extension}`;
 
