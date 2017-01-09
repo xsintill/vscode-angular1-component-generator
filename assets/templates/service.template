@@ -1,21 +1,17 @@
-namespace {namespace} {    
+namespace {namespace} {
 
-    export constant TEMPLATE_PATH_{serviceNameUpperCasedSnakeCased}: string = "{currentpath}/{serviceNameKebabCased}";
-    export constant {serviceNameUpperCasedSnakeCased}_SERVICE_NAME: string = "{serviceName}";
+    export const TEMPLATE_PATH_{serviceNameConstantCase}: string = "{currentpath}/{serviceNameKebabCased}.service.ts";
+    export const {serviceNameConstantCase}_SERVICE_NAME: string = "{serviceName}";
 
    /**
     *   Controller for service {serviceName}
     */
     export class {serviceName}Service {
         public static $inject: string[] = [
-
         ];
 
-        constructor(){
+        constructor() {
         }
     }
-    angular.module("app").service({serviceNameUpperCasedSnakeCased}_SERVICED_NAME, {
-        controller: {serviceName}Service,
-        templateUrl: 
-    })
+    angular.module("app").service({serviceNameConstantCase}_SERVICE_NAME, {serviceName}Service);
 }
