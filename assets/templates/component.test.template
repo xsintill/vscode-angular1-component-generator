@@ -1,0 +1,17 @@
+describe("llq-{componentNameKebabCased}", () => {
+    let component: {namespace}.{className}Controller;
+    let $componentController: ng.IComponentController;
+
+    beforeEach(angular.module(Application.LLQAPP_NAME));
+
+    beforeEach(inject((_$componentController_) {
+        $componentController = _$componentController_;
+    }));
+
+    describe("componentName", () => {
+        it("should return llq{className}", () => {
+            let result = {namespace}.{className}Controller.componentName;
+            expect(result).toBe("llq{className}");
+        })
+    })
+})
