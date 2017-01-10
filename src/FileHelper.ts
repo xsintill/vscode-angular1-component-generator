@@ -34,6 +34,28 @@ export class FileHelper {
             return Observable.of("");
         }
     };
+    public static createComponentTest(componentDir: string, namespaceName: string, componentName: string, config: any): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/component.test.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let testDir = this.resolveTestPath(componentDir);
+        
+        let componentContent = fs.readFileSync( templateFileName ).toString()  
+            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+            .replace(/{className}/g, changeCase.pascalCase(componentName));
+
+        let filename = `${testDir}/llq-${componentName}.component.test.${config.extension}`;
+
+        if (config.create) {
+            return this.createFile(filename, componentContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
 
     public static createService(serviceDir: string, namespaceName: string, serviceName: string, config: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/service.template";
@@ -169,6 +191,10 @@ export class FileHelper {
 
     public static resolveToRelativePath(path: string) {
         let result = path.replace(vscode.workspace.rootPath+"\\", "");
+        return result;
+    }
+    public static resolveTestPath(path: string) {
+        let result = path.replace(vscode.workspace.rootPath+"\\", vscode.workspace.rootPath + "\\" + "tests\\");
         return result;
     }
 
