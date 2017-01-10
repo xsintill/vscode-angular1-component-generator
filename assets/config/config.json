@@ -1,14 +1,14 @@
 {
     "files": {
-        "testFile": {
-            "create": true,
-            "extension": "ts"
-        },
         "filter": {
             "create": true,
             "extension": "ts"
         },
         "directive": {
+            "create": true,
+            "extension": "ts"
+        },
+        "directiveTestFile": {
             "create": true,
             "extension": "ts"
         },
@@ -24,7 +24,15 @@
             "create": true,
             "extension": "ts"
         },
+        "serviceTestFile": {
+            "create": true,
+            "extension": "ts"
+        },
         "component": {
+            "create": true,
+            "extension": "ts"
+        },
+        "componentTestFile": {
             "create": true,
             "extension": "ts"
         },
