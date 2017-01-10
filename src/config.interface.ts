@@ -37,6 +37,11 @@ export interface Config extends WorkspaceConfiguration {
             extension: string,
             template?: string
         },
+        componentTestFile: {
+            create: boolean,
+            extension: string,
+            template?: string
+        },
         css: {
             create: boolean,
             extension: string,
