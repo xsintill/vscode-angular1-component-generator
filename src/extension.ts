@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
                         };
                     })
                     .subscribe(
-                        () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
+                        () => vscode.window.setStatusBarMessage("Service Successfuly created!"),
                         err => vscode.window.showErrorMessage(err.message)
                     );
         });                
@@ -111,7 +111,7 @@ export function activate(context: vscode.ExtensionContext) {
                         };
                     })
                     .subscribe(
-                        () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
+                        () => vscode.window.setStatusBarMessage("Directive Successfuly created!"),
                         err => vscode.window.showErrorMessage(err.message)
                     );
         });                
@@ -149,13 +149,14 @@ export function activate(context: vscode.ExtensionContext) {
                                 throw new Error("Component name can not be empty!");
                             }
                             let componentName = changeCase.paramCase(val);
-                            let componentDir = FileHelper.createObjectDir(uri, "llq-" + componentName);
+                            let componentDir = FileHelper.createObjectDir(uri, "llq-" + componentName);                            
                             let namespaceName = changeCase.paramCase(namspaceValue);
 
                             return Observable.forkJoin(
                                 FileHelper.createComponent(componentDir, namespaceName, componentName, config.files.component),
                                 FileHelper.createHtml(componentDir, "llq-"+componentName, config.files.html),
-                                FileHelper.createCss(componentDir, "llq-"+componentName, config.files.css)                                
+                                FileHelper.createCss(componentDir, "llq-"+componentName, config.files.css),
+                                FileHelper.createComponentTest(componentDir, namespaceName, componentName, config.files.componentTestFile)
                             );
                         }
                     )
