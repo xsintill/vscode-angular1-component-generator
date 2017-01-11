@@ -4,23 +4,28 @@
 Extension let's you create the following angular files:
 - `Components`
 - `Directives`
-- `Filters`
-- `Controllers`
 - `Services`
-- `Config Route (angular-ui-router state configuration)`
 - `Tests`
 
-Extension automatically creates folder for angular1 component containing : 
-- `component.ts`
-- `module.ts`
-- `component.html`
-- `component.css`
+Command "Create component" creates the following files: 
+- <span style="color: lightblue">[path]/[component name]/</span>`component-name.component.ts`
+- <span style="color: lightblue">[path]/[component name]/</span>`component-name.template.html`
+- <span style="color: lightblue">[path]/[component name]/</span>`component-name.css`
+- <span style="color: lightblue">[test folder]/[path]/[component name]/</span>`component-name.test.ts`
+
+Command "Create service" creates the following file:
+- <span style="color: lightblue">[path]/</span>`service-name.service.ts`
+
+Command "Create directive" creates the following file:
+- <span style="color: lightblue">[path]/</span>`directive-name.directive.ts`
 
 ## Usage
 
 - Right click on the file or folder in the explorer
-- Select "Create Component"
-- Enter component name in the pop up in camelCase 
+- Select "Create Component", "Create service" or "Create directive" 
+- Enter namespace name in the pop up in camelCase
+- Enter the name for the component, service or directive in the pop up in camelCase 
+
 
 ![Use Extension](assets/tutorial/createComponent.gif)
 
@@ -28,45 +33,47 @@ Extension automatically creates folder for angular1 component containing :
 - create true / false - (controls whether to generate this file or not)
 - extension - extension of generated file (e.g. you might want to change "scss" to just plain "css")
 - template - path to the custom template for the generated file
-    - {selector}    -> replaced with `lower case, dash separated string`
-    - {templateUrl} -> replaced with `${selector}.component.html`
-    - {styleUrls}   -> replaced with `${selector}.component.css`
-    - {className}   -> replaced with `componentName in PascalCase`
 
 Use the "template" key to override default templates for the extension
 
 ```json
 {
     "files": {
-        "component": {
+          "filter": {
             "create": true,
-            "extension": "ts",
-            "template": "${workspaceRoot}/myComponent.template"
+            "extension": "ts"
         },
         "directive": {
             "create": true,
-            "extension": "ts",
-            "template": "${workspaceRoot}/myDirective.template"
+            "extension": "ts"
         },
-        "service": {
+        "directiveTestFile": {
             "create": true,
-            "extension": "ts",
-            "template": "${workspaceRoot}/myService.template"
-        },
-        "filter": {
-            "create": true,
-            "extension": "ts",
-            "template": "${workspaceRoot}/myFilter.template"
+            "extension": "ts"
         },
         "configRoute": {
             "create": true,
-            "extension": "ts",
-            "template": "${workspaceRoot}/myConfigRoute.template"
+            "extension": "ts"
+        },
+        "controller": {
+            "create": true,
+            "extension": "ts"
+        },
+        "service": {
+            "create": true,
+            "extension": "ts"
+        },
+        "serviceTestFile": {
+            "create": true,
+            "extension": "ts"
         },
         "component": {
             "create": true,
-            "extension": "ts",
-            "template": "${workspaceRoot}/myComponent.template"
+            "extension": "ts"
+        },
+        "componentTestFile": {
+            "create": true,
+            "extension": "ts"
         },
         "css": {
             "create": true,
