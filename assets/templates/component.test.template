@@ -1,11 +1,17 @@
 describe("llq-{componentNameKebabCased}", () => {
     let component: {namespace}.{className}Controller;
     let $componentController: ng.IComponentController;
+    let scope: ng.IScope;
 
     beforeEach(angular.module(Application.LLQAPP_NAME));
 
-    beforeEach(inject((_$componentController_) {
+    beforeEach(inject((
+        _$componentController_: ng.IComponentController,
+        _$rootScope_: ng.IRootScopeService
+        ) {
         $componentController = _$componentController_;
+        $rootScope = _$rootScope_;
+        scope = $rootScope.new();
     }));
 
     describe("componentName", () => {
