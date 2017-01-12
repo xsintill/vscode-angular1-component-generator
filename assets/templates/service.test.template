@@ -1,0 +1,20 @@
+describe("{serviceName}", () => {
+
+    let {serviceNameCamelCased}: {namespace}.{serviceName}Service;
+    let $injector: ng.auto.IInjectorService;
+
+    beforeEach(angular.mock.module("llqApp"));
+
+    beforeEach(inject((
+        _$injector_: ng.auto.IInjectorService
+    ) => {
+        $injector = _$injector_;
+        {serviceNameCamelCased} = $injector.get<{namespace}.{serviceName}Service>({namespace}.{serviceNameConstantCase}_SERVICE_NAME);
+    }));
+
+    describe("", () => { 
+        it("", () => {
+
+        })
+    })
+});

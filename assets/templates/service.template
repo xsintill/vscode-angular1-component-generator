@@ -1,7 +1,6 @@
 namespace {namespace} {
 
-    export const TEMPLATE_PATH_{serviceNameConstantCase}: string = "{currentpath}/{serviceNameKebabCased}.service.ts";
-    export const {serviceNameConstantCase}_SERVICE_NAME: string = "{serviceName}";
+    export const {serviceNameConstantCase}_SERVICE_NAME: string = "{serviceName}Service";
 
    /**
     *   Controller for service {serviceName}

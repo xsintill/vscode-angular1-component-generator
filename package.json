@@ -2,7 +2,7 @@
   "name": "vscode-angular1-file-generator",
   "displayName": "Angular 1.5 File Generator",
   "description": "Generates angular 1.5(or up) files (html, css, typescript -> template, stylesheet, component.ts + module.ts)",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "xsintill",
   "author": {
     "name": "Luc Neville",
@@ -60,31 +60,31 @@
     "commands": [
       {
         "command": "extension.genAngular1ComponentFiles",
-        "title": "Create Component"
+        "title": "New Component"
       },
       {
         "command": "extension.genAngular1DirectiveFiles",
-        "title": "Create Directive"
+        "title": "New Directive"
       },
       {
         "command": "extension.genAngular1ControllerFiles",
-        "title": "Create Controller"
+        "title": "New Controller"
       },
       {
         "command": "extension.genAngular1FilterFiles",
-        "title": "Create Filter"
+        "title": "New Filter"
       },
       {
         "command": "extension.genAngular1ConfigRouteFiles",
-        "title": "Create Config Route File"
+        "title": "New Config Route File"
       },
       {
         "command": "extension.genAngular1TestFiles",
-        "title": "Create Test"
+        "title": "New Test"
       },
       {
         "command": "extension.genAngular1ServiceFiles",
-        "title": "Create Service"
+        "title": "New Service"
       }
     ],
     "menus": {

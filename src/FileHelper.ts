@@ -58,21 +58,40 @@ export class FileHelper {
     };
 
     public static createService(serviceDir: string, namespaceName: string, serviceName: string, config: any): Observable<string> {
-        let templateFileName = this.assetRootDir + "/templates/service.template";
+        if (config.create) {
+            let templateFileName = this.assetRootDir + "/templates/service.template";
+            if (config.template) {
+                templateFileName = this.resolveWorkspaceRoot(config.template);
+            }   
+
+            let serviceContent = fs.readFileSync( templateFileName ).toString()
+                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+                .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
+                .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
+            
+            //let relativeDir = this.resolveToRelativePath(serviceDir);
+            let filename = `${serviceDir}/${serviceName}.service.${config.extension}`;
+            
+            return this.createFile(filename, serviceContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createServiceTest(serviceDir: string, namespaceName: string, serviceName: string, config: any): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/service.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
-        }
-        
-        let relativeDir = this.resolveToRelativePath(serviceDir);
+        }        
         
         let serviceContent = fs.readFileSync( templateFileName ).toString()
-            .replace(/{currentpath}/g, relativeDir)
-            .replace(/{serviceNameKebabCased}/g, changeCase.paramCase(serviceName))
-            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
             .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
+            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+            .replace(/{serviceNameCamelCased}/g, changeCase.camelCase(serviceName))
             .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
 
-        let filename = `${serviceDir}/${serviceName}.service.${config.extension}`;
+        let testDir = this.resolveTestPath(serviceDir);
+        let filename = `${testDir}/${serviceName}.service.test.${config.extension}`;
 
         if (config.create) {
             return this.createFile(filename, serviceContent)

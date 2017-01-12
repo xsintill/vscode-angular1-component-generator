@@ -36,13 +36,13 @@ export function activate(context: vscode.ExtensionContext) {
 
                         let namespaceName = changeCase.paramCase(namspaceValue);
                         let serviceName = changeCase.paramCase(serviceNameValue);
-                        let contextMenuDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
+                        let serviceDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
-                            FileHelper.createService(contextMenuDir, namespaceName, serviceName, config.files.service)                      
+                            FileHelper.createService(serviceDir, namespaceName, serviceName, config.files.service),
+                            FileHelper.createServiceTest(serviceDir, namespaceName, serviceName, config.files.serviceTestFile)
                         );
                     })
-                    .concatMap(result => {
-                        vscode.window.showInformationMessage(result.join(""));
+                    .concatMap(result => {                       
                         return Observable.from(result);
                     })
                     .filter(path => path.length > 0)

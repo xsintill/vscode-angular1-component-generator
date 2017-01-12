@@ -7,22 +7,22 @@ Extension let's you create the following angular files:
 - `Services`
 - `Tests`
 
-Command "Create component" creates the following files: 
+Command "New component" creates the following files: 
 - <span style="color: lightblue">[path]/[component name]/</span>`component-name.component.ts`
 - <span style="color: lightblue">[path]/[component name]/</span>`component-name.template.html`
 - <span style="color: lightblue">[path]/[component name]/</span>`component-name.css`
 - <span style="color: lightblue">[test folder]/[path]/[component name]/</span>`component-name.test.ts`
 
-Command "Create service" creates the following file:
+Command "New service" creates the following file:
 - <span style="color: lightblue">[path]/</span>`service-name.service.ts`
 
-Command "Create directive" creates the following file:
+Command "New directive" creates the following file:
 - <span style="color: lightblue">[path]/</span>`directive-name.directive.ts`
 
 ## Usage
 
 - Right click on the file or folder in the explorer
-- Select "Create Component", "Create service" or "Create directive" 
+- Select "New Component", "New service" or "New directive" 
 - Enter namespace name in the pop up in camelCase
 - Enter the name for the component, service or directive in the pop up in camelCase 
 
