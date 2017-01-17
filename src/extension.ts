@@ -11,10 +11,10 @@ import { Config } from "./config.interface";
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    let configPrefix: string = "ng1FilesGenerator";
     let serviceDisposable = vscode.commands.registerCommand("extension.genAngular1ServiceFiles", (uri) => {
-        let configPrefix: String = "ng1ServiceGenerator";
         let _workspace = vscode.workspace;
-        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        
 
         if (!config.files) {
             config = FileHelper.getConfig();
@@ -66,7 +66,6 @@ export function activate(context: vscode.ExtensionContext) {
         });                
     });
     let directiveDisposable = vscode.commands.registerCommand("extension.genAngular1DirectiveFiles", (uri) => {
-        let configPrefix: String = "ng1DirectiveGenerator";
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
 
@@ -123,9 +122,9 @@ export function activate(context: vscode.ExtensionContext) {
     let componentDisposable = vscode.commands.registerCommand("extension.genAngular1ComponentFiles", (uri) => {
         // The code you place here will be executed every time your command is executed
 
-        let configPrefix: String = "ng1ComponentGenerator";
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
+        let configGlobals =  <Config>_workspace.getConfiguration(configPrefix);
 
         if (!config.files) {
             config = FileHelper.getConfig();
@@ -149,14 +148,15 @@ export function activate(context: vscode.ExtensionContext) {
                                 throw new Error("Component name can not be empty!");
                             }
                             let componentName = changeCase.paramCase(val);
-                            let componentDir = FileHelper.createObjectDir(uri, "llq-" + componentName);                            
+                            let prefixedComponentName =  `${configGlobals.globals.prefix}${componentName}`;
+                            let componentDir = FileHelper.createObjectDir(uri, prefixedComponentName);                            
                             let namespaceName = changeCase.paramCase(namspaceValue);
 
                             return Observable.forkJoin(
-                                FileHelper.createComponent(componentDir, namespaceName, componentName, config.files.component),
-                                FileHelper.createHtml(componentDir, "llq-"+componentName, config.files.html),
-                                FileHelper.createCss(componentDir, "llq-"+componentName, config.files.css),
-                                FileHelper.createComponentTest(componentDir, namespaceName, componentName, config.files.componentTestFile)
+                                FileHelper.createComponent(componentDir, namespaceName, componentName, config.files.component, configGlobals),
+                                FileHelper.createHtml(componentDir, prefixedComponentName, config.files.html),
+                                FileHelper.createCss(componentDir, prefixedComponentName, config.files.css),
+                                FileHelper.createComponentTest(componentDir, namespaceName, componentName, config.files.componentTestFile, configGlobals)
                             );
                         }
                     )

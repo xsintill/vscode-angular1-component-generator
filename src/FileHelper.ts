@@ -9,7 +9,7 @@ export class FileHelper {
     private static createFile = <(file: string, data: string) => Observable<{}>>Observable.bindNodeCallback(fse.outputFile);
     private static assetRootDir: string = path.join(__dirname, "../../assets");
 
-    public static createComponent(componentDir: string, namespaceName: string, componentName: string, config: any): Observable<string> {
+    public static createComponent(componentDir: string, namespaceName: string, componentName: string, config: any, configGlobals: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -25,7 +25,7 @@ export class FileHelper {
             .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
             .replace(/{className}/g, changeCase.pascalCase(componentName));
 
-        let filename = `${componentDir}/llq-${componentName}.component.${config.extension}`;
+        let filename = `${componentDir}/${configGlobals.globals.prefix}${componentName}.component.${config.extension}`;
 
         if (config.create) {
             return this.createFile(filename, componentContent)
@@ -34,7 +34,7 @@ export class FileHelper {
             return Observable.of("");
         }
     };
-    public static createComponentTest(componentDir: string, namespaceName: string, componentName: string, config: any): Observable<string> {
+    public static createComponentTest(componentDir: string, namespaceName: string, componentName: string, config: any, configGlobals: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -47,7 +47,7 @@ export class FileHelper {
             .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
             .replace(/{className}/g, changeCase.pascalCase(componentName));
 
-        let filename = `${testDir}/llq-${componentName}.component.test.${config.extension}`;
+        let filename = `${testDir}/${configGlobals.globals.prefix}${componentName}.component.test.${config.extension}`;
 
         if (config.create) {
             return this.createFile(filename, componentContent)
@@ -204,7 +204,7 @@ export class FileHelper {
 
     public static getConfig(): any {
         let content = fs.readFileSync( this.assetRootDir + "/config/config.json" ).toString();
-        content = content.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);
+        content = content.replace(/\${workspaceRoot}/g, vscode.workspace.rootPath);        
         return JSON.parse(content);
     }
 

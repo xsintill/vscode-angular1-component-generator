@@ -48,5 +48,9 @@
             "create": true,
             "extension": "ts"
         }
+    },
+    "globals": {
+        "applicationName": "",
+        "prefix": ""
     }
 }

@@ -57,6 +57,22 @@
   "main": "./out/src/extension",
   "icon": "assets/images/icon.png",
   "contributes": {
+    "configuration": {
+      "type": "object",  
+      "title": "angular 1 files generator",
+      "properties": {
+        "ng1FilesGenerator.globals":{
+          "type": "object",
+          "description": "Configuration object for global settings for extension angular 1 files generator",
+          "properties": {
+            "prefix": {
+              "type": "string",
+              "description": "prefix used in front of certain files i.e. componentname (<prefix>+<component name>)"
+            }            
+          }
+        }       
+      }
+    },
     "commands": [
       {
         "command": "extension.genAngular1ComponentFiles",

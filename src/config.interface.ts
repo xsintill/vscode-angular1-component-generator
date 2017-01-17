@@ -63,4 +63,8 @@ export interface Config extends WorkspaceConfiguration {
             template?: string
         }
     };
+    globals: {
+        applicationName: string,
+        prefix: string
+    };
 };
