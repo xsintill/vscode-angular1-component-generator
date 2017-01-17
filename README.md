@@ -1,4 +1,4 @@
-# Angular 1 File Generation Extension for VS CODE
+# Angular 1 File Generation Extension for VS Code
 
 ## Description
 Extension let's you create the following angular files:
