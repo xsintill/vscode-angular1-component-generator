@@ -30,7 +30,9 @@
     ],
     "quotemark": [true, "double"],
     "semicolon": [true, "always"],
-    "trailing-comma": true,
+    "trailing-comma":[
+      true
+    ], 
     "triple-equals": true,
     "variable-name": false,
 
