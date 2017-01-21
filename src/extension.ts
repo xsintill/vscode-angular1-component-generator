@@ -149,7 +149,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 throw new Error("Component name can not be empty!");
                             }
                             let componentName = changeCase.paramCase(val);
-                            let prefixedComponentName =  `${configGlobals.globals.prefix}${componentName}`;
+                            let prefixedComponentName =  `${FileHelper.getTestPrefix(configGlobals)}${componentName}`;
                             let componentDir = FileHelper.createObjectDir(uri, prefixedComponentName);                            
                             let namespaceName = changeCase.paramCase(namspaceValue);
 

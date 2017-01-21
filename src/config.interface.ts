@@ -68,7 +68,8 @@ export interface Config extends WorkspaceConfiguration {
         prefix: string,
         test:{
             path: string,
-            exclude: string[]
+            exclude: string[],
+            postfix: string
         }
     };
 };

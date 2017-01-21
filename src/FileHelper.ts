@@ -8,9 +8,9 @@ import { Config } from "./config.interface";
 
 export class FileHelper {
     private static createFile = <(file: string, data: string) => Observable<{}>>Observable.bindNodeCallback(fse.outputFile);
-    private static assetRootDir: string = path.join(__dirname, "../../assets");
+    private static assetRootDir: string = path.join(__dirname, "../../assets");    
 
-    public static createComponent(componentDir: string, namespaceName: string, componentName: string, config: any, configGlobals: any): Observable<string> {
+    public static createComponent(componentDir: string, namespaceName: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -26,7 +26,7 @@ export class FileHelper {
             .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
             .replace(/{className}/g, changeCase.pascalCase(componentName));
 
-        let filename = `${componentDir}/${configGlobals.globals.prefix}${componentName}.component.${config.extension}`;
+        let filename = `${componentDir}/${FileHelper.getTestPrefix(configGlobals)}${componentName}.component.${config.extension}`;
 
         if (config.create) {
             return this.createFile(filename, componentContent)
@@ -35,27 +35,32 @@ export class FileHelper {
             return Observable.of("");
         }
     };
-    public static createComponentTest(componentDir: string, namespaceName: string, componentName: string, config: any, configGlobals: any): Observable<string> {
+    
+    public static createComponentTest(componentDir: string, namespaceName: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
 
-        let testDir = this.resolveTestPath(componentDir, configGlobals);
-        
-        let componentContent = fs.readFileSync( templateFileName ).toString()  
-            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
-            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
-            .replace(/{className}/g, changeCase.pascalCase(componentName));
-
-        let filename = `${testDir}/${configGlobals.globals.prefix}${componentName}.component.test.${config.extension}`;
-
-        if (config.create) {
-            return this.createFile(filename, componentContent)
-                .map(result => filename);
+        if  (configGlobals.globals.test) {
+            let testDir = this.resolveTestPath(componentDir, configGlobals);
+            let componentContent = fs.readFileSync( templateFileName ).toString()  
+                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+                .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+                .replace(/{className}/g, changeCase.pascalCase(componentName));
+            
+            let filename = `${testDir}/${FileHelper.getTestPrefix(configGlobals)}${componentName}.component${FileHelper.getTestPostfix(configGlobals)}.${config.extension}`;
+            vscode.window.showInformationMessage("creating:"+filename)    
+            if (config.create) {
+                return this.createFile(filename, componentContent)
+                    .map(result => filename);
+            } else {
+                return Observable.of("");
+            }
         } else {
             return Observable.of("");
         }
+        
     };
 
     public static createService(serviceDir: string, namespaceName: string, serviceName: string, config: any): Observable<string> {
@@ -83,23 +88,29 @@ export class FileHelper {
         let templateFileName = this.assetRootDir + "/templates/service.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
-        }        
-        
-        let serviceContent = fs.readFileSync( templateFileName ).toString()
-            .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
-            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
-            .replace(/{serviceNameCamelCased}/g, changeCase.camelCase(serviceName))
-            .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
+        }   
 
-        let testDir = this.resolveTestPath(serviceDir, config);
-        let filename = `${testDir}/${serviceName}.service.test.${config.extension}`;
+         if  (configGlobals.globals.test) {
+            let serviceContent = fs.readFileSync( templateFileName ).toString()
+                .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
+                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+                .replace(/{serviceNameCamelCased}/g, changeCase.camelCase(serviceName))
+                .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
 
-        if (config.create) {
-            return this.createFile(filename, serviceContent)
-                .map(result => filename);
+            let testDir = this.resolveTestPath(serviceDir, config);
+            let filename = `${testDir}/${serviceName}.service${FileHelper.getTestPostfix(configGlobals)}.${config.extension}`;
+
+            if (config.create) {
+                return this.createFile(filename, serviceContent)
+                    .map(result => filename);
+            } else {
+                return Observable.of("");
+            }
         } else {
             return Observable.of("");
-        }
+        }     
+        
+       
     };
     public static createDirective(directiveDir: string, namespaceName: string, directiveName: string, config: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/directive.template";
@@ -220,6 +231,13 @@ export class FileHelper {
     public static resolveWorkspaceRoot(path: string): string {
         let result = path.replace("${workspaceRoot}", vscode.workspace.rootPath);
         return result;
+    }
+    public static getTestPrefix(configGlobals: Config): string {
+        return (configGlobals.globals.prefix) ? configGlobals.globals.prefix : "";
+    }
+
+    private static getTestPostfix(configGlobals: Config): string {
+        return (configGlobals.globals.test.postfix) ? configGlobals.globals.test.postfix : ".test";
     }
 
 }
