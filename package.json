@@ -2,7 +2,7 @@
   "name": "vscode-angular1-file-generator",
   "displayName": "Angular 1.5 File Generator",
   "description": "Generates angular 1.5(or up) files (html, css, typescript -> template, stylesheet, component.ts + module.ts)",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "xsintill",
   "author": {
     "name": "Luc Neville",
@@ -68,7 +68,17 @@
             "prefix": {
               "type": "string",
               "description": "prefix used in front of certain files i.e. componentname (<prefix>+<component name>)"
-            }            
+            },
+            "test": {
+              "type": "object",
+              "description": "Configuration object for test settings for the extension angular 1 files generator",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "path used to indicate the root test path for which to create any of your test files"
+                }
+              }
+            }              
           }
         }       
       }

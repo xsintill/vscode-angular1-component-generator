@@ -15,6 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
     let serviceDisposable = vscode.commands.registerCommand("extension.genAngular1ServiceFiles", (uri) => {
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        
+        let configGlobals =  <Config>_workspace.getConfiguration(configPrefix);
 
         if (!config.files) {
             config = FileHelper.getConfig();
@@ -39,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
                         let serviceDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
                             FileHelper.createService(serviceDir, namespaceName, serviceName, config.files.service),
-                            FileHelper.createServiceTest(serviceDir, namespaceName, serviceName, config.files.serviceTestFile)
+                            FileHelper.createServiceTest(serviceDir, namespaceName, serviceName, config.files.serviceTestFile, configGlobals)
                         );
                     })
                     .concatMap(result => {                       
@@ -180,7 +181,7 @@ export function activate(context: vscode.ExtensionContext) {
                         err => vscode.window.showErrorMessage(err.message)
                     );
 
-        })
+        });
 
         // Display a dialog to the user
 
@@ -192,4 +193,5 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {
+    /**/
 }

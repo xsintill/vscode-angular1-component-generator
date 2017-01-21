@@ -65,6 +65,10 @@ export interface Config extends WorkspaceConfiguration {
     };
     globals: {
         applicationName: string,
-        prefix: string
+        prefix: string,
+        test:{
+            path: string,
+            exclude: string[]
+        }
     };
 };

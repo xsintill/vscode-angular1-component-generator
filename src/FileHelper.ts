@@ -4,6 +4,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as changeCase from "change-case";
 import { Observable } from "rxjs";
+import { Config } from "./config.interface";
 
 export class FileHelper {
     private static createFile = <(file: string, data: string) => Observable<{}>>Observable.bindNodeCallback(fse.outputFile);
@@ -40,7 +41,7 @@ export class FileHelper {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
 
-        let testDir = this.resolveTestPath(componentDir);
+        let testDir = this.resolveTestPath(componentDir, configGlobals);
         
         let componentContent = fs.readFileSync( templateFileName ).toString()  
             .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
@@ -78,7 +79,7 @@ export class FileHelper {
             return Observable.of("");
         }
     };
-    public static createServiceTest(serviceDir: string, namespaceName: string, serviceName: string, config: any): Observable<string> {
+    public static createServiceTest(serviceDir: string, namespaceName: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/service.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -90,7 +91,7 @@ export class FileHelper {
             .replace(/{serviceNameCamelCased}/g, changeCase.camelCase(serviceName))
             .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
 
-        let testDir = this.resolveTestPath(serviceDir);
+        let testDir = this.resolveTestPath(serviceDir, config);
         let filename = `${testDir}/${serviceName}.service.test.${config.extension}`;
 
         if (config.create) {
@@ -105,16 +106,12 @@ export class FileHelper {
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
-        
-        let relativeDir = this.resolveToRelativePath(directiveDir);
-        
+
         let serviceContent = fs.readFileSync( templateFileName ).toString()
-            //.replace(/{currentpath}/g, relativeDir)
             .replace(/{directiveNameKebabCased}/g, changeCase.paramCase(directiveName))
-            //.replace(/{directiveNamePascalCased}/g, changeCase.pascalCase(directiveName))
             .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
-            .replace(/{directiveName}/g, changeCase.pascalCase(directiveName))
-            // .replace(/{directiveNameConstantCase}/g, changeCase.constantCase(directiveName));
+            .replace(/{directiveName}/g, changeCase.pascalCase(directiveName));
+            
 
         let filename = `${directiveDir}/${directiveName}.directive.${config.extension}`;
 
@@ -212,8 +209,11 @@ export class FileHelper {
         let result = path.replace(vscode.workspace.rootPath+"\\", "");
         return result;
     }
-    public static resolveTestPath(path: string) {
-        let result = path.replace(vscode.workspace.rootPath+"\\", vscode.workspace.rootPath + "\\" + "tests\\");
+    public static resolveTestPath(path: string, configGlobals: Config) {        
+        let result = path.replace(
+           `${vscode.workspace.rootPath}\\`, 
+           `${vscode.workspace.rootPath}\\${configGlobals.globals.test.path}\\`
+           );
         return result;
     }
 
