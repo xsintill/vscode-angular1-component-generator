@@ -51,6 +51,11 @@
     },
     "globals": {
         "applicationName": "",
-        "prefix": ""
+        "prefix": "",
+        "sharedConstant": "",
+        "srcConstant": "",
+        "test": {
+            "path": ""
+        }
     }
 }

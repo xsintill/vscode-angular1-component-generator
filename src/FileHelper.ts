@@ -16,7 +16,9 @@ export class FileHelper {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
 
-        let relativeDir = this.resolveToRelativePath(componentDir);
+        //let relativeDir = this.resolveToRelativePath(componentDir); 
+        let relativeDir = this.resolveToRelativePathWithReplacedConstants(componentDir, configGlobals); 
+
         
         let componentContent = fs.readFileSync( templateFileName ).toString()  
             .replace(/{appname}/g, configGlobals.globals.applicationName)
@@ -223,6 +225,16 @@ export class FileHelper {
 
     public static resolveToRelativePath(path: string) {
         let result = path.replace(vscode.workspace.rootPath+"\\", "");
+        return result;
+    }
+    public static resolveToRelativePathWithReplacedConstants(path: string, config: Config) {
+        let result = this.resolveToRelativePath(path);
+        if (config.globals.sharedConstant) {
+            result = result.replace("app\\shared", config.globals.sharedConstant);
+        }
+        if (config.globals.srcConstant) {
+            result = result.replace("app\\areas", config.globals.srcConstant);
+        }
         return result;
     }
     public static resolveTestPath(path: string, configGlobals: Config) {        

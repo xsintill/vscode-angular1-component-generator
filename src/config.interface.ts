@@ -70,6 +70,8 @@ export interface Config extends WorkspaceConfiguration {
             path: string,
             exclude: string[],
             postfix: string
-        }
+        },
+        sharedConstant: string,
+        srcConstant: string
     };
 };

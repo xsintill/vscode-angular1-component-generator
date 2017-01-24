@@ -2,7 +2,7 @@
   "name": "vscode-angular1-file-generator",
   "displayName": "Angular 1.5 File Generator",
   "description": "Generates angular 1.5(or up) files (html, css, typescript -> template, stylesheet, component.ts + module.ts)",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "xsintill",
   "author": {
     "name": "Luc Neville",
@@ -87,7 +87,15 @@
             "applicationName": {
               "type": "string",
               "description": "Put the name of your app as a quoted string or as a constant defined elsewhere"
-            } 
+            },
+            "sharedConstant": {
+              "type": "string",
+              "description": "Replace the shared path in template path constants for this constant"  
+            },
+            "srcConstant": {
+              "type": "string",
+              "description": "Replace the src path in template path constants for this constant"  
+            }
           }
         }       
       }
