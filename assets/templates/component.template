@@ -22,7 +22,7 @@ namespace {namespace} {
             /*put your code here*/           
         }
     }
-    angular.module(Application.LLQAPP_NAME).component({className}Controller.componentName, {
+    angular.module({appname}).component({className}Controller.componentName, {
         controller: {className}Controller,
         templateUrl: TEMPLATE_PATH_{componentNameConstantCased},
         bindings: {

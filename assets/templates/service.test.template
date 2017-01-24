@@ -3,7 +3,7 @@ describe("{serviceName}", () => {
     let {serviceNameCamelCased}: {namespace}.{serviceName}Service;
     let $injector: ng.auto.IInjectorService;
 
-    beforeEach(angular.mock.module("llqApp"));
+    beforeEach(angular.mock.module({appname}));
 
     beforeEach(inject((
         _$injector_: ng.auto.IInjectorService
@@ -13,7 +13,7 @@ describe("{serviceName}", () => {
     }));
 
     describe("", () => { 
-        it("", () => {
+        it("should ", () => {
 
         })
     })

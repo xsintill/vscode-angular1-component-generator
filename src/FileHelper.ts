@@ -19,11 +19,12 @@ export class FileHelper {
         let relativeDir = this.resolveToRelativePath(componentDir);
         
         let componentContent = fs.readFileSync( templateFileName ).toString()  
+            .replace(/{appname}/g, configGlobals.globals.applicationName)
             .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
             .replace(/{currentpath}/g, `${relativeDir}`)
             .replace(/{templateUrl}/g, `${componentName}.component.html`)
             .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
-            .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
+            .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))            
             .replace(/{className}/g, changeCase.pascalCase(componentName));
 
         let filename = `${componentDir}/${FileHelper.getTestPrefix(configGlobals)}${componentName}.component.${config.extension}`;
@@ -44,13 +45,13 @@ export class FileHelper {
 
         if  (configGlobals.globals.test) {
             let testDir = this.resolveTestPath(componentDir, configGlobals);
-            let componentContent = fs.readFileSync( templateFileName ).toString()  
+            let componentContent = fs.readFileSync( templateFileName ).toString() 
+                .replace(/{appname}/g, configGlobals.globals.applicationName) 
                 .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
                 .replace(/{className}/g, changeCase.pascalCase(componentName));
             
             let filename = `${testDir}/${FileHelper.getTestPrefix(configGlobals)}${componentName}.component${FileHelper.getTestPostfix(configGlobals)}.${config.extension}`;
-            vscode.window.showInformationMessage("creating:"+filename)    
             if (config.create) {
                 return this.createFile(filename, componentContent)
                     .map(result => filename);
@@ -63,7 +64,7 @@ export class FileHelper {
         
     };
 
-    public static createService(serviceDir: string, namespaceName: string, serviceName: string, config: any): Observable<string> {
+    public static createService(serviceDir: string, namespaceName: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
         if (config.create) {
             let templateFileName = this.assetRootDir + "/templates/service.template";
             if (config.template) {
@@ -71,6 +72,7 @@ export class FileHelper {
             }   
 
             let serviceContent = fs.readFileSync( templateFileName ).toString()
+                .replace(/{appname}/g, configGlobals.globals.applicationName)
                 .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
                 .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
@@ -92,6 +94,7 @@ export class FileHelper {
 
          if  (configGlobals.globals.test) {
             let serviceContent = fs.readFileSync( templateFileName ).toString()
+                .replace(/{appname}/g, configGlobals.globals.applicationName)
                 .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
                 .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{serviceNameCamelCased}/g, changeCase.camelCase(serviceName))
@@ -112,13 +115,14 @@ export class FileHelper {
         
        
     };
-    public static createDirective(directiveDir: string, namespaceName: string, directiveName: string, config: any): Observable<string> {
+    public static createDirective(directiveDir: string, namespaceName: string, directiveName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/directive.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
 
         let serviceContent = fs.readFileSync( templateFileName ).toString()
+            .replace(/{appname}/g, configGlobals.globals.applicationName)
             .replace(/{directiveNameKebabCased}/g, changeCase.paramCase(directiveName))
             .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
             .replace(/{directiveName}/g, changeCase.pascalCase(directiveName));
@@ -134,13 +138,14 @@ export class FileHelper {
         }
     };
 
-    public static createModule(componentDir: string, componentName: string, config: any): Observable<string> {
+    public static createModule(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/module.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
 
         let moduleContent = fs.readFileSync( templateFileName ).toString()
+            .replace(/{appname}/g, configGlobals.globals.applicationName)
             .replace(/{componentName}/g, componentName)
             .replace(/{className}/g, changeCase.pascalCase(componentName));
 

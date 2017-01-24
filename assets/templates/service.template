@@ -12,5 +12,5 @@ namespace {namespace} {
         constructor() {
         }
     }
-    angular.module(Application.LLQAPP_NAME).service({serviceNameConstantCase}_SERVICE_NAME, {serviceName}Service);
+    angular.module({appname}).service({serviceNameConstantCase}_SERVICE_NAME, {serviceName}Service);
 }

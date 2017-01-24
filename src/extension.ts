@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
                         let serviceName = changeCase.paramCase(serviceNameValue);
                         let serviceDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
-                            FileHelper.createService(serviceDir, namespaceName, serviceName, config.files.service),
+                            FileHelper.createService(serviceDir, namespaceName, serviceName, config.files.service, configGlobals),
                             FileHelper.createServiceTest(serviceDir, namespaceName, serviceName, config.files.serviceTestFile, configGlobals)
                         );
                     })
@@ -69,6 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
     let directiveDisposable = vscode.commands.registerCommand("extension.genAngular1DirectiveFiles", (uri) => {
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
+        let configGlobals =  <Config>_workspace.getConfiguration(configPrefix);
 
         if (!config.files) {
             config = FileHelper.getConfig();
@@ -92,7 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
                         let directiveName = changeCase.paramCase(directiveNameValue);
                         let contextMenuDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
-                            FileHelper.createDirective(contextMenuDir, namespaceName, directiveName, config.files.directive)                      
+                            FileHelper.createDirective(contextMenuDir, namespaceName, directiveName, config.files.directive, configGlobals)                      
                         );
                     })
                     .concatMap(result => Observable.from(result))

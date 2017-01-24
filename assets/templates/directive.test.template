@@ -1,0 +1,18 @@
+describe("llq-{directiveNameKebabCased}", () => {
+    let directive: {namespace}.{className}Controller;
+
+    beforeEach(angular.module({appname}));
+
+    beforeEach(inject((
+        _$rootScope_: ng.IRootScopeService
+        ) {
+        $rootScope = _$rootScope_;
+        scope = $rootScope.new();
+    }));
+
+    describe("", () => {
+        it("should ", () => {
+            
+        })
+    })
+})

@@ -2,7 +2,7 @@
   "name": "vscode-angular1-file-generator",
   "displayName": "Angular 1.5 File Generator",
   "description": "Generates angular 1.5(or up) files (html, css, typescript -> template, stylesheet, component.ts + module.ts)",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "xsintill",
   "author": {
     "name": "Luc Neville",
@@ -43,6 +43,7 @@
     "angular1 generate test",
     "angular1 config route",
     "angular1 generate config route",
+    "learnlinq",
     "typescript"
   ],
   "activationEvents": [
@@ -82,7 +83,11 @@
                   "description": "postfix will be used in the naming of the test files use '.spec' or 'Spec' or '.test'"
                 }
               }
-            }              
+            },
+            "applicationName": {
+              "type": "string",
+              "description": "Put the name of your app as a quoted string or as a constant defined elsewhere"
+            } 
           }
         }       
       }

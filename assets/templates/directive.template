@@ -23,5 +23,5 @@ namespace {namespace} {
             return factory;
         }
     }
-    angular.module(Application.LLQAPP_NAME).directive({directiveName}Directive.directiveName, {directiveName}Directive.factory());
+    angular.module({appname}).directive({directiveName}Directive.directiveName, {directiveName}Directive.factory());
 }

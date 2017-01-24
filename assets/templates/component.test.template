@@ -3,7 +3,7 @@ describe("llq-{componentNameKebabCased}", () => {
     let $componentController: ng.IComponentController;
     let scope: ng.IScope;
 
-    beforeEach(angular.module(Application.LLQAPP_NAME));
+    beforeEach(angular.module({appname}));
 
     beforeEach(inject((
         _$componentController_: ng.IComponentController,
