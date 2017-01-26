@@ -1,6 +1,6 @@
 namespace {namespace} {    
 
-    export const TEMPLATE_PATH_{componentNameConstantCased}: string = {currentpath}/llq-{componentNameKebabCased}.component.ts";
+    export const TEMPLATE_PATH_{componentNameConstantCased}: string = {currentpath}/llq-{componentNameKebabCased}.component.html";
 
     /**
      *   Controller for component llq-{componentNameKebabCased}
@@ -28,5 +28,5 @@ namespace {namespace} {
         bindings: {
 
         }
-    })
+    });
 }
