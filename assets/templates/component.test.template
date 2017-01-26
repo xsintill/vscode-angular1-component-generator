@@ -3,15 +3,15 @@ describe("llq-{componentNameKebabCased}", () => {
     let $componentController: ng.IComponentController;
     let scope: ng.IScope;
 
-    beforeEach(angular.module({appname}));
+    beforeEach(angular.mock.module({appname}));
 
     beforeEach(inject((
         _$componentController_: ng.IComponentController,
         _$rootScope_: ng.IRootScopeService
-        ) {
+        ) => {
         $componentController = _$componentController_;
         $rootScope = _$rootScope_;
-        scope = $rootScope.new();
+        scope = $rootScope.$new();
     }));
 
     describe("componentName", () => {
