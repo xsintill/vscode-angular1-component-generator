@@ -2,47 +2,45 @@
     "files": {
         "filter": {
             "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "directive": {
             "create": true,
-            "extension": "ts"
-        },
-        "directiveTestFile": {
-            "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "configRoute": {
             "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "controller": {
             "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "service": {
             "create": true,
-            "extension": "ts"
-        },
-        "serviceTestFile": {
-            "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "component": {
             "create": true,
-            "extension": "ts"
-        },
-        "componentTestFile": {
-            "create": true,
-            "extension": "ts"
-        },
-        "css": {
-            "create": true,
-            "extension": "scss"
-        },
-        "html": {
-            "create": true,
-            "extension": "html"
+            "extension": "ts",            
+            "createTestFile": true,
+            "css": {
+                "create": true,
+                "extension": "scss"
+            },
+            "html": {
+                "create": true,
+                "extension": "html"
+            },
+            "module": {
+                "create": true,
+                "extension": "ts"
+            }
         },
         "module": {
             "create": true,

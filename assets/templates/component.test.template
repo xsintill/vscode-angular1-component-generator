@@ -18,6 +18,6 @@ describe("llq-{componentNameKebabCased}", () => {
         it("should return llq{className}", () => {
             let result = {namespace}.{className}Controller.componentName;
             expect(result).toBe("llq{className}");
-        })
-    })
+        });
+    });
 })
