@@ -8,16 +8,16 @@ Extension let's you create the following angular files:
 - `Tests`
 
 Command "New component" creates the following files: 
-- <span style="color: lightblue">[path]/[component name]/</span>`component-name.component.ts`
-- <span style="color: lightblue">[path]/[component name]/</span>`component-name.template.html`
-- <span style="color: lightblue">[path]/[component name]/</span>`component-name.css`
-- <span style="color: lightblue">[test folder]/[path]/[component name]/</span>`component-name.test.ts`
+- [path]/[component name]/`component-name.component.ts`
+- [path]/[component name]/`component-name.template.html`
+- [path]/[component name]/`component-name.css`
+- [test folder]/[path]/[component name]/`component-name.test.ts`
 
 Command "New service" creates the following file:
-- <span style="color: lightblue">[path]/</span>`service-name.service.ts`
+- [path]/`service-name.service.ts`
 
 Command "New directive" creates the following file:
-- <span style="color: lightblue">[path]/</span>`directive-name.directive.ts`
+- [path]/`directive-name.directive.ts`
 
 ## Usage
 
@@ -39,55 +39,53 @@ Use the "template" key to override default templates for the extension
 ```json
 {
     "files": {
-          "filter": {
+        "filter": {
             "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "directive": {
             "create": true,
-            "extension": "ts"
-        },
-        "directiveTestFile": {
-            "create": true,
-            "extension": "ts"
-        },
+            "extension": "ts",
+            "createTestFile": true
+        },        
         "configRoute": {
             "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "controller": {
             "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "service": {
             "create": true,
-            "extension": "ts"
-        },
-        "serviceTestFile": {
-            "create": true,
-            "extension": "ts"
+            "extension": "ts",
+            "createTestFile": true
         },
         "component": {
             "create": true,
-            "extension": "ts"
-        },
-        "componentTestFile": {
-            "create": true,
-            "extension": "ts"
-        },
-        "css": {
-            "create": true,
-            "extension": "scss"
-        },
-        "html": {
-            "create": true,
-            "extension": "html"
+            "extension": "ts",
+            "createTestFile": true,
+            "css": {
+                "create": true,
+                "extension": "scss"
+            },
+            "html": {
+                "create": true,
+                "extension": "html"
+            },
+            "module": {
+                "create": true,
+                "extension": "ts"
+            }
         },
         "module": {
             "create": true,
             "extension": "ts"
         }
-    }
+}
 }
 ```
 ![Config Extension](assets/tutorial/customTemplate.gif)
