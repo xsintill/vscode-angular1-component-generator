@@ -40,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
                         let serviceDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
                             FileHelper.createService(serviceDir, namespaceName, serviceName, config.files.service, configGlobals),
-                            FileHelper.createServiceTest(serviceDir, namespaceName, serviceName, config.files.serviceTestFile, configGlobals)
+                            FileHelper.createServiceTest(serviceDir, namespaceName, serviceName, config.files.service.testFile, configGlobals)
                         );
                     })
                     .concatMap(result => {                       
@@ -156,9 +156,9 @@ export function activate(context: vscode.ExtensionContext) {
 
                             return Observable.forkJoin(
                                 FileHelper.createComponent(componentDir, namespaceName, componentName, config.files.component, configGlobals),
-                                FileHelper.createHtml(componentDir, prefixedComponentName, config.files.html),
-                                FileHelper.createCss(componentDir, prefixedComponentName, config.files.css),
-                                FileHelper.createComponentTest(componentDir, namespaceName, componentName, config.files.componentTestFile, configGlobals)
+                                FileHelper.createHtml(componentDir, prefixedComponentName, config.files.component.html),
+                                FileHelper.createCss(componentDir, prefixedComponentName, config.files.component.css),
+                                FileHelper.createComponentTest(componentDir, namespaceName, componentName, config.files.component.testFile, configGlobals)
                             );
                         }
                     )
