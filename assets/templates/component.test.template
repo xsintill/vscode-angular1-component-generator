@@ -12,6 +12,9 @@ describe("llq-{componentNameKebabCased}", () => {
         $componentController = _$componentController_;
         $rootScope = _$rootScope_;
         scope = $rootScope.$new();
+
+        component = $componentController<{namespace}.{className}Controller, {namespace}.I{className}ControllerBindings>(
+            {namespace}.{className}Controller.componentName, { $scope: scope }, {});    
     }));
 
     describe("componentName", () => {
