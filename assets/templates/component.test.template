@@ -1,6 +1,6 @@
 describe("llq-{componentNameKebabCased}", () => {
     let component: {namespace}.{className}Controller;
-    let $componentController: ng.IComponentController;
+    let $componentController: ng.IComponentControllerService;
     let scope: ng.IScope;
 
     beforeEach(angular.mock.module({appname}));
