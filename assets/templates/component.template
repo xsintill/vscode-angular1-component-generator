@@ -21,6 +21,11 @@ namespace {namespace} {
             /*put your code here*/           
         }
     }
+
+    export interface I{className}ControllerBindings {
+
+    }
+
     angular.module({appname}).component({className}Controller.componentName, {
         controller: {className}Controller,
         templateUrl: TEMPLATE_PATH_{componentNameConstantCased},
