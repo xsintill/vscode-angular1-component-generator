@@ -6,7 +6,7 @@ describe("llq-{componentNameKebabCased}", () => {
     beforeEach(angular.mock.module({appname}));
 
     beforeEach(inject((
-        _$componentController_: ng.IComponentController,
+        _$componentController_: ng.IComponentControllerService,
         _$rootScope_: ng.IRootScopeService
         ) => {
         $componentController = _$componentController_;
