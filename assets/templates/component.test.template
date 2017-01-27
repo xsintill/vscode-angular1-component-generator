@@ -1,7 +1,7 @@
 describe("llq-{componentNameKebabCased}", () => {
     let $componentController: ng.IComponentControllerService;
     let $rootScope: ng.IRootScopeService;
-    
+
     let component: {namespace}.{className}Controller;
     let scope: ng.IScope;
 
@@ -25,4 +25,4 @@ describe("llq-{componentNameKebabCased}", () => {
             expect(result).toBe("llq{className}");
         });
     });
-})
+});
