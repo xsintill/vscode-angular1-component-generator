@@ -42,32 +42,46 @@ Use the "template" key to override default templates for the extension
         "filter": {
             "create": true,
             "extension": "ts",
-            "createTestFile": true
+            "testFile": {
+                "create": true,
+                "extension": ".test"
+            }
         },
         "directive": {
             "create": true,
             "extension": "ts",
-            "createTestFile": true
+            "testFile": {
+                "create": true,
+                "extension": ".test"
+            }
         },        
         "configRoute": {
             "create": true,
             "extension": "ts",
-            "createTestFile": true
+            "testFile": {
+                "create": true,
+                "extension": ".test"
+            }
         },
         "controller": {
             "create": true,
             "extension": "ts",
-            "createTestFile": true
+            "testFile": {
+                "create": true,
+                "extension": ".test"
+            }
         },
         "service": {
             "create": true,
             "extension": "ts",
-            "createTestFile": true
+            "testFile": {
+                "create": true,
+                "extension": ".test"
+            }
         },
         "component": {
             "create": true,
-            "extension": "ts",
-            "createTestFile": true,
+            "extension": "ts",            
             "css": {
                 "create": true,
                 "extension": "scss"
@@ -79,11 +93,16 @@ Use the "template" key to override default templates for the extension
             "module": {
                 "create": true,
                 "extension": "ts"
+            },
+            "testFile": {
+                "create": true,
+                "extension": ".test"
             }
         },
         "module": {
             "create": true,
             "extension": "ts"
+            
         }
 }
 }
