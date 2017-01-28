@@ -1,7 +1,7 @@
 # Angular 1 File Generation Extension for VS Code
 
 ## Description
-Extension let's you create the following angular files:
+Extension lets you create the following angular files:
 - `Components`
 - `Directives`
 - `Services`
