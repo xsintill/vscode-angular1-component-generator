@@ -9,7 +9,10 @@
         ],
         "sourceMap": true,
         "rootDir": ".",
-        "alwaysStrict": true
+        "alwaysStrict": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ]
     },
     "exclude": [
         "node_modules",

@@ -1,8 +1,10 @@
+import { _do } from 'rxjs/operator/do';
 import * as vscode from "vscode";
 import * as fse from "fs-extra";
 import * as fs from "fs";
 import * as path from "path";
 import * as changeCase from "change-case";
+import * as _ from "lodash";
 import { Observable } from "rxjs";
 import { Config } from "./config.interface";
 
@@ -238,11 +240,15 @@ export class FileHelper {
         return result;
     }
     public static resolveTestPath(path: string, configGlobals: Config) {        
-        let result = path.replace(
-           `${vscode.workspace.rootPath}\\`, 
-           `${vscode.workspace.rootPath}\\${configGlobals.globals.test.path}\\`
-           );
-        return result;
+        if (_.startsWith(path, `${vscode.workspace.rootPath}\\${configGlobals.globals.test.path}\\`) ) {
+            return path;
+        } else {
+            let result = path.replace(
+                `${vscode.workspace.rootPath}\\`, 
+                `${vscode.workspace.rootPath}\\${configGlobals.globals.test.path}\\`
+            );
+            return result;
+        }
     }
 
     public static resolveWorkspaceRoot(path: string): string {
