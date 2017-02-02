@@ -189,7 +189,7 @@ export class FileHelper {
         let cssContent = fs.readFileSync( templateFileName ).toString();
 
 
-        let filename = `${componentDir}/${componentName}.component.${config.extension}`; 
+        let filename = `${componentDir}/${componentName}.${config.extension}`; 
         if (config.create) {
             return this.createFile(filename, cssContent)
                 .map(result => filename);
