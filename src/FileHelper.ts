@@ -171,7 +171,7 @@ export class FileHelper {
 
         let htmlContent = fs.readFileSync( templateFileName ).toString();
 
-        let filename = `${componentDir}/${componentName}.component.${config.extension}`; 
+        let filename = `${componentDir}/${componentName}.template.${config.extension}`; 
         if (config.create) {
             return this.createFile(filename, htmlContent)
                 .map(result => filename);
