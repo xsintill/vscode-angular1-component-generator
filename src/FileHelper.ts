@@ -239,13 +239,19 @@ export class FileHelper {
         }
         return result;
     }
-    public static resolveTestPath(path: string, configGlobals: Config) {        
-        if (_.startsWith(path, `${vscode.workspace.rootPath}\\${configGlobals.globals.test.path}\\`) ) {
+    public static resolveTestPath(path: string, configGlobals: Config) { 
+        let testFolder = "tests";
+        if (configGlobals.globals) {
+            if (configGlobals.globals.test) {
+                testFolder = (configGlobals.globals.test.path) ? configGlobals.globals.test.path : "tests";       
+            }
+        }
+        if (_.startsWith(path, `${vscode.workspace.rootPath}\\${testFolder}\\`) ) {
             return path;
         } else {
             let result = path.replace(
                 `${vscode.workspace.rootPath}\\`, 
-                `${vscode.workspace.rootPath}\\${configGlobals.globals.test.path}\\`
+                `${vscode.workspace.rootPath}\\${testFolder}\\`
             );
             return result;
         }
