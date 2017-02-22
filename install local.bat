@@ -1,2 +1,2 @@
-xcopy /s . %USERPROFILE%\.vscode\extensions\angular-file-generator\
+xcopy /s /Y . %USERPROFILE%\.vscode\extensions\angular-file-generator\ /EXCLUDE:exclude.txt
 
