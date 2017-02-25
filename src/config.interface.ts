@@ -9,6 +9,7 @@ export interface Config extends WorkspaceConfiguration {
             testFile: {
                 create: boolean,
                 extension: string,
+                alongSide: boolean,
                 template?: string
             }
         },
@@ -19,7 +20,9 @@ export interface Config extends WorkspaceConfiguration {
             testFile: {
                 create: boolean,
                 extension: string,
+                alongSide: boolean,
                 template?: string
+
             }
         },
         directive: {
@@ -29,6 +32,7 @@ export interface Config extends WorkspaceConfiguration {
             testFile: {
                 create: boolean,
                 extension: string,
+                alongSide: boolean,
                 template?: string
             },
         },
@@ -39,6 +43,7 @@ export interface Config extends WorkspaceConfiguration {
             testFile: {
                 create: boolean,
                 extension: string,
+                alongSide: boolean,
                 template?: string
             },
         },
@@ -49,6 +54,7 @@ export interface Config extends WorkspaceConfiguration {
             testFile: {
                 create: boolean,
                 extension: string,
+                alongSide: boolean,
                 template?: string
             },
         },
@@ -59,6 +65,7 @@ export interface Config extends WorkspaceConfiguration {
             testFile: {
                 create: boolean,
                 extension: string,
+                alongSide: boolean,
                 template?: string
             },
             css: {

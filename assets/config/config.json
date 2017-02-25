@@ -5,7 +5,8 @@
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": "ts"                
+                "extension": "ts",
+                "alongSide": false                
             }
         },
         "directive": {
@@ -13,7 +14,8 @@
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": "ts"                
+                "extension": "ts",
+                "alongSide": false                
             }
         },
         "configRoute": {
@@ -21,7 +23,8 @@
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": "ts"                
+                "extension": "ts",
+                "alongSide": false            
             }
         },
         "controller": {
@@ -29,7 +32,8 @@
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": "ts"                
+                "extension": "ts",
+                "alongSide": false                
             }
         },
         "service": {
@@ -37,7 +41,8 @@
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": "ts"                
+                "extension": "ts",
+                "alongSide": false                
             }
         },
         "component": {
@@ -45,7 +50,8 @@
             "extension": "ts",            
             "testFile": {
                 "create": true,
-                "extension": "ts"                
+                "extension": "ts",
+                "alongSide": false                
             },
             "css": {
                 "create": true,

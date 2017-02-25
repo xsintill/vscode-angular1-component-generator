@@ -48,7 +48,16 @@ export class FileHelper {
         }
 
         if  (configGlobals.globals.test) {
-            let testDir = this.resolveTestPath(componentDir, configGlobals);
+            let testDir: string;
+            if (configGlobals && 
+                configGlobals.files && 
+                configGlobals.files.component && 
+                configGlobals.files.component.testFile && 
+                configGlobals.files.component.testFile.alongSide) {
+                testDir = componentDir;
+            } else {
+                testDir = this.resolveTestPath(componentDir, configGlobals);
+            }
             let componentContent = fs.readFileSync( templateFileName ).toString() 
                 .replace(/{appname}/g, configGlobals.globals.applicationName) 
                 .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
@@ -104,7 +113,17 @@ export class FileHelper {
                 .replace(/{serviceNameCamelCased}/g, changeCase.camelCase(serviceName))
                 .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
 
-            let testDir = this.resolveTestPath(serviceDir, config);
+            let testDir: string;
+             if (configGlobals && 
+                configGlobals.files && 
+                configGlobals.files.service && 
+                configGlobals.files.service.testFile && 
+                configGlobals.files.service.testFile.alongSide) {
+                testDir = serviceDir;
+            } else {
+                testDir = this.resolveTestPath(serviceDir, config);
+            }    
+            
             let filename = `${testDir}/${serviceName}.service${FileHelper.getTestPostfix(configGlobals)}.${config.extension}`;
 
             if (config.create) {
