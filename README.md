@@ -11,10 +11,16 @@ Command "New component" creates the following files:
 - [path]/[component name]/`component-name.component.ts`
 - [path]/[component name]/`component-name.template.html`
 - [path]/[component name]/`component-name.css`
-- [test folder]/[path]/[component name]/`component-name.test.ts`
+- [path]/[component name]/`component-name.test.ts`  
+or if not configured alongside
+- [test folder]/[path]/[component name]/`component-name.test.ts` 
+
 
 Command "New service" creates the following file:
 - [path]/`service-name.service.ts`
+- [path]/`service-name.test.ts`  
+or if not configured alongside
+- [test folder]/[path]/`service-name.test.ts` 
 
 Command "New directive" creates the following file:
 - [path]/`directive-name.directive.ts`
@@ -38,18 +44,20 @@ Command "New test" creates the following file:
 - template - path to the custom template for the generated file
 - testFile - configuration object with the following properties
     - create - true / false - (controls whether to generate the test file belonging to the general file type configuration it is placed under)
+    - alongSide - true / false - determines whether to place the testfile in same directory as the file the tesfile will test or put the testfile in a special test dir
 
 Use the "template" key to override default templates for the extension
 
 ```json
 {
-    "files": {
+     "files": {
         "filter": {
             "create": true,
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": ".test"
+                "extension": "ts",
+                "alongSide": false                
             }
         },
         "directive": {
@@ -57,15 +65,17 @@ Use the "template" key to override default templates for the extension
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": ".test"
+                "extension": "ts",
+                "alongSide": false                
             }
-        },        
+        },
         "configRoute": {
             "create": true,
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": ".test"
+                "extension": "ts",
+                "alongSide": false            
             }
         },
         "controller": {
@@ -73,7 +83,8 @@ Use the "template" key to override default templates for the extension
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": ".test"
+                "extension": "ts",
+                "alongSide": false                
             }
         },
         "service": {
@@ -81,12 +92,18 @@ Use the "template" key to override default templates for the extension
             "extension": "ts",
             "testFile": {
                 "create": true,
-                "extension": ".test"
+                "extension": "ts",
+                "alongSide": false                
             }
         },
         "component": {
             "create": true,
             "extension": "ts",            
+            "testFile": {
+                "create": true,
+                "extension": "ts",
+                "alongSide": false                
+            },
             "css": {
                 "create": true,
                 "extension": "scss"
@@ -98,18 +115,22 @@ Use the "template" key to override default templates for the extension
             "module": {
                 "create": true,
                 "extension": "ts"
-            },
-            "testFile": {
-                "create": true,
-                "extension": ".test"
             }
         },
         "module": {
             "create": true,
             "extension": "ts"
-            
         }
-}
+    },
+    "globals": {
+        "applicationName": "",
+        "prefix": "",
+        "sharedConstant": "",
+        "srcConstant": "",
+        "test": {
+            "path": ""
+        }
+    }
 }
 ```
 ![Config Extension](assets/tutorial/customTemplate.gif)
