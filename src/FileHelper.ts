@@ -76,6 +76,42 @@ export class FileHelper {
         }
         
     };
+    public static createControllerTest(controllerDir: string, namespaceName: string, controllerName: string, config: any, configGlobals: Config): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/controller.test.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        if  (configGlobals.globals.test) {
+            let testDir: string;
+            if (configGlobals && 
+                configGlobals.files && 
+                configGlobals.files.controller && 
+                configGlobals.files.controller.testFile && 
+                configGlobals.files.controller.testFile.alongSide) {
+                testDir = controllerDir;
+            } else {
+                testDir = this.resolveTestPath(controllerDir, configGlobals);
+            }
+            let controllerContent = fs.readFileSync( templateFileName ).toString() 
+                .replace(/{appname}/g, configGlobals.globals.applicationName) 
+                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+                .replace(/{className}/g, changeCase.pascalCase(controllerName))
+                .replace(/{controllerNameConstantCased}/g, changeCase.constantCase(controllerName));
+            
+            let strippedoOfController = controllerName.replace(/-controller$/g, "");
+            let filename = `${testDir}/${strippedoOfController}.controller${FileHelper.getTestPostfix(configGlobals)}.${config.extension}`;
+            if (config.create) {
+                return this.createFile(filename, controllerContent)
+                    .map(result => filename);
+            } else {
+                return Observable.of("");
+            }
+        } else {
+            return Observable.of("");
+        }
+        
+    };
 
     public static createService(serviceDir: string, namespaceName: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
         if (config.create) {

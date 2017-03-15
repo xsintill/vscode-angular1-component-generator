@@ -1,0 +1,37 @@
+describe("{className}", () => {
+    let $controller: ng.IControllerService;
+    let $httpBackend: ng.IHttpBackendService;
+    let controller: {namespace}.{className};
+    let newScope: any;
+    let $rootScope: ng.IRootScopeService;
+    let $q: ng.IQService;
+    let $stateParams: any;
+    let $state: ng.ui.IStateService;
+
+    beforeEach(angular.mock.module({appname}));
+
+    beforeEach(inject((
+        _$controller_: ng.IControllerService,
+        _$httpBackend_: ng.IHttpBackendService,
+        _$rootScope_: ng.IRootScopeService,
+        _$q_: ng.IQService,
+        _$stateParams_: ng.ui.IStateParamsService,
+        _$state_: ng.ui.IStateService
+        ) => {
+        $controller = _$controller_;
+        $httpBackend = _$httpBackend_;
+        $rootScope = _$rootScope_;
+        newScope = _$rootScope_.$new;
+        $state = _$state_;
+        $q = _$q_;
+        $stateParams = _$stateParams_;
+
+       controller = $controller<{namespace}.{className}>({namespace}.{controllerNameConstantCased}_NAME, { $scope: newScope });
+    }));
+
+    describe("", () => {
+        it("should ", () => {
+            
+        });
+    });
+});

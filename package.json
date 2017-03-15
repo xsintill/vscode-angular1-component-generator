@@ -52,6 +52,7 @@
     "onCommand:extension.genAngular1FilterFiles",
     "onCommand:extension.genAngular1ConfigRouteFiles",
     "onCommand:extension.genAngular1TestFiles",
+    "onCommand:extension.genAngular1ControllerTestFiles",
     "onCommand:extension.genAngular1ControllerFiles",
     "onCommand:extension.genAngular1ServiceFiles"
   ],
@@ -408,6 +409,10 @@
         "title": "New Test"
       },
       {
+        "command": "extension.genAngular1ControllerTestFiles",
+        "title": "New Controller Test"
+      },
+      {
         "command": "extension.genAngular1ServiceFiles",
         "title": "New Service"
       }
@@ -436,6 +441,10 @@
         },
         {
           "command": "extension.genAngular1TestFiles",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.genAngular1ControllerTestFiles",
           "group": "navigation"
         },
         {

@@ -61,11 +61,65 @@ export function activate(context: vscode.ExtensionContext) {
                 };
             })
             .subscribe(
-                () => vscode.window.setStatusBarMessage("Component Tesfile Successfuly created!"),
+                () => vscode.window.setStatusBarMessage("Component Testfile Successfuly created!"),
                 err => vscode.window.showErrorMessage(err.message)
             );
         });                
     });
+
+    let controllerTestDisposable = vscode.commands.registerCommand("extension.genAngular1ControllerTestFiles", (uri) => {
+        let _workspace = vscode.workspace;
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        
+        let configGlobals =  <Config>_workspace.getConfiguration(configPrefix);
+
+        if (!config.files) {
+            config = FileHelper.getConfig();
+        }
+
+        vscode.window.showInputBox({prompt: "Please enter name for the namespace."}).then(
+            (namspaceValue: string) => {                
+                if (namspaceValue.length === 0) {
+                    throw new Error("namespace name can not be empty!");
+                }
+
+                let enterNamespaceNameDialog$ = Observable.from(vscode.window.showInputBox({prompt: "Please enter name for the controller."})); 
+        enterNamespaceNameDialog$            
+            .concatMap( testFilenameValue => {                
+                if (testFilenameValue.length === 0) {
+                    throw new Error("Controller name can not be empty!");
+                }
+
+                let namespaceName = changeCase.paramCase(namspaceValue);
+                let testFilename = changeCase.paramCase(testFilenameValue);
+                let testFileDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
+                return Observable.forkJoin(
+                    FileHelper.createControllerTest(testFileDir, namespaceName, testFilename, config.files.controller.testFile, configGlobals)
+                );
+            })
+            .concatMap(result => {                       
+                return Observable.from(result);
+            })
+            .filter(path => path.length > 0)
+            .first()
+            .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+            .concatMap(textDocument => {
+                if (!textDocument) {
+                    throw new Error("Could not open file!");
+                };
+                return Observable.from(vscode.window.showTextDocument(textDocument));
+            })
+            .do(editor => {
+                if (!editor) {
+                    throw new Error("Could not open file!");
+                };
+            })
+            .subscribe(
+                () => vscode.window.setStatusBarMessage("Controller Testfile Successfuly created!"),
+                err => vscode.window.showErrorMessage(err.message)
+            );
+        });                
+    });
+
     let serviceDisposable = vscode.commands.registerCommand("extension.genAngular1ServiceFiles", (uri) => {
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        
