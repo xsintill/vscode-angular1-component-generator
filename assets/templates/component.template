@@ -1,23 +1,24 @@
-namespace {namespace} {    
-    export const TEMPLATE_PATH_{componentNameConstantCased}: string = {currentpath}/llq-{componentNameKebabCased}.template.html";
+namespace {namespace} {
+    export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/llq-{componentNameKebabCased}.template.html";
 
     /**
      *   Controller for component llq-{componentNameKebabCased}
      */
-    export class {className}Controller {        
+    export class {className}Controller {
         /**
          * Field with value used for registering the component llq-{componentNameKebabCased}
          */
-        public static componentName: string = "llq{className}";
+        public static componentName = "llq{className}";
 
         public static $inject: string[] = [
-
+            /*put your injectables here*/  
         ];
 
         constructor() {
+            /*put your code here*/  
         }
 
-        public $onInit(): void { 
+        public $onInit(): void {
             /*put your code here*/           
         }
     }
@@ -30,7 +31,7 @@ namespace {namespace} {
         controller: {className}Controller,
         templateUrl: TEMPLATE_PATH_{componentNameConstantCased},
         bindings: {
-
+            
         }
     });
 }
