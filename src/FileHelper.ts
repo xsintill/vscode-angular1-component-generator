@@ -287,10 +287,10 @@ export class FileHelper {
     public static resolveToRelativePathWithReplacedConstants(path: string, config: Config) {
         let result = this.resolveToRelativePath(path);
         if (config.globals.sharedConstant) {
-            result = result.replace("app\\shared", config.globals.sharedConstant);
+            result = result.replace("app\\shared\\", config.globals.sharedConstant+"/");
         }
         if (config.globals.srcConstant) {
-            result = result.replace("app\\areas", config.globals.srcConstant);
+            result = result.replace("app\\areas\\", config.globals.srcConstant+"/");
         }
         return result;
     }
