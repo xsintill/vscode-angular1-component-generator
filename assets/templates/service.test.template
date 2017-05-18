@@ -12,7 +12,7 @@ describe("{serviceName}", () => {
         {serviceNameCamelCased} = $injector.get<{namespace}.{serviceName}Service>({namespace}.{serviceNameConstantCase}_SERVICE_NAME);
     }));
 
-    describe("", () => { 
+    describe("", () => {
         it("should ", () => {
 
         })
