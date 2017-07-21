@@ -3,7 +3,7 @@ namespace {namespace} {
     export const {serviceNameConstantCase}_SERVICE_NAME: string = "{serviceName}Service";
 
    /**
-    *   Controller for service {serviceName}
+    *   Class for service {serviceName}
     */
     export class {serviceName}Service {
         public static $inject: string[] = [
