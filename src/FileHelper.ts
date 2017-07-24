@@ -174,6 +174,29 @@ export class FileHelper {
         
        
     };
+    public static createConfigRoute(ConfigRouteDir: string, namespaceName: string, configRouteName: string, config: any, configGlobals: Config): Observable<string> {
+        if (config.create) {
+            let templateFileName = this.assetRootDir + "/templates/config.route.template";
+            if (config.template) {
+                templateFileName = this.resolveWorkspaceRoot(config.template);
+            }   
+
+            let serviceContent = fs.readFileSync( templateFileName ).toString()
+                .replace(/{appname}/g, configGlobals.globals.applicationName)
+                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+                .replace(/{configRouteName}/g, changeCase.constantCase(configRouteName))
+                .replace(/{configRouteNameKebabCased}/g, changeCase.paramCase(configRouteName))
+                .replace(/{configRouteNameConstantCased}/g, changeCase.constantCase(configRouteName));
+            
+            //let relativeDir = this.resolveToRelativePath(serviceDir);
+            let filename = `${ConfigRouteDir}/${changeCase.lowerCase(configRouteName)}.config.route.${config.extension}`;
+            
+            return this.createFile(filename, serviceContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
     public static createDirective(directiveDir: string, namespaceName: string, directiveName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/directive.template";
         if (config.template) {

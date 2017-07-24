@@ -6,6 +6,7 @@ Extension lets you create the following angular files:
 - `Directives`
 - `Services`
 - `Tests`
+- `Config routes`
 
 Command "New component" creates the following files: 
 - [path]/[component name]/`component-name.component.ts`
@@ -28,12 +29,16 @@ Command "New directive" creates the following file:
 Command "New test" creates the following file:
 - [test folder]/[path]/`test-name.test.ts`
 
+Command "New config route" creates the following file:
+- [path]/`config-route-name.config.route.ts`
+
+
 ## Usage
 
 - Right click on the file or folder in the explorer
-- Select "New Component", "New service", "New test" or "New directive" 
+- Select "New Component", "New service", "New test", "New directive" or "New config route" 
 - Enter namespace name in the pop up in camelCase
-- Enter the name for the component, service, test or directive in the pop up in camelCase 
+- Enter the name for the component, service, test, directive or config route in the pop up in camelCase 
 
 
 ![Use Extension](assets/tutorial/createComponent.gif)
@@ -57,7 +62,7 @@ Use the "template" key to override default templates for the extension
             "testFile": {
                 "create": true,
                 "extension": "ts",
-                "alongSide": false                
+                "alongSide": false
             }
         },
         "directive": {
@@ -66,16 +71,16 @@ Use the "template" key to override default templates for the extension
             "testFile": {
                 "create": true,
                 "extension": "ts",
-                "alongSide": false                
+                "alongSide": false
             }
         },
         "configRoute": {
             "create": true,
             "extension": "ts",
             "testFile": {
-                "create": true,
+                "create": false,
                 "extension": "ts",
-                "alongSide": false            
+                "alongSide": false
             }
         },
         "controller": {
@@ -84,7 +89,7 @@ Use the "template" key to override default templates for the extension
             "testFile": {
                 "create": true,
                 "extension": "ts",
-                "alongSide": false                
+                "alongSide": false
             }
         },
         "service": {
@@ -93,16 +98,16 @@ Use the "template" key to override default templates for the extension
             "testFile": {
                 "create": true,
                 "extension": "ts",
-                "alongSide": false                
+                "alongSide": false
             }
         },
         "component": {
             "create": true,
-            "extension": "ts",            
+            "extension": "ts",
             "testFile": {
                 "create": true,
                 "extension": "ts",
-                "alongSide": false                
+                "alongSide": false
             },
             "css": {
                 "create": true,

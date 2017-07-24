@@ -1,0 +1,12 @@
+namespace  {namespace} {
+    export const STATE_{configRouteNameConstantCased}: string = "";
+
+    angular.module({appname})
+        .config(["$stateProvider", ($stateProvider: ng.ui.IStateProvider) => {
+            $stateProvider
+                .state(STATE_{configRouteNameConstantCased}, {
+                    url: "/{configRouteNameKebabCased}",
+                    template: ``
+                });
+        }]);
+}

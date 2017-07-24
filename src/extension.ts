@@ -174,6 +174,60 @@ export function activate(context: vscode.ExtensionContext) {
                     );
         });                
     });
+    let configRouteDisposable = vscode.commands.registerCommand("extension.genAngular1ConfigRouteFiles", (uri) => {
+        let _workspace = vscode.workspace;
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        
+        let configGlobals =  <Config>_workspace.getConfiguration(configPrefix);
+
+        if (!config.files) {
+            config = FileHelper.getConfig();
+        }
+
+        vscode.window.showInputBox({prompt: "Please enter name for the namespace."}).then(
+            (namspaceValue: string) => {                
+                if (namspaceValue.length === 0) {
+                    throw new Error("namespace name can not be empty!");
+                }
+
+                //Display a namespace dialog to the user
+                let enterConfigRouteNameDialog$ = Observable.from(vscode.window.showInputBox({prompt: "Please enter name for the config route."})); 
+                enterConfigRouteNameDialog$            
+                    .concatMap( configRouteNameValue => {                
+                        if (configRouteNameValue.length === 0) {
+                            throw new Error("Config route name can not be empty!");
+                        }
+
+                        let namespaceName = changeCase.paramCase(namspaceValue);
+                        let configRouteName = changeCase.paramCase(configRouteNameValue);
+                        let configRouteNameConstantCased = changeCase.constantCase(configRouteNameValue);
+                        let configRouteDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
+                        return Observable.forkJoin(
+                            FileHelper.createConfigRoute(configRouteDir, namespaceName, configRouteNameConstantCased, config.files.configRoute, configGlobals)
+                        );
+                    })
+                    .concatMap(result => {                       
+                        return Observable.from(result);
+                    })
+                    .filter(path => path.length > 0)
+                    .first()
+                    .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+                    .concatMap(textDocument => {
+                        if (!textDocument) {
+                            throw new Error("Could not open file!");
+                        };
+                        return Observable.from(vscode.window.showTextDocument(textDocument));
+                    })
+                    .do(editor => {
+                        if (!editor) {
+                            throw new Error("Could not open file!");
+                        };
+                    })
+                    .subscribe(
+                        () => vscode.window.setStatusBarMessage("Config route Successfully created!"),
+                        err => vscode.window.showErrorMessage(err.message)
+                    );
+        });                
+    });
     let directiveDisposable = vscode.commands.registerCommand("extension.genAngular1DirectiveFiles", (uri) => {
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
