@@ -10,8 +10,8 @@
   },
   "homepage": "https://github.com/xsintill/vscode-angular1-file-generator",
   "galleryBanner": {
-      "color": "#0273D4",
-      "theme": "dark"
+    "color": "#0273D4",
+    "theme": "dark"
   },
   "repository": {
     "type": "git",
@@ -60,14 +60,14 @@
   "icon": "assets/images/icon.png",
   "contributes": {
     "configuration": {
-      "type": "object",  
+      "type": "object",
       "title": "angular 1 files generator",
       "properties": {
-        "ng1FilesGenerator.files":{
+        "ng1FilesGenerator.files": {
           "type": "object",
           "title": "Configuration object for all the different generatable files",
           "properties": {
-            "filter":{
+            "filter": {
               "type": "object",
               "description": "Configure how filters should be generated",
               "properties": {
@@ -77,37 +77,37 @@
                 },
                 "extension": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "template":{
+                "template": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "testFile":{
+                "testFile": {
                   "type": "object",
                   "title": "Configuration object for all the different generatable files",
                   "properties": {
-                     "create": {
-                       "type": "boolean",
-                       "description": "Should the testfile be created"
-                      },
-                      "extension": {
-                        "type": "string",
-                        "description": "what extension should the test file get" 
-                      },
-                      "template":{
-                        "type": "string",
-                        "description": "If you want to use your own template put the path to it in here" 
-                      },
-                      "alongSide":{
-                        "type": "boolean",
-                        "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section" 
-                      }
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the testfile be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "what extension should the test file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    },
+                    "alongSide": {
+                      "type": "boolean",
+                      "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section"
+                    }
                   }
-                }                
+                }
               }
             },
-            "controller":{
+            "controller": {
               "type": "object",
               "description": "Configure how controllers should be generated",
               "properties": {
@@ -117,37 +117,37 @@
                 },
                 "extension": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "template":{
+                "template": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "testFile":{
+                "testFile": {
                   "type": "object",
                   "title": "Configuration object for all the different generatable files",
                   "properties": {
-                     "create": {
-                       "type": "boolean",
-                       "description": "Should the testfile be created"
-                      },
-                      "extension": {
-                        "type": "string",
-                        "description": "what extension should the test file get" 
-                      },
-                      "template":{
-                        "type": "string",
-                        "description": "If you want to use your own template put the path to it in here" 
-                      },
-                      "alongSide":{
-                        "type": "boolean",
-                        "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section" 
-                      }
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the testfile be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "what extension should the test file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    },
+                    "alongSide": {
+                      "type": "boolean",
+                      "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section"
+                    }
                   }
-                }                
+                }
               }
             },
-            "directive":{
+            "directive": {
               "type": "object",
               "description": "Configure how directives should be generated",
               "properties": {
@@ -157,37 +157,37 @@
                 },
                 "extension": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "template":{
+                "template": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "testFile":{
+                "testFile": {
                   "type": "object",
                   "title": "Configuration object for all the different generatable files",
                   "properties": {
-                     "create": {
-                       "type": "boolean",
-                       "description": "Should the testfile be created"
-                      },
-                      "extension": {
-                        "type": "string",
-                        "description": "what extension should the test file get" 
-                      },
-                      "template":{
-                        "type": "string",
-                        "description": "If you want to use your own template put the path to it in here" 
-                      },
-                      "alongSide":{
-                        "type": "boolean",
-                        "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section" 
-                      }
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the testfile be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "what extension should the test file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    },
+                    "alongSide": {
+                      "type": "boolean",
+                      "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section"
+                    }
                   }
-                }                
+                }
               }
             },
-            "configRoute":{
+            "configRoute": {
               "type": "object",
               "description": "Configure how configRoute files should be generated",
               "properties": {
@@ -197,37 +197,37 @@
                 },
                 "extension": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "template":{
+                "template": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "testFile":{
+                "testFile": {
                   "type": "object",
                   "title": "Configuration object for all the different generatable files",
                   "properties": {
-                     "create": {
-                       "type": "boolean",
-                       "description": "Should the testfile be created"
-                      },
-                      "extension": {
-                        "type": "string",
-                        "description": "what extension should the test file get" 
-                      },
-                      "template":{
-                        "type": "string",
-                        "description": "If you want to use your own template put the path to it in here" 
-                      },
-                      "alongSide":{
-                        "type": "boolean",
-                        "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section" 
-                      }
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the testfile be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "what extension should the test file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    },
+                    "alongSide": {
+                      "type": "boolean",
+                      "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section"
+                    }
                   }
-                }                
+                }
               }
             },
-            "service":{
+            "service": {
               "type": "object",
               "description": "Configure how services should be generated",
               "properties": {
@@ -237,37 +237,37 @@
                 },
                 "extension": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "template":{
+                "template": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "testFile":{
+                "testFile": {
                   "type": "object",
                   "title": "Configuration object for all the different generatable files",
                   "properties": {
-                     "create": {
-                       "type": "boolean",
-                       "description": "Should the testfile be created"
-                      },
-                      "extension": {
-                        "type": "string",
-                        "description": "what extension should the test file get" 
-                      },
-                      "template":{
-                        "type": "string",
-                        "description": "If you want to use your own template put the path to it in here" 
-                      },
-                      "alongSide":{
-                        "type": "boolean",
-                        "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section" 
-                      }
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the testfile be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "what extension should the test file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    },
+                    "alongSide": {
+                      "type": "boolean",
+                      "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section"
+                    }
                   }
-                }                
+                }
               }
             },
-            "component":{
+            "component": {
               "type": "object",
               "description": "Configure how components should be generated",
               "properties": {
@@ -277,75 +277,75 @@
                 },
                 "extension": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "template":{
+                "template": {
                   "type": "string",
-                  "description": "what extension should this file get" 
+                  "description": "what extension should this file get"
                 },
-                "testFile":{
+                "testFile": {
                   "type": "object",
                   "title": "Configuration object for all the different generatable files",
                   "properties": {
-                     "create": {
-                       "type": "boolean",
-                       "description": "Should the testfile be created"
-                      },
-                      "extension": {
-                        "type": "string",
-                        "description": "what extension should the test file get" 
-                      },
-                      "template":{
-                        "type": "string",
-                        "description": "If you want to use your own template put the path to it in here" 
-                      },
-                      "alongSide":{
-                        "type": "boolean",
-                        "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section" 
-                      }
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the testfile be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "what extension should the test file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    },
+                    "alongSide": {
+                      "type": "boolean",
+                      "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section"
+                    }
                   }
-                },  
-                "css":{
+                },
+                "css": {
                   "type": "object",
                   "title": "Configuration object for the style file to be generated alongside the component",
                   "properties": {
-                     "create": {
-                       "type": "boolean",
-                       "description": "Should the style file be created"
-                      },
-                      "extension": {
-                        "type": "string",
-                        "description": "What extension should the style file get" 
-                      },
-                      "template":{
-                        "type": "string",
-                        "description": "If you want to use your own template put the path to it in here" 
-                      }                      
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the style file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the style file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
                   }
                 },
-                "html":{
+                "html": {
                   "type": "object",
                   "title": "Configuration object for the html template file to be generated alongside the component",
                   "properties": {
-                     "create": {
-                       "type": "boolean",
-                       "description": "Should the html template file be created"
-                      },
-                      "extension": {
-                        "type": "string",
-                        "description": "What extension should the html template get" 
-                      },
-                      "template":{
-                        "type": "string",
-                        "description": "If you want to use your own template put the path to it in here" 
-                      }                      
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the html template file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the html template get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
                   }
                 }
               }
             }
           }
         },
-        "ng1FilesGenerator.globals":{
+        "ng1FilesGenerator.globals": {
           "type": "object",
           "description": "Configuration object for global settings for extension angular 1 files generator",
           "properties": {
@@ -373,14 +373,14 @@
             },
             "sharedConstant": {
               "type": "string",
-              "description": "Replace the shared path in template path constants for this constant"  
+              "description": "Replace the shared path in template path constants for this constant"
             },
             "srcConstant": {
               "type": "string",
-              "description": "Replace the src path in template path constants for this constant"  
+              "description": "Replace the src path in template path constants for this constant"
             }
           }
-        }       
+        }
       }
     },
     "commands": [
@@ -460,16 +460,18 @@
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "devDependencies": {
-    "typescript": "^2.1.4",
-    "vscode": "^1.0.0",
-    "mocha": "^2.3.3",
+    "@types/lodash": "^4.14.110",
+    "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.40",
-    "@types/mocha": "^2.2.32"
+    "mocha": "^2.3.3",
+    "typescript": "^2.9.1",
+    "vscode": "^1.1.18"
   },
   "dependencies": {
-    "change-case": "^3.0.0",
+    "change-case": "^3.0.2",
     "fs": "0.0.1-security",
     "fs-extra": "^0.30.0",
-    "rxjs": "^5.0.0-rc.1"
+    "lodash": "^4.17.10",
+    "rxjs": "^5.5.11"
   }
 }

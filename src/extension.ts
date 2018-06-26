@@ -1,4 +1,3 @@
-import { ObservableInput } from "rxjs/Observable";
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
@@ -130,8 +129,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         vscode.window.showInputBox({prompt: "Please enter name for the namespace."}).then(
-            (namspaceValue: string) => {                
-                if (namspaceValue.length === 0) {
+            (namespaceValue: string) => {                
+                if (namespaceValue.length === 0) {
                     throw new Error("namespace name can not be empty!");
                 }
 
@@ -143,7 +142,7 @@ export function activate(context: vscode.ExtensionContext) {
                             throw new Error("Service name can not be empty!");
                         }
 
-                        let namespaceName = changeCase.paramCase(namspaceValue);
+                        let namespaceName = changeCase.paramCase(namespaceValue);
                         let serviceName = changeCase.paramCase(serviceNameValue);
                         let serviceDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
