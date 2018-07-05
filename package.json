@@ -53,7 +53,7 @@
     "onCommand:extension.genAngular1ConfigRouteFiles",
     "onCommand:extension.genAngular1TestFiles",
     "onCommand:extension.genAngular1ControllerTestFiles",
-    "onCommand:extension.genAngular1ControllerFiles",
+    "onCommand:extension.genAngular1DialogControllerFiles",
     "onCommand:extension.genAngular1ServiceFiles",
     "onCommand:extension.genAngular1ProviderFiles"
   ],
@@ -110,7 +110,7 @@
             },
             "controller": {
               "type": "object",
-              "description": "Configure how controllers should be generated",
+              "description": "Configure how dialog controllers should be generated",
               "properties": {
                 "create": {
                   "type": "boolean",
@@ -394,8 +394,8 @@
         "title": "New Directive"
       },
       {
-        "command": "extension.genAngular1ControllerFiles",
-        "title": "New Controller"
+        "command": "extension.genAngular1DialogControllerFiles",
+        "title": "New Dialog Controller"
       },
       {
         "command": "extension.genAngular1FilterFiles",
@@ -433,7 +433,7 @@
           "group": "navigation"
         },
         {
-          "command": "extension.genAngular1ControllerFiles",
+          "command": "extension.genAngular1DialogControllerFiles",
           "group": "navigation"
         },
         {

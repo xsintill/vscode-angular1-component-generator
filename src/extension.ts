@@ -119,6 +119,63 @@ export function activate(context: vscode.ExtensionContext) {
         });                
     });
 
+    let controllerDisposable = vscode.commands.registerCommand("extension.genAngular1DialogControllerFiles", (uri) => {
+        let _workspace = vscode.workspace;
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        
+        let configGlobals =  <Config>_workspace.getConfiguration(configPrefix);
+
+        if (!config.files) {
+            config = FileHelper.getConfig();
+        }
+
+        vscode.window.showInputBox({prompt: "Please enter name for the namespace."}).then(
+            (namespaceValue: string) => {                
+                if (namespaceValue.length === 0) {
+                    throw new Error("namespace name can not be empty!");
+                }
+
+                //Display a namespace dialog to the user
+                let enterNamespaceNameDialog$ = Observable.from(vscode.window.showInputBox({prompt: "Please enter name for the dialog controller(leave out any dialog reference in the name)."})); 
+                enterNamespaceNameDialog$            
+                    .concatMap( controllerNameValue => {                
+                        if (controllerNameValue.length === 0) {
+                            throw new Error("Dialog controller name can not be empty!");
+                        }
+
+                        let namespaceName = changeCase.paramCase(namespaceValue);
+                        let controllerName = changeCase.paramCase(controllerNameValue);
+                        let controllerDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
+                        return Observable.forkJoin(
+                            FileHelper.createDialogController(controllerDir, namespaceName, controllerName, config.files.controller, configGlobals),
+                            FileHelper.createDialogTemplate(controllerDir, controllerName, config.files.controller),
+                            // FileHelper.createCss(controllerDir, controllerName, config.files.controller.css),
+                            FileHelper.createControllerTest(controllerDir, namespaceName, controllerName, config.files.controller.testFile, configGlobals)
+                        );
+                    })
+                    .concatMap(result => {                       
+                        return Observable.from(result);
+                    })
+                    .filter(path => path.length > 0)
+                    .first()
+                    .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+                    .concatMap(textDocument => {
+                        if (!textDocument) {
+                            throw new Error("Could not open file!");
+                        };
+                        return Observable.from(vscode.window.showTextDocument(textDocument));
+                    })
+                    .do(editor => {
+                        if (!editor) {
+                            throw new Error("Could not open file!");
+                        };
+                    })
+                    .subscribe(
+                        () => vscode.window.setStatusBarMessage("Controller Successfuly created!"),
+                        err => vscode.window.showErrorMessage(err.message)
+                    );
+        });                
+    });
+
     let providerDisposable = vscode.commands.registerCommand("extension.genAngular1ProviderFiles", (uri) => {
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        

@@ -1,0 +1,32 @@
+<md-dialog>
+    <form ng-cloak  
+          md-theme="default">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 translate=""></h2>
+                <span flex></span>
+                <md-button class="md-icon-button"
+                           ng-click="$ctrl.close()">
+                    <md-icon class="icon-current"
+                             md-svg-icon="x"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div class="animated fadeIn">
+
+                    
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout>
+            <md-button class="md-primary md-raised"
+                       ng-click="$ctrl.close()"
+                       translate="OK">
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -17,6 +17,11 @@ export interface Config extends WorkspaceConfiguration {
             create: boolean,
             extension: string,
             template?: string,
+            css: {
+                create: boolean,
+                extension: string,
+                template?: string
+            },
             testFile: {
                 create: boolean,
                 extension: string,

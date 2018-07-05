@@ -1,0 +1,23 @@
+namespace {namespace} {
+    export const {controllerNameConstantCased}_CONTROLLER_NAME: string = "{className}";
+
+    /**
+     * Controller Class {className}
+     */
+    export class {className} extends Dialog.DialogController {
+        public static $inject = [
+            "$injector"      
+        ];
+
+        /**
+         * Constructor for {className} controller
+         */
+        constructor(
+            protected $injector: ng.auto.IInjectorService
+        ) {
+            super($injector);
+        }
+    }
+
+    angular.module({appname}).controller({controllerNameConstantCased}_CONTROLLER_NAME, {className});
+}
