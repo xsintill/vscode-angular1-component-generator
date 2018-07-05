@@ -135,6 +135,7 @@ export class FileHelper {
             return Observable.of("");
         }
     };
+   
     public static createServiceTest(serviceDir: string, namespaceName: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/service.test.template";
         if (config.template) {
@@ -173,6 +174,66 @@ export class FileHelper {
         }     
         
        
+    };
+
+    public static createProvider(providerDir: string, namespaceName: string, providerName: string, config: any, configGlobals: Config): Observable<string> {
+        if (config.create) {
+            let templateFileName = this.assetRootDir + "/templates/provider.template";
+            if (config.template) {
+                templateFileName = this.resolveWorkspaceRoot(config.template);
+            }   
+
+            let providerContent = fs.readFileSync( templateFileName ).toString()
+                .replace(/{appname}/g, configGlobals.globals.applicationName)
+                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+                .replace(/{providerName}/g, changeCase.pascalCase(providerName))
+                .replace(/{providerNameConstantCase}/g, changeCase.constantCase(providerName));
+            
+            let filename = `${providerDir}/${providerName}.provider.${config.extension}`;
+            
+            return this.createFile(filename, providerContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+
+    public static createProviderTest(providerDir: string, namespaceName: string, providerName: string, config: any, configGlobals: Config): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/provider.test.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }   
+
+         if  (configGlobals.globals.test) {
+            let providerContent = fs.readFileSync( templateFileName ).toString()
+                .replace(/{appname}/g, configGlobals.globals.applicationName)
+                .replace(/{providerName}/g, changeCase.pascalCase(providerName))
+                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
+                .replace(/{providereNameCamelCased}/g, changeCase.camelCase(providerName))
+                .replace(/{providerNameConstantCase}/g, changeCase.constantCase(providerName));
+
+            let testDir: string;
+             if (configGlobals && 
+                configGlobals.files && 
+                configGlobals.files.provider && 
+                configGlobals.files.provider.testFile && 
+                configGlobals.files.provider.testFile.alongSide) {
+                testDir = providerDir;
+            } else {
+                testDir = this.resolveTestPath(providerDir, config);
+            }    
+            
+            let filename = `${testDir}/${providerName}.provider${FileHelper.getTestPostfix(configGlobals)}.${config.extension}`;
+
+            if (config.create) {
+                return this.createFile(filename, providerContent)
+                    .map(result => filename);
+            } else {
+                return Observable.of("");
+            }
+        } else {
+            return Observable.of("");
+        }     
     };
     public static createConfigRoute(ConfigRouteDir: string, namespaceName: string, configRouteName: string, config: any, configGlobals: Config): Observable<string> {
         if (config.create) {

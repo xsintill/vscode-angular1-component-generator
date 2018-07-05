@@ -54,7 +54,8 @@
     "onCommand:extension.genAngular1TestFiles",
     "onCommand:extension.genAngular1ControllerTestFiles",
     "onCommand:extension.genAngular1ControllerFiles",
-    "onCommand:extension.genAngular1ServiceFiles"
+    "onCommand:extension.genAngular1ServiceFiles",
+    "onCommand:extension.genAngular1ProviderFiles"
   ],
   "main": "./out/src/extension",
   "icon": "assets/images/icon.png",
@@ -415,6 +416,10 @@
       {
         "command": "extension.genAngular1ServiceFiles",
         "title": "New Service"
+      },
+      {
+        "command": "extension.genAngular1ProviderFiles",
+        "title": "New Provider"
       }
     ],
     "menus": {
@@ -449,6 +454,10 @@
         },
         {
           "command": "extension.genAngular1ServiceFiles",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.genAngular1ProviderFiles",
           "group": "navigation"
         }
       ]

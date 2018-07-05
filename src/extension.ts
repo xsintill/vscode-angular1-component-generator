@@ -119,7 +119,7 @@ export function activate(context: vscode.ExtensionContext) {
         });                
     });
 
-    let serviceDisposable = vscode.commands.registerCommand("extension.genAngular1ServiceFiles", (uri) => {
+    let providerDisposable = vscode.commands.registerCommand("extension.genAngular1ProviderFiles", (uri) => {
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        
         let configGlobals =  <Config>_workspace.getConfiguration(configPrefix);
@@ -135,19 +135,19 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 //Display a namespace dialog to the user
-                let enterNamespaceNameDialog$ = Observable.from(vscode.window.showInputBox({prompt: "Please enter name for the service."})); 
+                let enterNamespaceNameDialog$ = Observable.from(vscode.window.showInputBox({prompt: "Please enter name for the provider."})); 
                 enterNamespaceNameDialog$            
                     .concatMap( serviceNameValue => {                
                         if (serviceNameValue.length === 0) {
-                            throw new Error("Service name can not be empty!");
+                            throw new Error("Provider name can not be empty!");
                         }
 
                         let namespaceName = changeCase.paramCase(namespaceValue);
-                        let serviceName = changeCase.paramCase(serviceNameValue);
-                        let serviceDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
+                        let providerName = changeCase.paramCase(serviceNameValue);
+                        let providerDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
-                            FileHelper.createService(serviceDir, namespaceName, serviceName, config.files.service, configGlobals),
-                            FileHelper.createServiceTest(serviceDir, namespaceName, serviceName, config.files.service.testFile, configGlobals)
+                            FileHelper.createProvider(providerDir, namespaceName, providerName, config.files.service, configGlobals),
+                            FileHelper.createProviderTest(providerDir, namespaceName, providerName, config.files.service.testFile, configGlobals)
                         );
                     })
                     .concatMap(result => {                       
@@ -169,6 +169,61 @@ export function activate(context: vscode.ExtensionContext) {
                     })
                     .subscribe(
                         () => vscode.window.setStatusBarMessage("Service Successfuly created!"),
+                        err => vscode.window.showErrorMessage(err.message)
+                    );
+        });                
+    });
+
+    let serviceDisposable = vscode.commands.registerCommand("extension.genAngular1ServiceFiles", (uri) => {
+        let _workspace = vscode.workspace;
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));        
+        let configGlobals =  <Config>_workspace.getConfiguration(configPrefix);
+
+        if (!config.files) {
+            config = FileHelper.getConfig();
+        }
+
+        vscode.window.showInputBox({prompt: "Please enter name for the namespace."}).then(
+            (namespaceValue: string) => {                
+                if (namespaceValue.length === 0) {
+                    throw new Error("namespace name can not be empty!");
+                }
+
+                //Display a namespace dialog to the user
+                let enterNamespaceNameDialog$ = Observable.from(vscode.window.showInputBox({prompt: "Please enter name for the service."})); 
+                enterNamespaceNameDialog$            
+                    .concatMap( providerNameValue => {                
+                        if (providerNameValue.length === 0) {
+                            throw new Error("Service name can not be empty!");
+                        }
+
+                        let namespaceName = changeCase.paramCase(namespaceValue);
+                        let providerName = changeCase.paramCase(providerNameValue);
+                        let providerDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
+                        return Observable.forkJoin(
+                            FileHelper.createService(providerDir, namespaceName, providerName, config.files.provider, configGlobals),
+                            FileHelper.createServiceTest(providerDir, namespaceName, providerName, config.files.provider.testFile, configGlobals)
+                        );
+                    })
+                    .concatMap(result => {                       
+                        return Observable.from(result);
+                    })
+                    .filter(path => path.length > 0)
+                    .first()
+                    .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+                    .concatMap(textDocument => {
+                        if (!textDocument) {
+                            throw new Error("Could not open file!");
+                        };
+                        return Observable.from(vscode.window.showTextDocument(textDocument));
+                    })
+                    .do(editor => {
+                        if (!editor) {
+                            throw new Error("Could not open file!");
+                        };
+                    })
+                    .subscribe(
+                        () => vscode.window.setStatusBarMessage("Provider Successfuly created!"),
                         err => vscode.window.showErrorMessage(err.message)
                     );
         });                
