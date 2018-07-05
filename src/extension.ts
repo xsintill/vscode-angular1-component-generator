@@ -146,8 +146,8 @@ export function activate(context: vscode.ExtensionContext) {
                         let providerName = changeCase.paramCase(serviceNameValue);
                         let providerDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                         return Observable.forkJoin(
-                            FileHelper.createProvider(providerDir, namespaceName, providerName, config.files.service, configGlobals),
-                            FileHelper.createProviderTest(providerDir, namespaceName, providerName, config.files.service.testFile, configGlobals)
+                            FileHelper.createProvider(providerDir, namespaceName, providerName, config.files.provider, configGlobals),
+                            FileHelper.createProviderTest(providerDir, namespaceName, providerName, config.files.provider.testFile, configGlobals)
                         );
                     })
                     .concatMap(result => {                       
