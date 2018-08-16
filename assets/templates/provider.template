@@ -1,6 +1,6 @@
 namespace {namespace} {
 
-    export const {providerNameConstantCase}_PROVIDER_NAME: string = "{providerName}";
+    export const {providerNameConstantCase}_PROVIDER_NAME = "{providerName}";
 
     export interface I{providerName} {
 
@@ -10,7 +10,7 @@ namespace {namespace} {
     *   Class for provider {providerName}
     */
     export class {providerName}Provider implements ng.IServiceProvider {
-        public static $inject: string[] = [
+        public static $inject = [
         ];
 
         constructor() {

@@ -1,5 +1,5 @@
 namespace {namespace} {
-    export const {controllerNameConstantCased}_DIALOG_CONTROLLER_NAME: string = "{className}DialogController";
+    export const {controllerNameConstantCased}_DIALOG_CONTROLLER_NAME = "{className}DialogController";
 
     /**
      * Controller Class {className}DialogController
