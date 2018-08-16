@@ -1,5 +1,5 @@
 namespace  {namespace} {
-    export const STATE_{configRouteNameConstantCased}: string = "";
+    export const STATE_{configRouteNameConstantCased} = "";
 
     angular.module({appname})
         .config(["$stateProvider", ($stateProvider: ng.ui.IStateProvider) => {

@@ -4,9 +4,9 @@ namespace {namespace} {
      *   Directive for directive llq-{directiveNameKebabCased}
      */
     export class {directiveName}Directive implements ng.IDirective {
-        public static directiveName: string = "llq{directiveName}";
+        public static directiveName = "llq{directiveName}";
 
-        public static $inject: string[] = [
+        public static $inject = [
         ];
 
         constructor() {

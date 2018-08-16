@@ -1,0 +1,23 @@
+namespace {namespace} {
+    export const {controllerNameConstantCase}_CONTROLLER_NAME = "{controllerName}";
+
+    /**
+     * Controller Class {controllerName}
+     */
+    export class {controllerName} extends Controllers.BaseController {
+        public static $inject = [
+            "$injector"      
+        ];
+
+        /**
+         * Constructor for {controllerName} controller
+         */
+        constructor(
+            protected $injector: ng.auto.IInjectorService
+        ) {
+            super($injector);
+        }        
+    }
+
+    angular.module(Application.LLQAPP_NAME).controller({controllerNameConstantCase}_CONTROLLER_NAME, {controllerName}});
+}

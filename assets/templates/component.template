@@ -8,9 +8,9 @@ namespace {namespace} {
         /**
          *  Field with value used for registering the component llq-{componentNameKebabCased}
          */
-        public static componentName: string = "llq{className}";
+        public static componentName = "llq{className}";
 
-        public static $inject: string[] = [
+        public static $inject = [
             /*put your injectables here*/
         ];
 

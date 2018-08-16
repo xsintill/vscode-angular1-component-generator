@@ -1,12 +1,12 @@
 namespace {namespace} {
 
-    export const {serviceNameConstantCase}_SERVICE_NAME: string = "{serviceName}Service";
+    export const {serviceNameConstantCase}_SERVICE_NAME = "{serviceName}Service";
 
    /**
     *   Class for service {serviceName}
     */
     export class {serviceName}Service {
-        public static $inject: string[] = [
+        public static $inject = [
         ];
 
         constructor() {
