@@ -1,16 +1,17 @@
-namespace {namespace} {
+import angular from "angular";
 
-    export const {serviceNameConstantCase}_SERVICE_NAME = "{serviceName}Service";
+import { LLQAPP_NAME } from "app/shared/constants/application.const";
 
-   /**
-    *   Class for service {serviceName}
-    */
-    export class {serviceName}Service {
-        public static $inject = [
-        ];
+export const {serviceNameConstantCase}_SERVICE_NAME = "{serviceName}Service";
 
-        constructor() {
-        }
+/**
+ *   Class for service {serviceName}
+ */
+export class {serviceName}Service {
+    public static $inject = [
+    ];
+
+    constructor() {
     }
-    angular.module({appname}).service({serviceNameConstantCase}_SERVICE_NAME, {serviceName}Service);
 }
+angular.module({appname}).service({serviceNameConstantCase}_SERVICE_NAME, {serviceName}Service);

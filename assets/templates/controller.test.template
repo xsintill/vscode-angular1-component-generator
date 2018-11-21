@@ -1,7 +1,7 @@
 describe("{className}", () => {
     let $controller: ng.IControllerService;
     let $httpBackend: ng.IHttpBackendService;
-    let controller: {namespace}.{className};
+    let controller: {className};
     let newScope: any;
     let $rootScope: ng.IRootScopeService;
     let $q: ng.IQService;
@@ -26,7 +26,7 @@ describe("{className}", () => {
         $q = _$q_;
         $stateParams = _$stateParams_;
 
-       controller = $controller<{namespace}.{className}>({namespace}.{controllerNameConstantCased}_NAME, { $scope: newScope });
+       controller = $controller<{className}>({controllerNameConstantCased}_NAME, { $scope: newScope });
     }));
 
     describe("", () => {

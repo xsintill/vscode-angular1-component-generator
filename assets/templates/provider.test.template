@@ -1,6 +1,6 @@
 describe("{providerName}", () => {
 
-    let {providerNameCamelCased}: {namespace}.{providerName}Provider;
+    let {providerNameCamelCased}: {providerName}Provider;
     let $injector: ng.auto.IInjectorService;
 
     beforeEach(angular.mock.module({appname}));
@@ -9,7 +9,7 @@ describe("{providerName}", () => {
         _$injector_: ng.auto.IInjectorService
     ) => {
         $injector = _$injector_;
-        {providerNameCamelCased} = $injector.get<{namespace}.{providerName}Provider>({namespace}.{providerNameConstantCase}_PROVIDER_NAME);
+        {providerNameCamelCased} = $injector.get<{providerName}Provider>({providerNameConstantCase}_PROVIDER_NAME);
     }));
 
     describe("", () => {

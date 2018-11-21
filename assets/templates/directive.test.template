@@ -1,5 +1,5 @@
 describe("llq-{directiveNameKebabCased}", () => {
-    let directive: {namespace}.{className}Controller;
+    let directive: {className}Controller;
 
     beforeEach(angular.module({appname}));
 

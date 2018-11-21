@@ -12,7 +12,7 @@ export class FileHelper {
     private static createFile = <(file: string, data: string) => Observable<{}>>Observable.bindNodeCallback(fse.outputFile);
     private static assetRootDir: string = path.join(__dirname, "../../assets");
 
-    public static createComponent(componentDir: string, namespaceName: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createComponent(componentDir: string,  componentName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -24,7 +24,6 @@ export class FileHelper {
 
         let componentContent = fs.readFileSync(templateFileName).toString()
             .replace(/{appname}/g, configGlobals.globals.applicationName)
-            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
             .replace(/{currentpath}/g, `${relativeDir}`)
             .replace(/{templateUrl}/g, `${componentName}.component.html`)
             .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
@@ -42,9 +41,7 @@ export class FileHelper {
     };
 
     
-    public static createDialogTemplate(controllerDir: string, controllerName: string, config: any
-        // , configGlobals: Config
-    ): Observable<string> {
+    public static createDialogTemplate(controllerDir: string, controllerName: string, config: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/dialog-html.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -64,7 +61,7 @@ export class FileHelper {
         }
     };
 
-    public static createDialogController(controllerDir: string, namespaceName: string, controllerName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createDialogController(controllerDir: string, controllerName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/dialog-controller.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -74,33 +71,22 @@ export class FileHelper {
 
         let controllerContent = fs.readFileSync(templateFileName).toString()
             .replace(/{appname}/g, configGlobals.globals.applicationName)
-            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
             .replace(/{currentpath}/g, `${relativeDir}`)
             .replace(/{templateUrl}/g, `${controllerName}.template.html`)
-            // .replace(/{controllerNameKebabCased}/g, changeCase.paramCase(controllerName))
             .replace(/{controllerNameConstantCased}/g, changeCase.constantCase(controllerName))
             .replace(/{className}/g, changeCase.pascalCase(controllerName));
-        // let dialogTemplateContent = fs.readFileSync(templateFileName).toString()
-        //     .replace(/{appname}/g, configGlobals.globals.applicationName)
-        //     .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
-        //     .replace(/{currentpath}/g, `${relativeDir}`)
-        //     .replace(/{templateUrl}/g, `${controllerName}.template.html`)
-        //     // .replace(/{controllerNameKebabCased}/g, changeCase.paramCase(controllerName))
-        //     .replace(/{controllerNameConstantCased}/g, changeCase.constantCase(controllerName))
-        //     .replace(/{className}/g, changeCase.pascalCase(controllerName));
 
         let dialogControllerFilename = `${controllerDir}/${controllerName}-dialog.controller.${config.extension}`;
-        // let dialogTemplateFilename = `${controllerDir}/${controllerName}-dialog.controller.${config.extension}`;
 
         if (config.create) {
             return this.createFile(dialogControllerFilename, controllerContent)
-                .map(result => dialogControllerFilename); 
+                .map(result => dialogControllerFilename);
         } else {
             return Observable.of("");
         }
     };
 
-    public static createComponentTest(componentDir: string, namespaceName: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createComponentTest(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -119,7 +105,6 @@ export class FileHelper {
             }
             let componentContent = fs.readFileSync(templateFileName).toString()
                 .replace(/{appname}/g, configGlobals.globals.applicationName)
-                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
                 .replace(/{className}/g, changeCase.pascalCase(componentName));
 
@@ -134,7 +119,7 @@ export class FileHelper {
             return Observable.of("");
         }
     };
-    public static createControllerTest(controllerDir: string, namespaceName: string, controllerName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createControllerTest(controllerDir: string, controllerName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/controller.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -153,7 +138,6 @@ export class FileHelper {
             }
             let controllerContent = fs.readFileSync(templateFileName).toString()
                 .replace(/{appname}/g, configGlobals.globals.applicationName)
-                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{className}/g, changeCase.pascalCase(controllerName))
                 .replace(/{controllerNameConstantCased}/g, changeCase.constantCase(controllerName));
 
@@ -171,7 +155,7 @@ export class FileHelper {
 
     };
 
-    public static createService(serviceDir: string, namespaceName: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createService(serviceDir: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
         if (config.create) {
             let templateFileName = this.assetRootDir + "/templates/service.template";
             if (config.template) {
@@ -180,11 +164,9 @@ export class FileHelper {
 
             let serviceContent = fs.readFileSync(templateFileName).toString()
                 .replace(/{appname}/g, configGlobals.globals.applicationName)
-                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
                 .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
 
-            //let relativeDir = this.resolveToRelativePath(serviceDir);
             let filename = `${serviceDir}/${serviceName}.service.${config.extension}`;
 
             return this.createFile(filename, serviceContent)
@@ -194,7 +176,7 @@ export class FileHelper {
         }
     };
 
-    public static createServiceTest(serviceDir: string, namespaceName: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createServiceTest(serviceDir: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/service.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -204,7 +186,6 @@ export class FileHelper {
             let serviceContent = fs.readFileSync(templateFileName).toString()
                 .replace(/{appname}/g, configGlobals.globals.applicationName)
                 .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
-                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{serviceNameCamelCased}/g, changeCase.camelCase(serviceName))
                 .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
 
@@ -234,7 +215,7 @@ export class FileHelper {
 
     };
 
-    public static createProvider(providerDir: string, namespaceName: string, providerName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createProvider(providerDir: string, providerName: string, config: any, configGlobals: Config): Observable<string> {
         if (config.create) {
             let templateFileName = this.assetRootDir + "/templates/provider.template";
             if (config.template) {
@@ -243,7 +224,6 @@ export class FileHelper {
 
             let providerContent = fs.readFileSync(templateFileName).toString()
                 .replace(/{appname}/g, configGlobals.globals.applicationName)
-                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{providerName}/g, changeCase.pascalCase(providerName))
                 .replace(/{providerNameConstantCase}/g, changeCase.constantCase(providerName));
 
@@ -256,7 +236,7 @@ export class FileHelper {
         }
     };
 
-    public static createProviderTest(providerDir: string, namespaceName: string, providerName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createProviderTest(providerDir: string, providerName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/provider.test.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -266,7 +246,6 @@ export class FileHelper {
             let providerContent = fs.readFileSync(templateFileName).toString()
                 .replace(/{appname}/g, configGlobals.globals.applicationName)
                 .replace(/{providerName}/g, changeCase.pascalCase(providerName))
-                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{providereNameCamelCased}/g, changeCase.camelCase(providerName))
                 .replace(/{providerNameConstantCase}/g, changeCase.constantCase(providerName));
 
@@ -293,7 +272,7 @@ export class FileHelper {
             return Observable.of("");
         }
     };
-    public static createConfigRoute(ConfigRouteDir: string, namespaceName: string, configRouteName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createConfigRoute(ConfigRouteDir: string, configRouteName: string, config: any, configGlobals: Config): Observable<string> {
         if (config.create) {
             let templateFileName = this.assetRootDir + "/templates/config.route.template";
             if (config.template) {
@@ -302,12 +281,10 @@ export class FileHelper {
 
             let serviceContent = fs.readFileSync(templateFileName).toString()
                 .replace(/{appname}/g, configGlobals.globals.applicationName)
-                .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
                 .replace(/{configRouteName}/g, changeCase.constantCase(configRouteName))
                 .replace(/{configRouteNameKebabCased}/g, changeCase.paramCase(configRouteName))
                 .replace(/{configRouteNameConstantCased}/g, changeCase.constantCase(configRouteName));
 
-            //let relativeDir = this.resolveToRelativePath(serviceDir);
             let filename = `${ConfigRouteDir}/${changeCase.lowerCase(configRouteName)}.config.route.${config.extension}`;
 
             return this.createFile(filename, serviceContent)
@@ -316,7 +293,7 @@ export class FileHelper {
             return Observable.of("");
         }
     };
-    public static createDirective(directiveDir: string, namespaceName: string, directiveName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createDirective(directiveDir: string, directiveName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/directive.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
@@ -325,7 +302,6 @@ export class FileHelper {
         let serviceContent = fs.readFileSync(templateFileName).toString()
             .replace(/{appname}/g, configGlobals.globals.applicationName)
             .replace(/{directiveNameKebabCased}/g, changeCase.paramCase(directiveName))
-            .replace(/{namespace}/g, changeCase.pascalCase(namespaceName))
             .replace(/{directiveName}/g, changeCase.pascalCase(directiveName));
 
 

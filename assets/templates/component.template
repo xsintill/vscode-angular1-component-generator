@@ -1,37 +1,35 @@
-namespace {namespace} {
-    export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/llq-{componentNameKebabCased}.template.html";
+import angular from "angular";
 
+import { LLQAPP_NAME } from "app/shared/constants/application.const";
+
+export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/llq-{componentNameKebabCased}.template.html";
+
+/**
+ *  Controller for component llq-{componentNameKebabCased}
+ */
+ export class {className}Controller {
     /**
-     *  Controller for component llq-{componentNameKebabCased}
+     *  Field with value used for registering the component llq-{componentNameKebabCased}
      */
-    export class {className}Controller {
-        /**
-         *  Field with value used for registering the component llq-{componentNameKebabCased}
-         */
-        public static componentName = "llq{className}";
+    public static componentName = "llq{className}";
 
-        public static $inject = [
-            /*put your injectables here*/
-        ];
+    public static $inject = [
+        /*put your injectables here*/
+    ];
 
-        constructor() {
-            /*put your code here*/
-        }
-
-        public $onInit(): void {
-            /*put your code here*/
-        }
+    constructor() {
+        /*put your code here*/
     }
 
-    export interface I{className}ControllerBindings {
-
+    public $onInit(): void {
+        /*put your code here*/
     }
-
-    angular.module({appname}).component({className}Controller.componentName, {
-        controller: {className}Controller,
-        templateUrl: TEMPLATE_PATH_{componentNameConstantCased},
-        bindings: {
-
-        }
-    });
 }
+
+angular.module({appname}).component({className}Controller.componentName, {
+    controller: {className}Controller,
+    templateUrl: TEMPLATE_PATH_{componentNameConstantCased},
+    bindings: {
+
+    }
+});

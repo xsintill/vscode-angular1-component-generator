@@ -1,26 +1,27 @@
-namespace {namespace} {
+import angular from "angular";
 
-    export const {providerNameConstantCase}_PROVIDER_NAME = "{providerName}";
+import { LLQAPP_NAME } from "app/shared/constants/application.const";
 
-    export interface I{providerName} {
+export const {providerNameConstantCase}_PROVIDER_NAME = "{providerName}";
 
-    }
+export interface I{providerName} {
 
-   /**
-    *   Class for provider {providerName}
-    */
-    export class {providerName}Provider implements ng.IServiceProvider {
-        public static $inject = [
-        ];
-
-        constructor() {
-        }
-
-        public $get(): I{providerName}{
-            return {
-                // 
-            }
-        }
-    }
-    angular.module({appname}).provider({providerNameConstantCase}_PROVIDER_NAME, {providerName}Provider);
 }
+
+/**
+ *   Class for provider {providerName}
+ */
+export class {providerName}Provider implements ng.IServiceProvider {
+    public static $inject = [
+    ];
+
+    constructor() {
+    }
+
+    public $get(): I{providerName}{
+        return {
+            // 
+        }
+    }
+}
+angular.module({appname}).provider({providerNameConstantCase}_PROVIDER_NAME, {providerName}Provider);

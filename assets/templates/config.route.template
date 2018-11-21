@@ -1,12 +1,14 @@
-namespace  {namespace} {
-    export const STATE_{configRouteNameConstantCased} = "";
+import angular from "angular";
 
-    angular.module({appname})
-        .config(["$stateProvider", ($stateProvider: ng.ui.IStateProvider) => {
-            $stateProvider
-                .state(STATE_{configRouteNameConstantCased}, {
-                    url: "/{configRouteNameKebabCased}",
-                    template: ``
-                });
-        }]);
-}
+import { LLQAPP_NAME } from "app/shared/constants/application.const";
+
+export const STATE_{configRouteNameConstantCased} = "";
+
+angular.module({appname})
+    .config(["$stateProvider", ($stateProvider: ng.ui.IStateProvider) => {
+        $stateProvider
+            .state(STATE_{configRouteNameConstantCased}, {
+                url: "/{configRouteNameKebabCased}",
+                template: ``
+            });
+    }]);

@@ -2,7 +2,7 @@ describe("llq-{componentNameKebabCased}", () => {
     let $componentController: ng.IComponentControllerService;
     let $rootScope: ng.IRootScopeService;
 
-    let component: {namespace}.{className}Controller;
+    let component: {className}Controller;
     let scope: ng.IScope;
 
     beforeEach(angular.mock.module({appname}));
@@ -15,13 +15,13 @@ describe("llq-{componentNameKebabCased}", () => {
         $rootScope = _$rootScope_;
         scope = $rootScope.$new();
 
-        component = $componentController<{namespace}.{className}Controller, {namespace}.I{className}ControllerBindings>(
-            {namespace}.{className}Controller.componentName, { $scope: scope }, {});
+        component = $componentController<{className}Controller, I{className}ControllerBindings>(
+            {className}Controller.componentName, { $scope: scope }, {});
     }));
 
     describe("componentName", () => {
         it("should return llq{className}", () => {
-            let result = {namespace}.{className}Controller.componentName;
+            let result = {className}Controller.componentName;
             expect(result).toBe("llq{className}");
         });
     });
