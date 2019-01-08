@@ -1,4 +1,4 @@
-import "{componentNameKebabCased}.ui.scss";
+import "./{componentNameKebabCased}.ui.scss";
 
 import angular from "angular";
 
