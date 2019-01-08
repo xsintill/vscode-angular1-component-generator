@@ -1,4 +1,4 @@
-export const PRESENTABLE_{componentNameConstantCased}_RESPONSE = "PRESETABLE_{componentNameConstantCased}_RESPONSE";
+export const PRESENTABLE_{componentNameConstantCased}_RESPONSE = "PRESENTABLE_{componentNameConstantCased}_RESPONSE";
 
 export interface IPresentable{className} {
 
@@ -8,10 +8,6 @@ export interface IPresentable{className} {
  *  Presenter for {className}
  */
 export class {className}Presenter {
-
-    public static $inject = [
-        "$rootScope"
-    ];
 
     constructor(
         private readonly $rootScope: ng.IRootScopeService
