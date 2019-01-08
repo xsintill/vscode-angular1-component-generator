@@ -1,6 +1,7 @@
 import angular from "angular";
 
 import { LLQAPP_NAME } from "app/shared/constants/application.const";
+import { DialogController } from "app/shared/dialog/default-dialog.controller";
 
 export const {controllerNameConstantCased}_DIALOG_CONTROLLER_NAME = "{className}DialogController";
 

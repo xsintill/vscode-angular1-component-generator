@@ -69,6 +69,69 @@
         "module": {
             "create": true,
             "extension": "ts"
+        },
+        "mvpPattern": {
+            "create": true,
+            "extension": "ts",
+            "testFile": {
+                "create": true,
+                "extension": "ts",
+                "alongSide": false
+            },
+            "css": {
+                "create": true,
+                "extension": "scss"
+            },
+            "html": {
+                "create": true,
+                "extension": "html"
+            },
+            "module": {
+                "create": true,
+                "extension": "ts"
+            },
+            "presenter":{
+                "create": true,
+                "extension": "ts",
+                "testFile": {
+                    "create": true,
+                    "extension": "ts",
+                    "alongSide": false
+                },
+                "css": {
+                    "create": true,
+                    "extension": "scss"
+                },
+                "html": {
+                    "create": true,
+                    "extension": "html"
+                },
+                "module": {
+                    "create": true,
+                    "extension": "ts"
+                }
+            },
+            "container":{
+                "create": true,
+                "extension": "ts",
+                "testFile": {
+                    "create": true,
+                    "extension": "ts",
+                    "alongSide": false
+                },
+                "css": {
+                    "create": true,
+                    "extension": "scss"
+                },
+                "html": {
+                    "create": true,
+                    "extension": "html"
+                },
+                "module": {
+                    "create": true,
+                    "extension": "ts"
+                }
+            }
         }
     },
     "globals": {

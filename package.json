@@ -43,6 +43,7 @@
     "angular1 generate test",
     "angular1 config route",
     "angular1 generate config route",
+    "angular1 generate mvp pattern files",
     "learnlinq",
     "typescript"
   ],
@@ -55,7 +56,8 @@
     "onCommand:extension.genAngular1ControllerTestFiles",
     "onCommand:extension.genAngular1DialogControllerFiles",
     "onCommand:extension.genAngular1ServiceFiles",
-    "onCommand:extension.genAngular1ProviderFiles"
+    "onCommand:extension.genAngular1ProviderFiles",
+    "onCommand:extension.genAngular1MvpPatternFiles"
   ],
   "main": "./out/src/extension",
   "icon": "assets/images/icon.png",
@@ -343,6 +345,193 @@
                   }
                 }
               }
+            },
+            "MVPPattern": {
+              "type": "object",
+              "description": "Configure how mvp patern should be generated",
+              "properties": {
+                "create": {
+                  "type": "boolean",
+                  "description": "Should the component view file be created"
+                },
+                "extension": {
+                  "type": "string",
+                  "description": "what extension should the component view file get"
+                },
+                "template": {
+                  "type": "string",
+                  "description": "what template should the component view use"
+                },
+                "testFile": {
+                  "type": "object",
+                  "title": "Configuration object for all the different generatable files",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the testfile be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "what extension should the test file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    },
+                    "alongSide": {
+                      "type": "boolean",
+                      "description": "if no value is provided exists or the value is false it will be created in the testdir configure in the globals section"
+                    }
+                  }
+                },
+                "css": {
+                  "type": "object",
+                  "title": "Configuration object for the style file to be generated alongside the component",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the style file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the style file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                },
+                "html": {
+                  "type": "object",
+                  "title": "Configuration object for the html template file to be generated alongside the component",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the html template file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the html template get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                },
+                "container": {
+                  "type": "object",
+                  "title": "Configuration object for the container file to be generated alongside the component",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the container file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the container get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                },
+                "containerTestFile": {
+                  "type": "object",
+                  "title": "Configuration object for the container test file to be generated alongside the container file",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the container test file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the container file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                },
+                "containerHtml": {
+                  "type": "object",
+                  "title": "Configuration object for the container html file to be generated alongside the container file",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the container html file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the container html file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                },
+                "containerCss": {
+                  "type": "object",
+                  "title": "Configuration object for the container style file to be generated alongside the container file",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the container css file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the container css file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                },
+
+
+
+                "presenter": {
+                  "type": "object",
+                  "title": "Configuration object for the presenter file to be generated alongside the component",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the presenter file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the presenter get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                },
+                "presenterTestFile": {
+                  "type": "object",
+                  "title": "Configuration object for the presenter test file to be generated alongside the presenter file",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the presenter test file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the presenter file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -420,45 +609,53 @@
       {
         "command": "extension.genAngular1ProviderFiles",
         "title": "New Provider"
+      },
+      {
+        "command": "extension.genAngular1MvpPatternFiles",
+        "title": "New MVP Pattern"
       }
     ],
     "menus": {
       "explorer/context": [
         {
+          "command": "extension.genAngular1MvpPatternFiles",
+          "group": "MVP"
+        },
+        {
           "command": "extension.genAngular1ComponentFiles",
-          "group": "navigation"
+          "group": "refactoring"
         },
         {
           "command": "extension.genAngular1DirectiveFiles",
-          "group": "navigation"
+          "group": "refactoring"
         },
         {
           "command": "extension.genAngular1DialogControllerFiles",
-          "group": "navigation"
+          "group": "refactoring"
         },
         {
           "command": "extension.genAngular1FilterFiles",
-          "group": "navigation"
+          "group": "refactoring"
         },
         {
           "command": "extension.genAngular1ConfigRouteFiles",
-          "group": "navigation"
+          "group": "refactoring"
         },
         {
           "command": "extension.genAngular1TestFiles",
-          "group": "navigation"
+          "group": "refactoring"
         },
         {
           "command": "extension.genAngular1ControllerTestFiles",
-          "group": "navigation"
+          "group": "refactoring"
         },
         {
           "command": "extension.genAngular1ServiceFiles",
-          "group": "navigation"
+          "group": "refactoring"
         },
         {
           "command": "extension.genAngular1ProviderFiles",
-          "group": "navigation"
+          "group": "refactoring"
         }
       ]
     }

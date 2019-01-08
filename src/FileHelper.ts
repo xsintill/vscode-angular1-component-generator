@@ -12,25 +12,108 @@ export class FileHelper {
     private static createFile = <(file: string, data: string) => Observable<{}>>Observable.bindNodeCallback(fse.outputFile);
     private static assetRootDir: string = path.join(__dirname, "../../assets");
 
-    public static createComponent(componentDir: string,  componentName: string, config: any, configGlobals: Config): Observable<string> {
+    public static createComponent(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.template";
         if (config.template) {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
 
-        //let relativeDir = this.resolveToRelativePath(componentDir); 
-        let relativeDir = this.resolveToRelativePathWithReplacedConstants(componentDir, configGlobals);
-
+        let relativeDirObj = this.resolveToRelativePathWithReplacedConstants(componentDir, configGlobals);
 
         let componentContent = fs.readFileSync(templateFileName).toString()
             .replace(/{appname}/g, configGlobals.globals.applicationName)
-            .replace(/{currentpath}/g, `${relativeDir}`)
+            .replace(/{currentpath}/g, `${relativeDirObj.relativeDir}`)
+            .replace(/{areasOrShared}/g, `${(relativeDirObj.isAreas)? "TEMPLATE_PATH_BASE_AREAS": "TEMPLATE_PATH_BASE_SHARED" }`)
             .replace(/{templateUrl}/g, `${componentName}.component.html`)
             .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
             .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
             .replace(/{className}/g, changeCase.pascalCase(componentName));
 
-        let filename = `${componentDir}/${FileHelper.getTestPrefix(configGlobals)}${componentName}.component.${config.extension}`;
+        let filename = `${componentDir}/${componentName}.ui.${config.extension}`;
+
+        if (config.create) {
+            return this.createFile(filename, componentContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createUiComponent(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/component-ui.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let relativeDirObj = this.resolveToRelativePathWithReplacedConstants(componentDir, configGlobals);
+
+        let componentContent = fs.readFileSync(templateFileName).toString()
+            .replace(/{appname}/g, configGlobals.globals.applicationName)
+            .replace(/{currentpath}/g, `${relativeDirObj.relativeDir}`)
+            .replace(/{areasOrShared}/g, `${(relativeDirObj.isAreas)? "TEMPLATE_PATH_BASE_AREAS": "TEMPLATE_PATH_BASE_SHARED" }`)
+            .replace(/{templateUrl}/g, `${componentName}.ui.html`)
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+            .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
+            .replace(/{className}/g, changeCase.pascalCase(componentName));
+
+        let filename = `${componentDir}/${componentName}.ui.${config.extension}`;
+
+        if (config.create) {
+            return this.createFile(filename, componentContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createPresenter(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/presenter.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let relativeDirObj = this.resolveToRelativePathWithReplacedConstants(componentDir, configGlobals);
+
+        let componentContent = fs.readFileSync(templateFileName).toString()
+            // .replace(/{appname}/g, configGlobals.globals.applicationName)
+            // .replace(/{currentpath}/g, `${relativeDirObj.relativeDir}`)
+            // .replace(/{areasOrShared}/g, `${(relativeDirObj.isAreas)? "TEMPLATE_PATH_BASE_AREAS": "TEMPLATE_PATH_BASE_SHARED" }`)
+            // .replace(/{templateUrl}/g, `${componentName}.presenter.html`)
+            // .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+            .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
+            .replace(/{className}/g, `${changeCase.pascalCase(componentName)}`);
+
+        let filename = `${componentDir}/${componentName}.presenter.${config.extension}`;
+
+        if (config.create) {
+            return this.createFile(filename, componentContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createContainer(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/container.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        //let relativeDir = this.resolveToRelativePath(componentDir); 
+        let relativeDirObj = this.resolveToRelativePathWithReplacedConstants(componentDir, configGlobals);
+
+
+        let componentContent = fs.readFileSync(templateFileName).toString()
+            .replace(/{appname}/g, configGlobals.globals.applicationName)
+            .replace(/{currentpath}/g, `${relativeDirObj.relativeDir}`)
+            .replace(/{areasOrShared}/g, `${(relativeDirObj.isAreas)? "TEMPLATE_PATH_BASE_AREAS": "TEMPLATE_PATH_BASE_SHARED" }`)
+            .replace(/{templateUrl}/g, `${componentName}.container.html`)
+            .replace(/{componentNameKebabCased}/g, `${changeCase.paramCase(componentName)}-container`)
+            .replace(/{serviceFileName}/g, `${changeCase.paramCase(componentName)}`)
+            .replace(/{componentNameConstantCased}/g, `${changeCase.constantCase(componentName)}_CONTAINER`)
+            .replace(/{serviceNameConstantCased}/g, `${changeCase.constantCase(componentName)}`)
+            .replace(/{containerClassName}/g, `${changeCase.pascalCase(componentName)}Container`)
+            .replace(/{camelCasedClassName}/g, changeCase.camelCase(componentName))
+            .replace(/{className}/g, changeCase.pascalCase(componentName));
+
+        let filename = `${componentDir}/${componentName}.container.${config.extension}`;
 
         if (config.create) {
             return this.createFile(filename, componentContent)
@@ -40,7 +123,7 @@ export class FileHelper {
         }
     };
 
-    
+
     public static createDialogTemplate(controllerDir: string, controllerName: string, config: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/dialog-html.template";
         if (config.template) {
@@ -342,9 +425,10 @@ export class FileHelper {
             templateFileName = this.resolveWorkspaceRoot(config.template);
         }
 
-        let htmlContent = fs.readFileSync(templateFileName).toString();
+        let htmlContent = fs.readFileSync(templateFileName).toString().
+            replace(/{className}/g, changeCase.pascalCase(componentName));
 
-        let filename = `${componentDir}/${componentName}.template.${config.extension}`;
+        let filename = `${componentDir}/${componentName}.${config.extension}`;
         if (config.create) {
             return this.createFile(filename, htmlContent)
                 .map(result => filename);
@@ -352,6 +436,61 @@ export class FileHelper {
             return Observable.of("");
         }
     };
+    public static createContainerHtml(componentDir: string, componentName: string, config: any): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/container-html.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let htmlContent = fs.readFileSync(templateFileName).toString()
+            .replace(/{className}/g, changeCase.pascalCase(componentName))
+            
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+
+        let filename = `${componentDir}/${componentName}.container.${config.extension}`;
+        if (config.create) {
+            return this.createFile(filename, htmlContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createUiComponentHtml(componentDir: string, componentName: string, config: any): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/component-ui-html.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let htmlContent = fs.readFileSync(templateFileName).toString()
+            .replace(/{className}/g, changeCase.pascalCase(componentName))
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+
+        let filename = `${componentDir}/${componentName}.${config.extension}`;
+        if (config.create) {
+            return this.createFile(filename, htmlContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    // public static createPresenterHtml(componentDir: string, componentName: string, config: any): Observable<string> {
+    //     let templateFileName = this.assetRootDir + "/templates/presenter-html.template";
+    //     if (config.template) {
+    //         templateFileName = this.resolveWorkspaceRoot(config.template);
+    //     }
+
+    //     let htmlContent = fs.readFileSync(templateFileName).toString()
+    //         .replace(/{{componentNameKebabCased}}/g, changeCase.paramCase(componentName))
+    //         .replace(/{className}/g, changeCase.pascalCase(componentName));
+
+    //     let filename = `${componentDir}/${componentName}.${config.extension}`;
+    //     if (config.create) {
+    //         return this.createFile(filename, htmlContent)
+    //             .map(result => filename);
+    //     } else {
+    //         return Observable.of("");
+    //     }
+    // };
 
     public static createCss(componentDir: string, componentName: string, config: any): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/css.template";
@@ -360,6 +499,42 @@ export class FileHelper {
         }
 
         let cssContent = fs.readFileSync(templateFileName).toString();
+
+
+        let filename = `${componentDir}/${componentName}.${config.extension}`;
+        if (config.create) {
+            return this.createFile(filename, cssContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createUiComponentCss(componentDir: string, componentName: string, config: any): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/component-ui-css.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let cssContent = fs.readFileSync(templateFileName).toString()
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName));
+
+
+        let filename = `${componentDir}/${componentName}.${config.extension}`;
+        if (config.create) {
+            return this.createFile(filename, cssContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createContainerCss(componentDir: string, componentName: string, config: any): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/container-css.template";
+        if (config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let cssContent = fs.readFileSync(templateFileName).toString()
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName));
 
 
         let filename = `${componentDir}/${componentName}.${config.extension}`;
@@ -403,12 +578,18 @@ export class FileHelper {
         return result;
     }
     public static resolveToRelativePathWithReplacedConstants(path: string, config: Config) {
-        let result = this.resolveToRelativePath(path);
+        let result = { 
+            relativeDir: this.resolveToRelativePath(path),
+            isShared: undefined,
+            isAreas: undefined
+        }
         if (config.globals.sharedConstant) {
-            result = result.replace("app\\shared\\", config.globals.sharedConstant + "/");
+            result.isShared = result.relativeDir.includes("app\\shared\\");
+            result.relativeDir = result.relativeDir.replace("app\\shared\\", config.globals.sharedConstant + "/");
         }
         if (config.globals.srcConstant) {
-            result = result.replace("app\\areas\\", config.globals.srcConstant + "/");
+            result.isAreas = result.relativeDir.includes("app\\areas\\");
+            result.relativeDir = result.relativeDir.replace("app\\areas\\", config.globals.srcConstant + "/");
         }
         return result;
     }

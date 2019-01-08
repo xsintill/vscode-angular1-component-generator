@@ -3,7 +3,7 @@ import angular from "angular";
 import { LLQAPP_NAME } from "app/shared/constants/application.const";
 
 /**
- *   Directive for directive llq-{directiveNameKebabCased}
+ * Directive for directive llq-{directiveNameKebabCased}
  */
 export class {directiveName}Directive implements ng.IDirective {
     public static directiveName = "llq{directiveName}";

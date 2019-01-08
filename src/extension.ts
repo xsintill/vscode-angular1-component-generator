@@ -126,7 +126,8 @@ export function activate(context: vscode.ExtensionContext) {
                 let controllerDir = FileHelper.resolveWorkspaceRoot(FileHelper.getContextMenuDir(uri));
                 return Observable.forkJoin(
                     FileHelper.createDialogController(controllerDir, controllerName, config.files.controller, configGlobals),
-                    FileHelper.createDialogTemplate(controllerDir, controllerName, config.files.controller),
+                    // FileHelper.createDialogTemplate(controllerDir, controllerName, config.files.controller),
+                    FileHelper.createHtml(controllerDir, controllerName, config.files.component.html),
                     FileHelper.createControllerTest(controllerDir, controllerName, config.files.controller.testFile, configGlobals)
                 );
             })
@@ -397,6 +398,71 @@ export function activate(context: vscode.ExtensionContext) {
                         err => vscode.window.showErrorMessage(err.message)
                     );
             });
+    let mvpPattewrnDisposable = vscode.commands.registerCommand("extension.genAngular1MvpPatternFiles", (uri) => {
+        // The code you place here will be executed every time your command is executed
+
+        let _workspace = vscode.workspace;
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
+        let configGlobals = <Config>_workspace.getConfiguration(configPrefix);
+
+        if (!config.files) {
+            config = FileHelper.getConfig();
+        }
+
+        let enterComponentNameDialog$ = Observable.from(
+            vscode.window.showInputBox(
+                { prompt: "Please enter feature name in camelCase" }
+            ));
+
+
+        enterComponentNameDialog$
+            .concatMap(val => {
+                if (val.length === 0) {
+                    throw new Error("Feature name can not be empty!");
+                }
+                let componentName = changeCase.paramCase(val);
+                let postfixedComponentName = `${componentName}.ui`;
+                let postfixedPresenter = `${componentName}.presenter`;
+                let postfixedContainer = `${componentName}.container`;
+                // let prefixedContainer = `${FileHelper.getTestPrefix(configGlobals)}${componentName}.container`;
+                let componentDir = FileHelper.createObjectDir(uri, componentName);
+
+                return Observable.forkJoin(
+                    FileHelper.createUiComponent(componentDir, componentName, config.files.mvpPattern, configGlobals),
+                    FileHelper.createUiComponentHtml(componentDir, postfixedComponentName, config.files.mvpPattern.html),
+                    FileHelper.createUiComponentCss(componentDir, postfixedComponentName, config.files.mvpPattern.css),
+                    FileHelper.createComponentTest(componentDir, postfixedComponentName, config.files.mvpPattern.testFile, configGlobals),
+                    FileHelper.createPresenter(componentDir, componentName, config.files.mvpPattern.presenter, configGlobals),
+                    FileHelper.createComponentTest(componentDir, postfixedPresenter, config.files.mvpPattern.presenter.testFile, configGlobals),
+                    FileHelper.createContainer(componentDir, componentName, config.files.mvpPattern.container, configGlobals),
+                    FileHelper.createContainerHtml(componentDir, componentName, config.files.mvpPattern.container.html),
+                    FileHelper.createContainerCss(componentDir, postfixedContainer, config.files.mvpPattern.container.css),
+                    FileHelper.createComponentTest(componentDir, postfixedContainer, config.files.mvpPattern.container.testFile, configGlobals),
+                    FileHelper.createService(componentDir, componentName, config.files.component.testFile, configGlobals),
+                    FileHelper.createServiceTest(componentDir, componentName, config.files.component.testFile, configGlobals)
+                );
+            }
+            )
+            .concatMap(result => Observable.from(result))
+            .filter(path => path.length > 0)
+            .first()
+            .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+            .concatMap(textDocument => {
+                if (!textDocument) {
+                    throw new Error("Could not open file!");
+                };
+                return Observable.from(vscode.window.showTextDocument(textDocument));
+            })
+            .do(editor => {
+                if (!editor) {
+                    throw new Error("Could not open file!");
+                };
+            })
+            .subscribe(
+                () => vscode.window.setStatusBarMessage("Feature Successfuly created!"),
+                err => vscode.window.showErrorMessage(err.message)
+            );
+    });
 
     context.subscriptions.push(serviceDisposable);
     context.subscriptions.push(componentDisposable);

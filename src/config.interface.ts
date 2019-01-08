@@ -99,6 +99,64 @@ export interface Config extends WorkspaceConfiguration {
             create: boolean,
             extension: string,
             template?: string
+        },
+        mvpPattern:{
+            create: boolean,
+            extension: string,
+            template?: string,
+            testFile: {
+                create: boolean,
+                extension: string,
+                alongSide: boolean,
+                template?: string
+            },
+            css: {
+                create: boolean,
+                extension: string,
+                template?: string
+            },
+            html: {
+                create: boolean,
+                extension: string,
+                template?: string
+            },
+            presenter: {
+                create: boolean,
+                extension: string,
+                template?: string,
+                testFile: {
+                    create: boolean,
+                    extension: string,
+                    alongSide: boolean,
+                    template?: string
+                }
+            },
+            container: {
+                create: boolean,
+                extension: string,
+                template?: string,
+                testFile: {
+                    create: boolean,
+                    extension: string,
+                    alongSide: boolean,
+                    template?: string
+                },
+                css: {
+                    create: boolean,
+                    extension: string,
+                    template?: string
+                },
+                html: {
+                    create: boolean,
+                    extension: string,
+                    template?: string
+                },
+            }
+            service: {
+                create: boolean,
+                extension: string,
+                template?: string
+            }
         }
     };
     globals: {

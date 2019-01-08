@@ -1,0 +1,54 @@
+import "{componentNameKebabCased}.ui.scss";
+
+import angular from "angular";
+
+import { LLQAPP_NAME } from "app/shared/constants/application.const";
+import { {areasOrShared} } from "app/shared/constants/template-paths.const";
+import { IPresentable{className}, PRESENTABLE_{componentNameConstantCased}_RESPONSE, {className}Presenter } from "./{componentNameKebabCased}.presenter";
+
+export const TEMPLATE_PATH_{componentNameConstantCased}_UI = {currentpath}/{componentNameKebabCased}.ui.html`;
+
+/**
+ *  View component llq-{componentNameKebabCased}
+ */
+export class {className}Ui {
+    private readonly onPresentable{className}: Function;
+    private presenter: {className}Presenter;
+    /**
+     *  Field with value used for registering the component llq-{componentNameKebabCased}
+     */
+    public static componentName = "llq{className}";
+
+    public static $inject = [
+        "$rootScope"
+    ];
+
+    constructor(
+        private readonly $rootScope: ng.IRootScopeService
+    ) {
+
+        this.presenter = new {className}Presenter(this.$rootScope);
+        this.onPresentable{className} =
+            this.$rootScope.$on(PRESENTABLE_{componentNameConstantCased}_RESPONSE, (event: ng.IAngularEvent, data: IPresentable{className}) => {
+                /*put any action here*/
+            }
+        );
+    }
+
+    public $onInit(): void {
+        /*put your code here*/
+    }
+    public $onDestroy(): void {
+        this.onPresentable{className}();
+        this.presenter.destroy();
+        this.presenter = null;
+    }
+}
+
+angular.module({appname}).component({className}Ui.componentName, {
+    controller: {className}Ui,
+    templateUrl: TEMPLATE_PATH_{componentNameConstantCased}_UI,
+    bindings: {
+
+    }
+});

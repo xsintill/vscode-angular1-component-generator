@@ -1,0 +1,40 @@
+import "{serviceFileName}.container.scss";
+
+import angular from "angular";
+
+import { {appname} } from "app/shared/constants/application.const";
+import { {areasOrShared} } from "app/shared/constants/template-paths.const";
+import { {serviceNameConstantCased}_SERVICE_NAME, {className}Service } from "./{serviceFileName}.service";
+
+export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/llq-{componentNameKebabCased}.html`;
+
+/**
+ *  Container component llq-{componentNameKebabCased}
+ */
+export class {containerClassName} {
+    /**
+     *  Field with value used for registering the component llq-{componentNameKebabCased}
+     */
+    public static componentName = "llq{className}Container";
+
+    public static $inject = [
+        {serviceNameConstantCased}_SERVICE_NAME
+    ];
+
+    constructor(
+        private readonly {camelCasedClassName}Service: {className}Service
+    ) {
+    }
+
+    public $onInit(): void {
+        /*put your code here*/
+    }
+}
+
+angular.module({appname}).component({containerClassName}.componentName, {
+    controller: {containerClassName},
+    templateUrl: TEMPLATE_PATH_{componentNameConstantCased},
+    bindings: {
+
+    }
+});
