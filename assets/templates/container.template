@@ -5,6 +5,8 @@ import angular from "angular";
 import { {appname} } from "app/shared/constants/application.const";
 import { {areasOrShared} } from "app/shared/constants/template-paths.const";
 import { {serviceNameConstantCased}_SERVICE_NAME, {className}Service } from "./{serviceFileName}.service";
+import "./{serviceFileName}.ui";
+import { {className}Ui } from "./{serviceFileName}.ui";
 
 export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/{componentNameKebabCased}.html`;
 
