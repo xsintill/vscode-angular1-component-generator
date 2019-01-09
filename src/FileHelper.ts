@@ -258,6 +258,26 @@ export class FileHelper {
             return Observable.of("");
         }
     };
+    public static createWebapiService(serviceDir: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
+        if (config.create) {
+            let templateFileName = this.assetRootDir + "/templates/service-webapi.template";
+            if (config.template) {
+                templateFileName = this.resolveWorkspaceRoot(config.template);
+            }
+
+            let serviceContent = fs.readFileSync(templateFileName).toString()
+                .replace(/{appname}/g, configGlobals.globals.applicationName)
+                .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
+                .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
+
+            let filename = `${serviceDir}/${serviceName}.service.${config.extension}`;
+
+            return this.createFile(filename, serviceContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
 
     public static createServiceTest(serviceDir: string, serviceName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/service.test.template";

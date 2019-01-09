@@ -8,6 +8,33 @@ import 'rxjs/add/observable/forkJoin';
 import { FileHelper } from "./FileHelper";
 import { Config } from "./config.interface";
 
+// enum EventType {
+//     None,
+//     Incoming,
+//     Outgoing
+// }
+// interface IEventItem {
+//     name: string;
+//     eventType: EventType;
+// }
+
+// export async function showEventInputType(eventItems: IEventItem[]): Promise<IEventItem[]> {
+//     let eventItem: IEventItem;
+//     const eventType = await vscode.window.showQuickPick([{label:"No events needed", description:"", target: EventType.None}, 
+//     {label:"Incoming", description:"", target: EventType.Incoming}, {label:"Outgoing", description:"", target: EventType.Outgoing}],{placeHolder:"Select what kind of event you need."
+
+//     });
+//     if (eventType) {
+//         if (eventType.target === EventType.None) {
+//             return eventItems
+//         } else {
+//             eventItem.eventType = eventType.target;
+//             eventItem.name = await vscode.window.showInputBox({placeHolder: "Give an event name (camelCased"})
+//             showEventInputType(eventItems);
+//         }
+//     }
+// }
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -398,7 +425,7 @@ export function activate(context: vscode.ExtensionContext) {
                         err => vscode.window.showErrorMessage(err.message)
                     );
             });
-    let mvpPattewrnDisposable = vscode.commands.registerCommand("extension.genAngular1MvpPatternFiles", (uri) => {
+    let mvpPattewrnDisposable = vscode.commands.registerCommand("extension.genAngular1MvpPatternFiles",  async (uri) => {
         // The code you place here will be executed every time your command is executed
 
         let _workspace = vscode.workspace;
@@ -414,7 +441,7 @@ export function activate(context: vscode.ExtensionContext) {
                 { prompt: "Please enter feature name in camelCase" }
             ));
 
-
+            // let eventItems = showEventInputType([]);
         enterComponentNameDialog$
             .concatMap(val => {
                 if (val.length === 0) {
@@ -438,7 +465,7 @@ export function activate(context: vscode.ExtensionContext) {
                     FileHelper.createContainerHtml(componentDir, componentName, config.files.mvpPattern.container.html),
                     FileHelper.createContainerCss(componentDir, postfixedContainer, config.files.mvpPattern.container.css),
                     FileHelper.createComponentTest(componentDir, postfixedContainer, config.files.mvpPattern.container.testFile, configGlobals),
-                    FileHelper.createService(componentDir, componentName, config.files.component.testFile, configGlobals),
+                    FileHelper.createWebapiService(componentDir, componentName, config.files.component.testFile, configGlobals),
                     FileHelper.createServiceTest(componentDir, componentName, config.files.component.testFile, configGlobals)
                 );
             }
