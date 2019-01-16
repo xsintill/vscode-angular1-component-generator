@@ -1,4 +1,4 @@
-export const PRESENTABLE_{componentNameConstantCased}_RESPONSE = "PRESENTABLE_{componentNameConstantCased}_RESPONSE";
+import { Observable, Subject } from "rxjs";
 
 export interface IPresentable{className} {
 
@@ -9,9 +9,15 @@ export interface IPresentable{className} {
  */
 export class {className}Presenter {
 
-    constructor(
-        private readonly $rootScope: ng.IRootScopeService
-    ) {
+    private presentable{className}: Subject<IPresentable{className}> = new Subject();
+    public presentable{className}$: Observable<IPresentable{className}> = this.presentable{className}.asObservable();
+
+    public static $inject = [
+        /*put your injectables here*/
+    ];
+
+    constructor() {
+        /*put your code here*/
     }
 
     public destroy(): void {
@@ -19,13 +25,12 @@ export class {className}Presenter {
     }
 
     /**
-     * This method is mainly here as an example
+     * This method is mainly here as an example 
      */
-    public createPresentable{className}(): void {
-        //Create your presentable item here
-        let presentable{className}: IPresentable{className} = {
+    public createPresentable{className}({camelCaseClassName}: IPresentable{className}): void {
+        let presentable: IPresentable{className} = {...{camelCaseClassName}};
+        // Transform the {camelCaseClassName} to make it become presentable
 
-        };
-        this.$rootScope.$emit(PRESENTABLE_{componentNameConstantCased}_RESPONSE, presentable{className});
+        this.presentable{className}.next(presentable);
     }
 }

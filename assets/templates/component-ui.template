@@ -1,10 +1,12 @@
 import "./{componentNameKebabCased}.ui.scss";
 
 import angular from "angular";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 import { LLQAPP_NAME } from "app/shared/constants/application.const";
 import { {areasOrShared} } from "app/shared/constants/template-paths.const";
-import { IPresentable{className}, PRESENTABLE_{componentNameConstantCased}_RESPONSE, {className}Presenter } from "./{componentNameKebabCased}.presenter";
+import { IPresentable{className}, {className}Presenter } from "./{componentNameKebabCased}.presenter";
 
 export const TEMPLATE_PATH_{componentNameConstantCased}_UI = {currentpath}/{componentNameKebabCased}.ui.html`;
 
@@ -12,36 +14,48 @@ export const TEMPLATE_PATH_{componentNameConstantCased}_UI = {currentpath}/{comp
  *  View component llq-{componentNameKebabCased}
  */
 export class {className}Ui {
-    private readonly onPresentable{className}: Function;
+    public presentable{className}: IPresentable{className};
+
     private presenter: {className}Presenter;
+    private unsubscribe = new Subject();
+
     /**
      *  Field with value used for registering the component llq-{componentNameKebabCased}
      */
-    public static componentName = "llq{className}";
+    public static componentName = "llq{className}Ui";
 
     public static $inject = [
-        "$rootScope"
     ];
 
-    constructor(
-        private readonly $rootScope: ng.IRootScopeService
-    ) {
+    constructor() {
 
-        this.presenter = new {className}Presenter(this.$rootScope);
-        this.onPresentable{className} =
-            this.$rootScope.$on(PRESENTABLE_{componentNameConstantCased}_RESPONSE, (event: ng.IAngularEvent, data: IPresentable{className}) => {
-                /*put any action here*/
-            }
-        );
+        this.presenter = new {className}Presenter();
+        this.presenter.presentable{className}$.pipe(
+            takeUntil(this.unsubscribe)
+        ).subscribe((presentable: IPresentable{className}) => {
+            this.presentable{className} = presentable;
+        });
     }
 
     public $onInit(): void {
         /*put your code here*/
     }
     public $onDestroy(): void {
-        this.onPresentable{className}();
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
         this.presenter.destroy();
         this.presenter = null;
+    }
+
+
+     /**
+     * Life-cycle hook which is called by angular when a change occurs for any bindings assigned to the component
+     * @returns: does not return anything
+     */
+    public $onChanges(onChangesObj: ng.IOnChangesObject): void {
+        if (onChangesObj.{camelCaseClassName} && onChangesObj.{camelCaseClassName}.currentValue) {
+            this.presenter.createPresentable{className}(onChangesObj.{camelCaseClassName}.currentValue);
+        }
     }
 }
 
@@ -49,6 +63,6 @@ angular.module({appname}).component({className}Ui.componentName, {
     controller: {className}Ui,
     templateUrl: TEMPLATE_PATH_{componentNameConstantCased}_UI,
     bindings: {
-
+        {camelCaseClassName}: "<"
     }
 });

@@ -53,7 +53,8 @@ export class FileHelper {
             .replace(/{templateUrl}/g, `${componentName}.ui.html`)
             .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
             .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
-            .replace(/{className}/g, changeCase.pascalCase(componentName));
+            .replace(/{className}/g, changeCase.pascalCase(componentName))
+            .replace(/{camelCaseClassName}/g, `${changeCase.camelCase(componentName)}`);
 
         let filename = `${componentDir}/${componentName}.ui.${config.extension}`;
 
@@ -79,7 +80,8 @@ export class FileHelper {
             // .replace(/{templateUrl}/g, `${componentName}.presenter.html`)
             // .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
             .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
-            .replace(/{className}/g, `${changeCase.pascalCase(componentName)}`);
+            .replace(/{className}/g, `${changeCase.pascalCase(componentName)}`)
+            .replace(/{camelCaseClassName}/g, `${changeCase.camelCase(componentName)}`);
 
         let filename = `${componentDir}/${componentName}.presenter.${config.extension}`;
 

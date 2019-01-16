@@ -7,17 +7,19 @@ import { {areasOrShared} } from "app/shared/constants/template-paths.const";
 import { {serviceNameConstantCased}_SERVICE_NAME, {className}Service } from "./{serviceFileName}.service";
 import "./{serviceFileName}.ui";
 import { {className}Ui } from "./{serviceFileName}.ui";
+// import { {className}DTO } from "app/server-models/DTO/{className}DTO";
 
-export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/{componentNameKebabCased}.html`;
+export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/{serviceFileName}.container.html`;
 
 /**
  *  Container component llq-{componentNameKebabCased}
  */
 export class {containerClassName} {
+    // public data: {className}DTO;
     /**
      *  Field with value used for registering the component llq-{componentNameKebabCased}
      */
-    public static componentName = "llq{className}Container";
+    public static componentName = "llq{className}";
 
     public static $inject = [
         {serviceNameConstantCased}_SERVICE_NAME
@@ -27,6 +29,17 @@ export class {containerClassName} {
         private readonly {camelCasedClassName}Service: {className}Service
     ) {
     }
+
+    /**
+     * code underneath only serves as an example to get this working you need to uncomment code underneath the data property and the 
+     * import - import { {className}DTO } from "app/server-models/DTO/{className}DTO";
+     * if you do not need this at all you might want to clean up the container.html template since it has a binding using the $ctrl.data
+     */
+    // public search(searchText: string): void {
+    //     this.{camelCasedClassName}Service.get(searchText).then((response: {className}DTO) => {
+    //         this.data = response
+    //     });
+    // }
 
     public $onInit(): void {
         /*put your code here*/
