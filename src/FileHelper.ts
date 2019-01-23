@@ -48,7 +48,8 @@ export class FileHelper {
 
         let componentContent = fs.readFileSync(templateFileName).toString()
             .replace(/{appname}/g, configGlobals.globals.applicationName)
-            .replace(/{currentpath}/g, `${relativeDirObj.relativeDir}`)
+            .split("{currentpath}").join(`${relativeDirObj.relativeDir}`)
+            // .replace(, `${relativeDirObj.relativeDir}`)
             .replace(/{areasOrShared}/g, `${(relativeDirObj.isAreas)? "TEMPLATE_PATH_BASE_AREAS": "TEMPLATE_PATH_BASE_SHARED" }`)
             .replace(/{templateUrl}/g, `${componentName}.ui.html`)
             .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
@@ -571,7 +572,7 @@ export class FileHelper {
     public static createObjectDir(uri: any, objectName: string): string {
         let contextMenuSourcePath = this.getContextMenuDir(uri);
 
-        let objectDir = `${contextMenuSourcePath}/${objectName}`;
+        let objectDir = `${contextMenuSourcePath}\\${objectName}`;
         fse.mkdirsSync(objectDir);
         return objectDir;
     }
@@ -607,12 +608,13 @@ export class FileHelper {
         }
         if (config.globals.sharedConstant) {
             result.isShared = result.relativeDir.includes("app\\shared\\");
-            result.relativeDir = result.relativeDir.replace("app\\shared\\", config.globals.sharedConstant + "/");
+            result.relativeDir = result.relativeDir.replace("app\\shared\\", config.globals.sharedConstant + "\\");
         }
         if (config.globals.srcConstant) {
             result.isAreas = result.relativeDir.includes("app\\areas\\");
-            result.relativeDir = result.relativeDir.replace("app\\areas\\", config.globals.srcConstant + "/");
+            result.relativeDir = result.relativeDir.replace("app\\areas\\", config.globals.srcConstant + "\\");
         }
+        result.relativeDir = result.relativeDir.split("\\").join("/");
         return result;
     }
     public static resolveTestPath(path: string, configGlobals: Config) {

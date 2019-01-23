@@ -8,7 +8,7 @@ import { LLQAPP_NAME } from "app/shared/constants/application.const";
 import { {areasOrShared} } from "app/shared/constants/template-paths.const";
 import { IPresentable{className}, {className}Presenter } from "./{componentNameKebabCased}.presenter";
 
-export const TEMPLATE_PATH_{componentNameConstantCased}_UI = {currentpath}/{componentNameKebabCased}.ui.html`;
+export const TEMPLATE_PATH_{componentNameConstantCased}_UI = `{currentpath}/{componentNameKebabCased}.ui.html`;
 
 /**
  *  View component llq-{componentNameKebabCased}-ui

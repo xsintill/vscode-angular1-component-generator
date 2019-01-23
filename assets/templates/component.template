@@ -2,7 +2,7 @@ import angular from "angular";
 
 import { LLQAPP_NAME } from "app/shared/constants/application.const";
 
-export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/llq-{componentNameKebabCased}.html`;
+export const TEMPLATE_PATH_{componentNameConstantCased} = `{currentpath}/llq-{componentNameKebabCased}.html`;
 
 /**
  *  Controller for component llq-{componentNameKebabCased}
