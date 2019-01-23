@@ -9,8 +9,8 @@ export interface IPresentable{className} {
  */
 export class {className}Presenter {
 
-    private presentable{className}: Subject<IPresentable{className}> = new Subject();
-    public presentable{className}$: Observable<IPresentable{className}> = this.presentable{className}.asObservable();
+    private presentable: Subject<IPresentable{className}> = new Subject();
+    public presentable$: Observable<IPresentable{className}> = this.presentable.asObservable();
 
     constructor() {
         /*put your code here*/
@@ -21,12 +21,12 @@ export class {className}Presenter {
     }
 
     /**
-     * This method is mainly here as an example 
+     * This method is mainly here as an example
      */
-    public createPresentable{className}({camelCaseClassName}: IPresentable{className}): void {
+    public createPresentable({camelCaseClassName}: IPresentable{className}): void {
         let presentable: IPresentable{className} = {...{camelCaseClassName}};
         // Transform the {camelCaseClassName} to make it become presentable
 
-        this.presentable{className}.next(presentable);
+        this.presentable.next(presentable);
     }
 }

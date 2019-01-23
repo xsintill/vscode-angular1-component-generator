@@ -14,7 +14,7 @@ export const TEMPLATE_PATH_{componentNameConstantCased}_UI = {currentpath}/{comp
  *  View component llq-{componentNameKebabCased}-ui
  */
 export class {className}Ui {
-    public presentable{className}: IPresentable{className};
+    public presentable: IPresentable{className};
 
     private presenter: {className}Presenter;
     private unsubscribe = new Subject();
@@ -30,10 +30,10 @@ export class {className}Ui {
     constructor() {
 
         this.presenter = new {className}Presenter();
-        this.presenter.presentable{className}$.pipe(
+        this.presenter.presentable$.pipe(
             takeUntil(this.unsubscribe)
         ).subscribe((presentable: IPresentable{className}) => {
-            this.presentable{className} = presentable;
+            this.presentable = presentable;
         });
     }
 
@@ -54,7 +54,7 @@ export class {className}Ui {
      */
     public $onChanges(onChangesObj: ng.IOnChangesObject): void {
         if (onChangesObj.{camelCaseClassName} && onChangesObj.{camelCaseClassName}.currentValue) {
-            this.presenter.createPresentable{className}(
+            this.presenter.createPresentable(
                 onChangesObj.{camelCaseClassName}.currentValue as IPresentable{className}
                 );
         }
