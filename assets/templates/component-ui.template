@@ -11,7 +11,7 @@ import { IPresentable{className}, {className}Presenter } from "./{componentNameK
 export const TEMPLATE_PATH_{componentNameConstantCased}_UI = {currentpath}/{componentNameKebabCased}.ui.html`;
 
 /**
- *  View component llq-{componentNameKebabCased}
+ *  View component llq-{componentNameKebabCased}-ui
  */
 export class {className}Ui {
     public presentable{className}: IPresentable{className};
@@ -20,7 +20,7 @@ export class {className}Ui {
     private unsubscribe = new Subject();
 
     /**
-     *  Field with value used for registering the component llq-{componentNameKebabCased}
+     *  Field with value used for registering the component llq-{componentNameKebabCased}-ui
      */
     public static componentName = "llq{className}Ui";
 
@@ -48,13 +48,15 @@ export class {className}Ui {
     }
 
 
-     /**
+    /**
      * Life-cycle hook which is called by angular when a change occurs for any bindings assigned to the component
      * @returns: does not return anything
      */
     public $onChanges(onChangesObj: ng.IOnChangesObject): void {
         if (onChangesObj.{camelCaseClassName} && onChangesObj.{camelCaseClassName}.currentValue) {
-            this.presenter.createPresentable{className}(onChangesObj.{camelCaseClassName}.currentValue);
+            this.presenter.createPresentable{className}(
+                onChangesObj.{camelCaseClassName}.currentValue as IPresentable{className}
+                );
         }
     }
 }

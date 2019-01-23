@@ -12,12 +12,12 @@ import { {className}Ui } from "./{serviceFileName}.ui";
 export const TEMPLATE_PATH_{componentNameConstantCased} = {currentpath}/{serviceFileName}.container.html`;
 
 /**
- *  Container component llq-{componentNameKebabCased}
+ *  Container component llq-{serviceFileName}
  */
 export class {containerClassName} {
     // public data: {className}DTO;
     /**
-     *  Field with value used for registering the component llq-{componentNameKebabCased}
+     *  Field with value used for registering the component llq-{serviceFileName}
      */
     public static componentName = "llq{className}";
 

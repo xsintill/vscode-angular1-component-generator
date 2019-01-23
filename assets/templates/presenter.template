@@ -12,10 +12,6 @@ export class {className}Presenter {
     private presentable{className}: Subject<IPresentable{className}> = new Subject();
     public presentable{className}$: Observable<IPresentable{className}> = this.presentable{className}.asObservable();
 
-    public static $inject = [
-        /*put your injectables here*/
-    ];
-
     constructor() {
         /*put your code here*/
     }
