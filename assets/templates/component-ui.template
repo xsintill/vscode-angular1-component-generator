@@ -17,7 +17,7 @@ export class {className}Ui {
     public presentable: IPresentable{className};
 
     private presenter: {className}Presenter;
-    private unsubscribe = new Subject();
+    private readonly unsubscribe = new Subject();
 
     /**
      *  Field with value used for registering the component llq-{componentNameKebabCased}-ui
@@ -40,13 +40,13 @@ export class {className}Ui {
     public $onInit(): void {
         /*put your code here*/
     }
+
     public $onDestroy(): void {
         this.unsubscribe.next();
         this.unsubscribe.complete();
         this.presenter.destroy();
         this.presenter = null;
     }
-
 
     /**
      * Life-cycle hook which is called by angular when a change occurs for any bindings assigned to the component

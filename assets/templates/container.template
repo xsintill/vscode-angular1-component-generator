@@ -31,7 +31,7 @@ export class {containerClassName} {
     }
 
     /**
-     * code underneath only serves as an example to get this working you need to uncomment code underneath the data property and the 
+     * code underneath only serves as an example to get this working you need to uncomment code underneath the data property and the
      * import - import { {className}DTO } from "app/server-models/DTO/{className}DTO";
      * if you do not need this at all you might want to clean up the container.html template since it has a binding using the $ctrl.data
      */

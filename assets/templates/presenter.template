@@ -9,7 +9,7 @@ export interface IPresentable{className} {
  */
 export class {className}Presenter {
 
-    private presentable: Subject<IPresentable{className}> = new Subject();
+    private readonly presentable: Subject<IPresentable{className}> = new Subject();
     public presentable$: Observable<IPresentable{className}> = this.presentable.asObservable();
 
     constructor() {
