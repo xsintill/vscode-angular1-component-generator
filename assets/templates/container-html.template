@@ -1,3 +1,2 @@
 <h2>{className} container works</h2>
-<llq-{componentNameKebabCased}-ui class="llq-{componentNameKebabCased}-container"
-    {componentNameKebabCased}="$ctrl.data"></llq-{componentNameKebabCased}-ui>
+<llq-{componentNameKebabCased}-ui {componentNameKebabCased}="$ctrl.data"></llq-{componentNameKebabCased}-ui>

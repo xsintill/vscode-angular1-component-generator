@@ -463,7 +463,7 @@ export function activate(context: vscode.ExtensionContext) {
                     FileHelper.createComponentTest(componentDir, postfixedPresenter, config.files.mvpPattern.presenter.testFile, configGlobals),
                     FileHelper.createContainer(componentDir, componentName, config.files.mvpPattern.container, configGlobals),
                     FileHelper.createContainerHtml(componentDir, componentName, config.files.mvpPattern.container.html),
-                    FileHelper.createContainerCss(componentDir, postfixedContainer, config.files.mvpPattern.container.css),
+                    FileHelper.createContainerCss(componentDir, componentName, config.files.mvpPattern.container.css),
                     FileHelper.createComponentTest(componentDir, postfixedContainer, config.files.mvpPattern.container.testFile, configGlobals),
                     FileHelper.createWebapiService(componentDir, componentName, config.files.component.testFile, configGlobals),
                     FileHelper.createServiceTest(componentDir, componentName, config.files.component.testFile, configGlobals)

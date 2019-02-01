@@ -560,7 +560,7 @@ export class FileHelper {
             .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName));
 
 
-        let filename = `${componentDir}/${componentName}.${config.extension}`;
+        let filename = `${componentDir}/${componentName}.container.${config.extension}`;
         if (config.create) {
             return this.createFile(filename, cssContent)
                 .map(result => filename);
