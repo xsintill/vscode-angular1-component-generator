@@ -6,7 +6,6 @@ import { {appname} } from "app/shared/constants/application.const";
 import { {areasOrShared} } from "app/shared/constants/template-paths.const";
 import { {serviceNameConstantCased}_SERVICE_NAME, {className}Service } from "./{serviceFileName}.service";
 import "./{serviceFileName}.ui";
-import { {className}Ui } from "./{serviceFileName}.ui";
 // import { {className}DTO } from "app/server-models/DTO/{className}DTO";
 
 export const TEMPLATE_PATH_{componentNameConstantCased} = 
