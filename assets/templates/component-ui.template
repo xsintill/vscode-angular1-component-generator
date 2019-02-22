@@ -8,7 +8,8 @@ import { LLQAPP_NAME } from "app/shared/constants/application.const";
 import { {areasOrShared} } from "app/shared/constants/template-paths.const";
 import { IPresentable{className}, {className}Presenter } from "./{componentNameKebabCased}.presenter";
 
-export const TEMPLATE_PATH_{componentNameConstantCased}_UI = `{currentpath}/{componentNameKebabCased}.ui.html`;
+export const TEMPLATE_PATH_{componentNameConstantCased}_UI = 
+    `{currentpath}/{componentNameKebabCased}.ui.html`;
 
 /**
  *  View component llq-{componentNameKebabCased}-ui
@@ -16,7 +17,7 @@ export const TEMPLATE_PATH_{componentNameConstantCased}_UI = `{currentpath}/{com
 export class {className}Ui {
     public presentable: IPresentable{className};
 
-    private presenter: {className}Presenter;
+    private readonly presenter: {className}Presenter;
     private readonly unsubscribe = new Subject();
 
     /**
@@ -28,7 +29,6 @@ export class {className}Ui {
     ];
 
     constructor() {
-
         this.presenter = new {className}Presenter();
         this.presenter.presentable$.pipe(
             takeUntil(this.unsubscribe)
@@ -56,7 +56,7 @@ export class {className}Ui {
         if (onChangesObj.{camelCaseClassName} && onChangesObj.{camelCaseClassName}.currentValue) {
             this.presenter.createPresentable(
                 onChangesObj.{camelCaseClassName}.currentValue as IPresentable{className}
-                );
+            );
         }
     }
 }

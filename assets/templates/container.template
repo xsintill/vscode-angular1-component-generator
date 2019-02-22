@@ -9,7 +9,8 @@ import "./{serviceFileName}.ui";
 import { {className}Ui } from "./{serviceFileName}.ui";
 // import { {className}DTO } from "app/server-models/DTO/{className}DTO";
 
-export const TEMPLATE_PATH_{componentNameConstantCased} = `{currentpath}/{serviceFileName}.container.html`;
+export const TEMPLATE_PATH_{componentNameConstantCased} = 
+    `{currentpath}/{serviceFileName}.container.html`;
 
 /**
  *  Container component llq-{serviceFileName}
