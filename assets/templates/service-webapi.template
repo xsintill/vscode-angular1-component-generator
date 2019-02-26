@@ -7,7 +7,7 @@ export const {serviceNameConstantCase}_SERVICE_NAME = "{serviceName}Service";
 /**
  *   Class for service {serviceName}
  */
-export class {serviceName}Service {
+export class {serviceName}Service<TSelectAll, TSelectIndividual, TUpsert> {
     public static $inject = [
         "$http"
     ];
@@ -21,5 +21,31 @@ export class {serviceName}Service {
         return `${WEBAPI}` /*add the webapi controller route here*/;
     }
 
+    public get(id?: number): ng.IPromise<TSelectAll | TSelectIndividual> {
+        if (!id) {
+            return this.$http.get<TSelectAll>(this.getUrl()).then(
+                (response: ng.IHttpResponse<TSelectAll>) => response.data
+            );
+        }
+        return this.$http.get<TSelectIndividual>(`${this.getUrl()}/${id}`).then(
+            (response: ng.IHttpResponse<TSelectIndividual>) => response.data
+        );
+    }
+
+    public put(value: TUpsert): ng.IPromise<number> {
+        return this.$http.put<number>(this.getUrl(), value).then(
+            (response: ng.IHttpResponse<number>) => response.data
+        );
+    }
+
+    public post(value: TUpsert): ng.IPromise<number> {
+        return this.$http.post<number>(this.getUrl(), value).then(
+            (response: ng.IHttpResponse<number>) => response.data
+        );
+    }
+
+    public delete(id: number): ng.IPromise<number> {
+        return this.$http.delete<void>(`${this.getUrl()}/${id}`).then(() => null);
+    }
 }
 angular.module({appname}).service({serviceNameConstantCase}_SERVICE_NAME, {serviceName}Service);

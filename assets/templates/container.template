@@ -26,7 +26,8 @@ export class {containerClassName} {
     ];
 
     constructor(
-        private readonly {camelCasedClassName}Service: {className}Service
+        private readonly {camelCasedClassName}Service: 
+            {className}Service<{className}SelectAllDTO, {className}SelectIndividualDTO, {className}UpsertDTO>
     ) {
     }
 
