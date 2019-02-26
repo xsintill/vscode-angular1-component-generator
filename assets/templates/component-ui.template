@@ -17,7 +17,7 @@ export const TEMPLATE_PATH_{componentNameConstantCased}_UI =
 export class {className}Ui {
     public presentable: IPresentable{className};
 
-    private readonly presenter: {className}Presenter;
+    private presenter: {className}Presenter;
     private readonly unsubscribe = new Subject();
 
     /**
