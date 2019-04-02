@@ -6,6 +6,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { LLQAPP_NAME } from "app/shared/constants/application.const";
 import { {areasOrShared} } from "app/shared/constants/template-paths.const";
+import { extractChangeValue } from "app/shared/on-change-object/on-change-object-helper";
 import { IPresentable{className}, {className}Presenter } from "./{componentNameKebabCased}.presenter";
 
 export const TEMPLATE_PATH_{componentNameConstantCased}_UI = 
@@ -53,11 +54,12 @@ export class {className}Ui {
      * @returns: does not return anything
      */
     public $onChanges(onChangesObj: ng.IOnChangesObject): void {
-        if (onChangesObj.{camelCaseClassName} && onChangesObj.{camelCaseClassName}.currentValue) {
-            this.presenter.createPresentable(
-                onChangesObj.{camelCaseClassName}.currentValue as IPresentable{className}
-            );
-        }
+
+        let {camelCaseClassName}: IPresentable{className};
+
+        {camelCaseClassName} = extractChangeValue<string>(onChangesObj.{camelCaseClassName});
+
+        this.presenter.createPresentable({camelCaseClassName});
     }
 }
 
