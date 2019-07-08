@@ -21,7 +21,7 @@ describe("llq-{componentNameKebabCased}", () => {
 
     describe("componentName", () => {
         it("should return llq{className}", () => {
-            let result = {className}Controller.componentName;
+            const result = {className}Controller.componentName;
             expect(result).toBe("llq{className}");
         });
     });

@@ -1,8 +1,6 @@
 import { Observable, Subject } from "rxjs";
 
-export interface IPresentable{className} {
-
-}
+import { IPresentable{className} } from "./{componentNameKebabCased}.type";
 
 /**
  *  Presenter for {className}
@@ -23,10 +21,22 @@ export class {className}Presenter {
     /**
      * This method is mainly here as an example
      */
-    public createPresentable({camelCaseClassName}: IPresentable{className}): void {
-        let presentable: IPresentable{className} = {...{camelCaseClassName}};
+    public createPresentable(presentableState: IPresentable{className}): void {
+        const presentable = this.determineDefaultOrPreviousState(presentableState);
         // Transform the {camelCaseClassName} to make it become presentable
 
         this.presentable.next(presentable);
+    }
+
+    private determineDefaultOrPreviousState(previousState: IPresentable{className}): IPresentable{className} {
+        return (previousState === undefined) ?
+            { ...this.getDefaultPresentableValues() } :
+            { ...previousState };
+    }
+    private getDefaultPresentableValues(): IPresentable{className} {
+        const presentableState: Partial<IPresentable{className}> = {
+            // Put the IPresentable{className} properties here you need defaults for
+        };
+        return presentableState as Required<IPresentable{className}>;
     }
 }

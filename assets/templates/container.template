@@ -3,13 +3,12 @@ import "./{serviceFileName}.container.scss";
 import angular from "angular";
 
 import { {appname} } from "app/shared/constants/application.const";
-import { {areasOrShared} } from "app/shared/constants/template-paths.const";
-import { {serviceNameConstantCased}_SERVICE_NAME, {className}Service } from "./{serviceFileName}.service";
+import { {serviceNameConstantCased}_SERVICE_NAME, TEMPLATE_PATH_{componentNameConstantCased} } from "./{serviceFileName}.const";
+//Next import is needed to prevent Unknown provider: <ServiceName>ServiceProvider <- <ServiceName>Service and still move the consts to it's own file
+import "./{serviceFileName}.service";
+import { {className}Service } from "./{serviceFileName}.service";
 import "./{serviceFileName}.ui";
 // import { {className}DTO } from "app/server-models/DTO/{className}DTO";
-
-export const TEMPLATE_PATH_{componentNameConstantCased} = 
-    `{currentpath}/{serviceFileName}.container.html`;
 
 /**
  *  Container component llq-{serviceFileName}
@@ -26,7 +25,7 @@ export class {containerClassName} {
     ];
 
     constructor(
-        private readonly {camelCasedClassName}Service: 
+        private readonly {camelCasedClassName}Service:
             {className}Service<{className}SelectAllDTO, {className}SelectIndividualDTO, {className}UpsertDTO>
     ) {
     }

@@ -5,12 +5,10 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { LLQAPP_NAME } from "app/shared/constants/application.const";
-import { {areasOrShared} } from "app/shared/constants/template-paths.const";
 import { extractChangeValue } from "app/shared/on-change-object/on-change-object-helper";
-import { IPresentable{className}, {className}Presenter } from "./{componentNameKebabCased}.presenter";
-
-export const TEMPLATE_PATH_{componentNameConstantCased}_UI = 
-    `{currentpath}/{componentNameKebabCased}.ui.html`;
+import { TEMPLATE_PATH_{componentNameConstantCased}_UI } from "./{componentNameKebabCased}.const";
+import { {className}Presenter } from "./{componentNameKebabCased}.presenter";
+import { IPresentable{className} } from "./{componentNameKebabCased}.type";
 
 /**
  *  View component llq-{componentNameKebabCased}-ui
@@ -54,10 +52,7 @@ export class {className}Ui {
      * @returns: does not return anything
      */
     public $onChanges(onChangesObj: ng.IOnChangesObject): void {
-
-        let {camelCaseClassName}: IPresentable{className};
-
-        {camelCaseClassName} = extractChangeValue<string>(onChangesObj.{camelCaseClassName});
+        const {camelCaseClassName}: IPresentable{className} = extractChangeValue<string>(onChangesObj.{camelCaseClassName});
 
         this.presenter.createPresentable({camelCaseClassName});
     }

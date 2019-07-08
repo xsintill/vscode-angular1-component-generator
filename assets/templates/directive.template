@@ -20,7 +20,7 @@ export class {directiveName}Directive implements ng.IDirective {
     };
 
     public static factory() {
-        let factory: ng.IDirectiveFactory = () => new {directiveName}Directive();
+        const factory: ng.IDirectiveFactory = () => new {directiveName}Directive();
         factory.$inject = [];
         return factory;
     }

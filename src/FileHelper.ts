@@ -1,4 +1,4 @@
-import { _do } from 'rxjs/operator/do';
+ import { _do } from 'rxjs/operator/do';
 import * as vscode from "vscode";
 import * as fse from "fs-extra";
 import * as fs from "fs";
@@ -11,6 +11,23 @@ import { Config } from "./config.interface";
 export class FileHelper {
     private static createFile = <(file: string, data: string) => Observable<{}>>Observable.bindNodeCallback(fse.outputFile);
     private static assetRootDir: string = path.join(__dirname, "../../assets");
+
+    
+    // public static async  getBindings(bindings: string[]): Promise<string[]> {
+    //     if (!bindings) {
+    //         bindings = [];
+    //     }
+    //     return await vscode.window.showInputBox(
+    //         { prompt: "Please enter a binding name in camelCase. Leave empty if you have defined all bindings" }
+    //     ).then((response: string) => {
+    //         if (response !== "") {
+    //             bindings.push(response);
+    //             this.getBindings(bindings);
+    //         } else {
+    //             return bindings;
+    //         }
+    //     });
+    // }
 
     public static createComponent(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/component.template";
@@ -48,7 +65,7 @@ export class FileHelper {
 
         let componentContent = fs.readFileSync(templateFileName).toString()
             .replace(/{appname}/g, configGlobals.globals.applicationName)
-            .split("{currentpath}").join(`${relativeDirObj.relativeDir}`)
+            // .split("{currentpath}").join(`${relativeDirObj.relativeDir}`)
             // .replace(, `${relativeDirObj.relativeDir}`)
             .replace(/{areasOrShared}/g, `${(relativeDirObj.isAreas)? "TEMPLATE_PATH_BASE_AREAS": "TEMPLATE_PATH_BASE_SHARED" }`)
             .replace(/{templateUrl}/g, `${componentName}.ui.html`)
@@ -66,6 +83,7 @@ export class FileHelper {
             return Observable.of("");
         }
     };
+
     public static createPresenter(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
         let templateFileName = this.assetRootDir + "/templates/presenter.template";
         if (config.template) {
@@ -74,12 +92,15 @@ export class FileHelper {
 
         let relativeDirObj = this.resolveToRelativePathWithReplacedConstants(componentDir, configGlobals);
 
+        // let bindings = this.getBindings(undefined);
+        // console.log("bindings available", bindings)
+
         let componentContent = fs.readFileSync(templateFileName).toString()
             // .replace(/{appname}/g, configGlobals.globals.applicationName)
             // .replace(/{currentpath}/g, `${relativeDirObj.relativeDir}`)
             // .replace(/{areasOrShared}/g, `${(relativeDirObj.isAreas)? "TEMPLATE_PATH_BASE_AREAS": "TEMPLATE_PATH_BASE_SHARED" }`)
             // .replace(/{templateUrl}/g, `${componentName}.presenter.html`)
-            // .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
             .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
             .replace(/{className}/g, `${changeCase.pascalCase(componentName)}`)
             .replace(/{camelCaseClassName}/g, `${changeCase.camelCase(componentName)}`);
@@ -271,6 +292,7 @@ export class FileHelper {
             let serviceContent = fs.readFileSync(templateFileName).toString()
                 .replace(/{appname}/g, configGlobals.globals.applicationName)
                 .replace(/{serviceName}/g, changeCase.pascalCase(serviceName))
+                .replace(/{serviceNameKebabCased}/g, `${changeCase.paramCase(serviceName)}`)
                 .replace(/{serviceNameConstantCase}/g, changeCase.constantCase(serviceName));
 
             let filename = `${serviceDir}/${serviceName}.service.${config.extension}`;
@@ -545,6 +567,48 @@ export class FileHelper {
         let filename = `${componentDir}/${componentName}.${config.extension}`;
         if (config.create) {
             return this.createFile(filename, cssContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createConst(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/const.template";
+        if (config && config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let relativeDirObj = this.resolveToRelativePathWithReplacedConstants(componentDir, configGlobals);
+
+        let cssContent = fs.readFileSync(templateFileName).toString()
+            .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
+            .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
+            .replace(/{serviceFileName}/g, `${changeCase.paramCase(componentName)}`)
+            .replace(/{serviceNameConstantCased}/g, `${changeCase.constantCase(componentName)}`)
+            .replace(/{currentpath}/g, `${relativeDirObj.relativeDir}`)
+            .replace(/{serviceName}/g, changeCase.pascalCase(componentName));
+
+        let filename = `${componentDir}/${componentName}.const.${(config) ? config.extension : 'ts'}`;
+        if ((config) ? config.create : true) {
+            return this.createFile(filename, cssContent)
+                .map(result => filename);
+        } else {
+            return Observable.of("");
+        }
+    };
+    public static createType(componentDir: string, componentName: string, config: any, configGlobals: Config): Observable<string> {
+        let templateFileName = this.assetRootDir + "/templates/type.template";
+        if (config && config.template) {
+            templateFileName = this.resolveWorkspaceRoot(config.template);
+        }
+
+        let typeContent = fs.readFileSync(templateFileName).toString()
+            .replace(/{className}/g, changeCase.pascalCase(componentName))
+
+
+        let filename = `${componentDir}/${componentName}.type.${(config) ? config.extension : 'ts'}`;
+        if ((config) ? config.create : true) {
+            return this.createFile(filename, typeContent)
                 .map(result => filename);
         } else {
             return Observable.of("");

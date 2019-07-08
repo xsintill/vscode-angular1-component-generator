@@ -530,6 +530,42 @@
                       "description": "If you want to use your own template put the path to it in here"
                     }
                   }
+                },
+                "const": {
+                  "type": "object",
+                  "title": "Configuration object for the const file to be generated alongside the component",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the const file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the const file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
+                },
+                "const": {
+                  "type": "object",
+                  "title": "Configuration object for the type file to be generated alongside the component",
+                  "properties": {
+                    "create": {
+                      "type": "boolean",
+                      "description": "Should the type file be created"
+                    },
+                    "extension": {
+                      "type": "string",
+                      "description": "What extension should the type file get"
+                    },
+                    "template": {
+                      "type": "string",
+                      "description": "If you want to use your own template put the path to it in here"
+                    }
+                  }
                 }
               }
             }

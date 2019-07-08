@@ -151,8 +151,18 @@ export interface Config extends WorkspaceConfiguration {
                     extension: string,
                     template?: string
                 },
-            }
+            },
             service: {
+                create: boolean,
+                extension: string,
+                template?: string
+            },
+            const: {
+                create: boolean,
+                extension: string,
+                template?: string
+            }
+            type: {
                 create: boolean,
                 extension: string,
                 template?: string

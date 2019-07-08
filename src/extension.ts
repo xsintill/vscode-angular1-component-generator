@@ -35,6 +35,26 @@ import { Config } from "./config.interface";
 //     }
 // }
 
+// export function getBindingsO(bindings: string[]): Observable<string[]> {
+//     if (!bindings) {
+//         bindings = [];
+//     }
+//    .then((response)=>{
+//     if (!bindings) {
+//         bindings = [];
+//     }
+//             if (response !== "") {
+//                 bindings.push(response);
+//                 getBindingsO(bindings);
+//             } else {
+//                 return bindings;
+//             }
+//     });
+
+
+// }
+
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -382,52 +402,52 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
 
-                let enterComponentNameDialog$ = Observable.from(
-                    vscode.window.showInputBox(
-                        { prompt: "Please enter component name in camelCase" }
-                    ));
+        let enterComponentNameDialog$ = Observable.from(
+            vscode.window.showInputBox(
+                { prompt: "Please enter component name in camelCase" }
+            ));
 
 
-                enterComponentNameDialog$
-                    .concatMap(val => {
-                        if (val.length === 0) {
-                            throw new Error("Component name can not be empty!");
-                        }
-                        let componentName = changeCase.paramCase(val);
-                        let prefixedComponentName = `${FileHelper.getTestPrefix(configGlobals)}${componentName}`;
-                        let componentDir = FileHelper.createObjectDir(uri, prefixedComponentName);
+        enterComponentNameDialog$
+            .concatMap(val => {
+                if (val.length === 0) {
+                    throw new Error("Component name can not be empty!");
+                }
+                let componentName = changeCase.paramCase(val);
+                let prefixedComponentName = `${FileHelper.getTestPrefix(configGlobals)}${componentName}`;
+                let componentDir = FileHelper.createObjectDir(uri, prefixedComponentName);
 
-                        return Observable.forkJoin(
-                            FileHelper.createComponent(componentDir, componentName, config.files.component, configGlobals),
-                            FileHelper.createHtml(componentDir, prefixedComponentName, config.files.component.html),
-                            FileHelper.createCss(componentDir, prefixedComponentName, config.files.component.css),
-                            FileHelper.createComponentTest(componentDir, componentName, config.files.component.testFile, configGlobals)
-                        );
-                    }
-                    )
-                    .concatMap(result => Observable.from(result))
-                    .filter(path => path.length > 0)
-                    .first()
-                    .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
-                    .concatMap(textDocument => {
-                        if (!textDocument) {
-                            throw new Error("Could not open file!");
-                        };
-                        return Observable.from(vscode.window.showTextDocument(textDocument));
-                    })
-                    .do(editor => {
-                        if (!editor) {
-                            throw new Error("Could not open file!");
-                        };
-                    })
-                    .subscribe(
-                        () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
-                        err => vscode.window.showErrorMessage(err.message)
-                    );
-            });
-    let mvpPattewrnDisposable = vscode.commands.registerCommand("extension.genAngular1MvpPatternFiles",  async (uri) => {
+                return Observable.forkJoin(
+                    FileHelper.createComponent(componentDir, componentName, config.files.component, configGlobals),
+                    FileHelper.createHtml(componentDir, prefixedComponentName, config.files.component.html),
+                    FileHelper.createCss(componentDir, prefixedComponentName, config.files.component.css),
+                    FileHelper.createComponentTest(componentDir, componentName, config.files.component.testFile, configGlobals)
+                );
+            }
+            )
+            .concatMap(result => Observable.from(result))
+            .filter(path => path.length > 0)
+            .first()
+            .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+            .concatMap(textDocument => {
+                if (!textDocument) {
+                    throw new Error("Could not open file!");
+                };
+                return Observable.from(vscode.window.showTextDocument(textDocument));
+            })
+            .do(editor => {
+                if (!editor) {
+                    throw new Error("Could not open file!");
+                };
+            })
+            .subscribe(
+                () => vscode.window.setStatusBarMessage("Component Successfuly created!"),
+                err => vscode.window.showErrorMessage(err.message)
+            );
+    });
+    let mvpPatternDisposable = vscode.commands.registerCommand("extension.genAngular1MvpPatternFiles", async (uri) => {
         // The code you place here will be executed every time your command is executed
-
+        let bindings: string[] = [];
         let _workspace = vscode.workspace;
         let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
         let configGlobals = <Config>_workspace.getConfiguration(configPrefix);
@@ -441,18 +461,30 @@ export function activate(context: vscode.ExtensionContext) {
                 { prompt: "Please enter feature name in camelCase" }
             ));
 
-            // let eventItems = showEventInputType([]);
+        // let bindingNameDialog$ = Observable.from(
+        //     vscode.window.showInputBox(
+        //         { prompt: "Please enter a binding name in camelCase. Leave empty if you have defined all bindings" }
+        //     )
+        // );
+
+        // // let eventItems = showEventInputType([]);
+        // bindingNameDialog$.map(response => {
+        //     bindings.push(response);
+        // }).subscribe();
         enterComponentNameDialog$
             .concatMap(val => {
                 if (val.length === 0) {
                     throw new Error("Feature name can not be empty!");
                 }
+
                 let componentName = changeCase.paramCase(val);
                 let postfixedComponentName = `${componentName}.ui`;
                 let postfixedPresenter = `${componentName}.presenter`;
                 let postfixedContainer = `${componentName}.container`;
                 // let prefixedContainer = `${FileHelper.getTestPrefix(configGlobals)}${componentName}.container`;
                 let componentDir = FileHelper.createObjectDir(uri, componentName);
+                // return 
+
 
                 return Observable.forkJoin(
                     FileHelper.createUiComponent(componentDir, componentName, config.files.mvpPattern, configGlobals),
@@ -466,14 +498,19 @@ export function activate(context: vscode.ExtensionContext) {
                     FileHelper.createContainerCss(componentDir, componentName, config.files.mvpPattern.container.css),
                     FileHelper.createComponentTest(componentDir, postfixedContainer, config.files.mvpPattern.container.testFile, configGlobals),
                     FileHelper.createWebapiService(componentDir, componentName, config.files.component.testFile, configGlobals),
-                    FileHelper.createServiceTest(componentDir, componentName, config.files.component.testFile, configGlobals)
+                    FileHelper.createServiceTest(componentDir, componentName, config.files.component.testFile, configGlobals),
+                    FileHelper.createConst(componentDir, componentName, config.files.mvpPattern.const, configGlobals),
+                    FileHelper.createType(componentDir, componentName, config.files.mvpPattern.type, configGlobals)
+
                 );
-            }
-            )
-            .concatMap(result => Observable.from(result))
-            .filter(path => path.length > 0)
+                // })
+            })
+            .concatMap(result => {
+                return Observable.from(Array.prototype.concat(result, bindings))
+            })
+            .filter(path => path && path.length > 0)
             .first()
-            .concatMap(filename => Observable.from(vscode.workspace.openTextDocument(filename)))
+            .concatMap(filename => Observable.from(filename && vscode.workspace.openTextDocument(filename)))
             .concatMap(textDocument => {
                 if (!textDocument) {
                     throw new Error("Could not open file!");

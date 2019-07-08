@@ -1,8 +1,7 @@
 import angular from "angular";
 
 import { {appname}, WEBAPI } from "app/shared/constants/application.const";
-
-export const {serviceNameConstantCase}_SERVICE_NAME = "{serviceName}Service";
+import { {serviceNameConstantCase}_SERVICE_NAME } from "./{serviceNameKebabCased}.const";
 
 /**
  *   Class for service {serviceName}
