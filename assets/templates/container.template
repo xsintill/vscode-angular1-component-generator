@@ -20,6 +20,9 @@ export class {containerClassName} {
      */
     public static componentName = "llq{className}";
 
+    /**
+     *  Dependency injection annotations
+     */
     public static $inject = [
         {serviceNameConstantCased}_SERVICE_NAME
     ];

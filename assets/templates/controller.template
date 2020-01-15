@@ -8,6 +8,9 @@ export const {controllerNameConstantCase}_CONTROLLER_NAME = "{controllerName}";
  * Controller Class {controllerName}
  */
 export class {controllerName} extends Controllers.BaseController {
+    /**
+     *  Dependency injection annotations
+     */
     public static $inject = [
         "$injector"
     ];

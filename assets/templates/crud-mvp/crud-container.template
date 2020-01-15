@@ -1,0 +1,74 @@
+import "./{serviceFileName}.container.scss";
+
+import angular from "angular";
+
+import { {className}DTO } from "app/server-models/DTO/{className}DTO";
+import { {appname} } from "app/shared/constants/application.const";
+import { {serviceNameConstantCased}_SERVICE_NAME, TEMPLATE_PATH_{componentNameConstantCased} } from "./{serviceFileName}.const";
+//Next import is needed to prevent Unknown provider: <ServiceName>ServiceProvider <- <ServiceName>Service and still move the consts to it's own file
+import "./{serviceFileName}.service";
+import { {className}Service } from "./{serviceFileName}.service";
+import "./{serviceFileName}.ui";
+
+/**
+ *  Container component llq-{serviceFileName}
+ */
+export class {containerClassName} {
+    public data: {className}DTO[];
+    /**
+     *  Field with value used for registering the component llq-{serviceFileName}
+     */
+    public static componentName = "llq{className}";
+
+    /**
+     *  Dependency injection annotations
+     */
+    public static $inject = [
+        {serviceNameConstantCased}_SERVICE_NAME
+    ];
+
+    constructor(
+        private readonly {camelCasedClassName}Service: {className}Service
+    ) {
+    }
+
+    /**
+     * Life-cycle hook which is called by angular when the component will be initialized
+     * Will retrieve all {pluralSubject} upon initialization
+     */
+    public $onInit(): void {
+        this.refresh();
+    }
+
+    /**
+     * Method refresh will retrieve all {pluralSubject} from the server
+     * @returns {ng.IPromise<void>}
+     * @memberof {className}Container
+     */
+    public refresh(): ng.IPromise<void> {
+        return this.{camelCasedClassName}Service.get().then((response: {className}DTO[]) => {
+            this.data = response;
+        });
+    }
+
+    /**
+     * Method delete will remove the {className} with the given id from the server
+     * @param id
+     */
+    public delete(id: number): ng.IPromise<void> {
+        return this.{camelCasedClassName}Service.delete(id).then(() => null);
+    }
+
+    /**
+     * Method to retrieve the number of elements which were linked to the {className} with the provided id.
+     * @param id
+     */
+    public getNrOfElementsFor{className}(id: number): ng.IPromise<number> {
+        return this.{camelCasedClassName}Service.getNrOfElementsFor{className}(id).then((nrOfElements: number) => nrOfElements);
+    }
+}
+
+angular.module({appname}).component({containerClassName}.componentName, {
+    controller: {containerClassName},
+    templateUrl: TEMPLATE_PATH_{componentNameConstantCased}
+});

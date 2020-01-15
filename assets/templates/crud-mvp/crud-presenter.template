@@ -1,0 +1,70 @@
+import _ from "lodash";
+import { Observable, Subject } from "rxjs";
+
+import { {className}DTO } from "app/server-models/DTO/{className}DTO";
+import { IPresentable{className} } from "./{componentNameKebabCased}.type";
+
+/**
+ *  Presenter for {className}
+ */
+export class {className}Presenter {
+
+    private readonly presentable: Subject<IPresentable{className}> = new Subject();
+    /**
+     * Observable for IPresentable{className}
+     */
+    public presentable$: Observable<IPresentable{className}> = this.presentable.asObservable();
+
+    /**
+     * Method createPresentable will create a new presentable based on the given parameters
+     * @param previousPresentable
+     * @param {pluralSubject}
+     * @param searchText
+     */
+    public createPresentable(previousPresentable: IPresentable{className}, {pluralSubject}: {className}DTO[], searchText: string): void {
+        const presentable = this.determineDefaultOrPreviousState(previousPresentable);
+
+        this.handle{className}Change(presentable, {pluralSubject});
+        this.handleSearchTextChange(presentable, searchText);
+
+        this.presentable.next(presentable);
+    }
+
+    private handle{className}Change(presentable: IPresentable{className}, {pluralSubject}: {className}DTO[]): void {
+        if ({pluralSubject}) {
+            presentable.{pluralSubject} = _.cloneDeep({pluralSubject});
+            presentable.view{pascalCasedPluralSubject} = _.sortBy({pluralSubject}, "Name");
+            presentable.showEmptyState = ({pluralSubject}) ? {pluralSubject}.length === 0 : true;
+        }
+    }
+
+    private handleSearchTextChange(presentable: IPresentable{className}, searchText: string): void {
+        if ((!!searchText && searchText !== presentable.searchText) || (!searchText && presentable.searchText)) {
+            if (searchText || searchText === "") {
+                presentable.searchText = searchText;
+            }
+            presentable.view{pascalCasedPluralSubject} = _.filter(
+                presentable.{pluralSubject},
+                ({camelCaseClassName}: {className}DTO) => {camelCaseClassName}.Name.toLowerCase().includes(presentable.searchText.toLowerCase())
+            );
+        } else {
+            presentable.view{pascalCasedPluralSubject} = _.cloneDeep(_.sortBy(presentable.{pluralSubject}));
+        }
+    }
+
+    private determineDefaultOrPreviousState(previousState: IPresentable{className}): IPresentable{className} {
+        return (previousState === undefined) ?
+            { ...this.getDefaultPresentableValues() } :
+            { ...previousState };
+    }
+
+    private getDefaultPresentableValues(): IPresentable{className} {
+        const presentableState: Partial<IPresentable{className}> = {
+            {pluralSubject}: [],
+            view{pascalCasedPluralSubject}: [],
+            showEmptyState: false,
+            searchText: ""
+        };
+        return presentableState as Required<IPresentable{className}>;
+    }
+}

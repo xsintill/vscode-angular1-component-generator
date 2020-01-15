@@ -1,0 +1,8 @@
+import { {className}DTO } from "app/server-models/DTO/{className}DTO";
+
+export interface IPresentable{className} {
+    {pluralSubject}: {className}DTO[];
+    view{pascalCasePluralSubject}: {className}DTO[];
+    showEmptyState: boolean;
+    searchText: string;
+}

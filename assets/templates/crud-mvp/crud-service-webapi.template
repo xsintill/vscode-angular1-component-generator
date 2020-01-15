@@ -1,0 +1,81 @@
+import angular from "angular";
+
+import { {className}DTO } from "app/server-models/DTO/{className}DTO";
+import { Upsert{className}DTO } from "app/server-models/DTO/Upsert{className}DTO";
+import { {appname}, WEBAPI } from "app/shared/constants/application.const";
+import { {serviceNameConstantCase}_SERVICE_NAME } from "./{serviceNameKebabCased}.const";
+
+/**
+ *   Class for service {serviceName}
+ */
+export class {serviceName}Service {
+    /**
+     *  Dependency injection annotations
+     */
+    public static $inject = [
+        "$http"
+    ];
+
+    constructor(
+        private readonly $http: ng.IHttpService
+    ) {
+    }
+
+    get url(): string {
+        return `${WEBAPI}/{className}` /*add the webapi controller route here*/;
+    }
+
+    /**
+     * Method get which requests a get on the webapi to retrieve all {pluralSubject} if no id was provided or 1 {camelCaseClassName} which has the provided id
+     * @param id
+     */
+    public get(id?: number): ng.IPromise<{className}DTO[] | Upsert{className}DTO> {
+        if (!id) {
+            return this.$http.get<{className}DTO[]>(this.url).then(
+                (response: ng.IHttpResponse<{className}DTO[]>) => response.data
+            );
+        }
+        return this.$http.get<Upsert{className}DTO>(`${this.url}/${id}`).then(
+            (response: ng.IHttpResponse<Upsert{className}DTO>) => response.data
+        );
+    }
+
+    /**
+     * Method put will add a new {className} to the backend
+     * @param value
+     */
+    public put(value: Upsert{className}DTO): ng.IPromise<number> {
+        return this.$http.put<number>(this.url, value).then(
+            (response: ng.IHttpResponse<number>) => response.data
+        );
+    }
+
+    /**
+     * Method post which requests a post on the webapi for a new {className}
+     * @param value
+     */
+    public post(value: Upsert{className}DTO): ng.IPromise<number> {
+        return this.$http.post<number>(this.url, value).then(
+            (response: ng.IHttpResponse<number>) => response.data
+        );
+    }
+
+    /**
+     * Method delete which requests a delete on the webapi for a {className}
+     * @param id
+     */
+    public delete(id: number): ng.IPromise<number> {
+        return this.$http.delete<void>(`${this.url}/${id}`).then(() => null);
+    }
+
+    /**
+     * Method getNrOfElementsFor{className} which retrieves the number of elements linked with the {className} determined
+     * by the given {camelCaseClassName}Id
+     * @param {camelCaseClassName}Id
+     */
+    public getNrOfElementsFor{className}({camelCaseClassName}Id: number): ng.IPromise<number> {
+        return this.$http.get<number>(`${this.url}/GetElementsCountIn{className}/${{camelCaseClassName}Id}`).then(
+            (response: ng.IHttpResponse<number>) => response.data);
+    }
+}
+angular.module({appname}).service({serviceNameConstantCase}_SERVICE_NAME, {serviceName}Service);

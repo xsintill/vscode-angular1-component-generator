@@ -7,6 +7,7 @@ import 'rxjs/add/observable/forkJoin';
 
 import { FileHelper } from "./FileHelper";
 import { Config } from "./config.interface";
+import * as pluralize from 'pluralize';
 
 // enum EventType {
 //     None,
@@ -502,6 +503,94 @@ export function activate(context: vscode.ExtensionContext) {
                     FileHelper.createConst(componentDir, componentName, config.files.mvpPattern.const, configGlobals),
                     FileHelper.createType(componentDir, componentName, config.files.mvpPattern.type, configGlobals)
 
+                );
+                // })
+            })
+            .concatMap(result => {
+                return Observable.from(Array.prototype.concat(result, bindings))
+            })
+            .filter(path => path && path.length > 0)
+            .first()
+            .concatMap(filename => Observable.from(filename && vscode.workspace.openTextDocument(filename)))
+            .concatMap(textDocument => {
+                if (!textDocument) {
+                    throw new Error("Could not open file!");
+                };
+                return Observable.from(vscode.window.showTextDocument(textDocument));
+            })
+            .do(editor => {
+                if (!editor) {
+                    throw new Error("Could not open file!");
+                };
+            })
+            .subscribe(
+                () => vscode.window.setStatusBarMessage("Feature Successfuly created!"),
+                err => vscode.window.showErrorMessage(err.message)
+            );
+    });
+    let mvpPatternCrudDisposable = vscode.commands.registerCommand("extension.genAngular1MvpPatternCrudFiles", async (uri) => {
+        // The code you place here will be executed every time your command is executed
+        let bindings: string[] = [];
+        let _workspace = vscode.workspace;
+        let config = <Config>_workspace.getConfiguration((configPrefix + ".config"));
+        let configGlobals = <Config>_workspace.getConfiguration(configPrefix);
+
+        if (!config.files) {
+            config = FileHelper.getConfig();
+        }
+
+        let enterComponentNameDialog$ = Observable.from(
+            vscode.window.showInputBox(
+                { prompt: "Please enter feature name in camelCase" }
+            ));
+
+        // let bindingNameDialog$ = Observable.from(
+        //     vscode.window.showInputBox(
+        //         { prompt: "Please enter a binding name in camelCase. Leave empty if you have defined all bindings" }
+        //     )
+        // );
+
+        // // let eventItems = showEventInputType([]);
+        // bindingNameDialog$.map(response => {
+        //     bindings.push(response);
+        // }).subscribe();
+        enterComponentNameDialog$
+            .concatMap(val => {
+                if (val.length === 0) {
+                    throw new Error("Feature name can not be empty!");
+                }
+
+                const componentName = changeCase.paramCase(val);
+                const postfixedComponentName = `${componentName}.ui`;
+                const postfixedPresenter = `${componentName}.presenter`;
+                const postfixedContainer = `${componentName}.container`;
+                // const prefixedContainer = `${FileHelper.getTestPrefix(configGlobals)}${componentName}.container`;
+                const componentDir = FileHelper.createObjectDir(uri, pluralize(componentName));
+                const upsertComponentDir = FileHelper.createObjectDir(uri, `${changeCase.paramCase(pluralize(componentName))}\\upsert-${componentName}`);
+                // return 
+
+
+                return Observable.forkJoin(
+                    FileHelper.createCrudUiComponent(componentDir, componentName, config.files.mvpPattern, configGlobals),
+                    FileHelper.createCrudUiComponentHtml(componentDir, componentName, config.files.mvpPattern.html),
+                    FileHelper.createUiComponentCss(componentDir, postfixedComponentName, config.files.mvpPattern.css),
+                    FileHelper.createCrudType(componentDir, componentName, config.files.mvpPattern.type, configGlobals),
+                    FileHelper.createCrudPresenter(componentDir, componentName, config.files.mvpPattern.presenter, configGlobals),
+                    FileHelper.createCrudContainer(componentDir, componentName, config.files.mvpPattern.container, configGlobals),
+                    FileHelper.createCrudContainerHtml(componentDir, componentName, config.files.mvpPattern.container.html),
+                    FileHelper.createContainerCss(componentDir, componentName, config.files.mvpPattern.container.css),
+                    FileHelper.createCrudConst(componentDir, componentName, config.files.mvpPattern.const, configGlobals),
+                    FileHelper.createCrudWebapiService(componentDir, componentName, config.files.component.testFile, configGlobals),
+                    
+                    FileHelper.createUpsertCrudConst(upsertComponentDir, componentName, config.files.mvpPattern, configGlobals),
+                    FileHelper.createUpsertCrudContainerHtml(upsertComponentDir, componentName, config.files.mvpPattern.container.html),
+                    FileHelper.createUpsertCrudContainerCss(upsertComponentDir, componentName, config.files.mvpPattern.container.css),
+                    FileHelper.createUpsertCrudContainer(upsertComponentDir, componentName, config.files.mvpPattern.container, configGlobals),
+                    FileHelper.createUpsertCrudPresenter(upsertComponentDir, componentName, config.files.mvpPattern.presenter, configGlobals),
+                    FileHelper.createUpsertCrudType(upsertComponentDir, componentName, config.files.mvpPattern.type, configGlobals),
+                    FileHelper.createUpsertCrudUiComponentHtml(upsertComponentDir, componentName, config.files.mvpPattern.html),
+                    FileHelper.createUpsertUiComponentCss(upsertComponentDir, postfixedComponentName, config.files.mvpPattern.css),
+                    FileHelper.createUpsertCrudUiComponent(upsertComponentDir, componentName, config.files.mvpPattern, configGlobals),
                 );
                 // })
             })

@@ -8,6 +8,9 @@ import { LLQAPP_NAME } from "app/shared/constants/application.const";
 export class {directiveName}Directive implements ng.IDirective {
     public static directiveName = "llq{directiveName}";
 
+    /**
+     *  Dependency injection annotations
+     */
     public static $inject = [
     ];
 

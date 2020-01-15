@@ -12,6 +12,9 @@ export interface I{providerName} {
  *   Class for provider {providerName}
  */
 export class {providerName}Provider implements ng.IServiceProvider {
+    /**
+     *  Dependency injection annotations
+     */
     public static $inject = [
     ];
 

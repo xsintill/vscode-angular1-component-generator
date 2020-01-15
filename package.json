@@ -2,7 +2,7 @@
   "name": "vscode-angular1-file-generator",
   "displayName": "Angular 1.5 File Generator",
   "description": "Generates angular 1.5(or up) files (html, css, typescript -> template, stylesheet, component.ts + module.ts)",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "publisher": "xsintill",
   "author": {
     "name": "Luc Neville",
@@ -57,7 +57,8 @@
     "onCommand:extension.genAngular1DialogControllerFiles",
     "onCommand:extension.genAngular1ServiceFiles",
     "onCommand:extension.genAngular1ProviderFiles",
-    "onCommand:extension.genAngular1MvpPatternFiles"
+    "onCommand:extension.genAngular1MvpPatternFiles",
+    "onCommand:extension.genAngular1MvpPatternCrudFiles"
   ],
   "main": "./out/src/extension",
   "icon": "assets/images/icon.png",
@@ -492,9 +493,6 @@
                     }
                   }
                 },
-
-
-
                 "presenter": {
                   "type": "object",
                   "title": "Configuration object for the presenter file to be generated alongside the component",
@@ -524,24 +522,6 @@
                     "extension": {
                       "type": "string",
                       "description": "What extension should the presenter file get"
-                    },
-                    "template": {
-                      "type": "string",
-                      "description": "If you want to use your own template put the path to it in here"
-                    }
-                  }
-                },
-                "const": {
-                  "type": "object",
-                  "title": "Configuration object for the const file to be generated alongside the component",
-                  "properties": {
-                    "create": {
-                      "type": "boolean",
-                      "description": "Should the const file be created"
-                    },
-                    "extension": {
-                      "type": "string",
-                      "description": "What extension should the const file get"
                     },
                     "template": {
                       "type": "string",
@@ -649,12 +629,20 @@
       {
         "command": "extension.genAngular1MvpPatternFiles",
         "title": "New MVP Pattern"
+      },
+      {
+        "command": "extension.genAngular1MvpPatternCrudFiles",
+        "title": "New MVP Pattern with CRUD"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "extension.genAngular1MvpPatternFiles",
+          "group": "MVP"
+        },
+        {
+          "command": "extension.genAngular1MvpPatternCrudFiles",
           "group": "MVP"
         },
         {
@@ -714,6 +702,7 @@
     "fs": "0.0.1-security",
     "fs-extra": "^0.30.0",
     "lodash": "^4.17.10",
+    "pluralize": "^8.0.0",
     "rxjs": "^5.5.11"
   }
 }

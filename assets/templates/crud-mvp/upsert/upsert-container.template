@@ -1,0 +1,77 @@
+import "./{serviceFileName}.container.scss";
+
+import angular from "angular";
+
+import { Upsert{className}DTO } from "app/server-models/DTO/Upsert{className}DTO";
+import { {appname} } from "app/shared/constants/application.const";
+import { {serviceNameConstantCased}_SERVICE_NAME } from "../{serviceFileName}.const";
+import { TEMPLATE_PATH_UPSERT_{componentNameConstantCased} } from "./upsert-{serviceFileName}.const";
+//Next import is needed to prevent Unknown provider: <ServiceName>ServiceProvider <- <ServiceName>Service and still move the consts to it's own file
+import "./{serviceFileName}.service";
+import { {className}Service } from "../{serviceFileName}.service";
+import "./upsert-{serviceFileName}.ui";
+
+/**
+ *  Container component llq-upsert-{serviceFileName}
+ */
+export class Upsert{containerClassName} {
+    public data: Upsert{className}DTO;
+
+    /**
+     *  Field with value used for registering the component llq-upsert-{serviceFileName}
+     */
+    public static componentName = "llq{className}";
+
+    /**
+     *  Dependency injection annotations
+     */
+    public static $inject = [
+        {serviceNameConstantCased}_SERVICE_NAME,
+        "id"
+    ];
+
+    constructor(
+        private readonly {camelCaseClassName}Service: {className}Service,
+        public id: number
+    ) {
+    }
+
+    /**
+     * Life-cycle hook which is called by angular when the component will be initialized
+     * Will retrieve the {camelCaseClassName} to be edited if an id(not 0) is provided
+     */
+    public $onInit(): void {
+        //The presenter will determine default values so we do not need to worry about those here
+        if (this.id !== 0) {
+            this.{camelCaseClassName}Service.get(this.id).then(({camelCaseClassName}: Upsert{className}DTO) => {
+                this.data = {
+                    ...{camelCaseClassName}
+                };
+            });
+        }
+    }
+
+    /**
+     * Method save will determine whether an edit or add was done and will use the correct method on the {camelCaseClassName}Service
+     * @param {camelCaseClassName}
+     */
+    public save({camelCaseClassName}: Upsert{className}DTO): ng.IPromise<number> {
+        if (!{camelCaseClassName}.Id) {
+            return this.{camelCaseClassName}Service.post({camelCaseClassName}).then((response: number) => response);
+        } else {
+            return this.{camelCaseClassName}Service.put({camelCaseClassName}).then((response: number) => response);
+        }
+    }
+
+    /**
+     * Method isEdit determines whether the dialog should be shown in edit or add mode
+     */
+    public isEdit(): boolean {
+        return this.id !== undefined && this.id !== 0;
+    }
+}
+
+angular.module({appname}).component(Upsert{containerClassName}.componentName, {
+    controller: Upsert{containerClassName},
+    templateUrl: TEMPLATE_PATH_UPSERT_{componentNameConstantCased}
+});

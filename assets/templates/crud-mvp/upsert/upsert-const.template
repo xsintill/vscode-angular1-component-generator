@@ -1,0 +1,6 @@
+import { TEMPLATE_PATH_BASE_AREAS } from "app/shared/constants/template-paths.const";
+
+export const TEMPLATE_PATH_UPSERT_{componentNameConstantCased}_UI =
+    `{currentpath}/upsert-{componentNameKebabCased}.ui.html`;
+export const TEMPLATE_PATH_UPSERT_{componentNameConstantCased}_CONTAINER =
+    `{currentpath}/upsert-{componentNameKebabCased}.container.html`;

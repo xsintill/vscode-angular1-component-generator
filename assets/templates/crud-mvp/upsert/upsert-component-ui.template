@@ -1,0 +1,113 @@
+import "./upsert-{componentNameKebabCased}.ui.scss";
+
+import angular from "angular";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+
+import { Upsert{className}DTO } from "app/server-models/DTO/Upsert{className}DTO";
+import { LLQAPP_NAME } from "app/shared/constants/application.const";
+import { VALIDATION_MESSAGES_PATH } from "app/shared/constants/template-paths.const";
+import { extractChangeValue } from "app/shared/on-change-object/on-change-object-helper";
+import { TOAST_MESSAGE_SERVICE_NAME } from "app/shared/toast/toast-message.const";
+import { ToastMessageService } from "app/shared/toast/toast-message.service";
+import { TEMPLATE_PATH_UPSERT_{componentNameConstantCased}_UI } from "./upsert-{componentNameKebabCased}.const";
+import { Upsert{className}Presenter } from "./upsert-{componentNameKebabCased}.presenter";
+import { IPresentableUpsert{className} } from "./upsert-{componentNameKebabCased}.type";
+
+/**
+ *  View component llq-upsert-{componentNameKebabCased}-ui
+ */
+export class Upsert{className}Ui {
+    /**
+     * The default validationmessage which can be used in the template on validation errors
+     */
+    public validationMessagesPath = VALIDATION_MESSAGES_PATH;
+    /**
+     * The form in the Upsert{className} template
+     */
+    public form: ng.IFormController;
+    /**
+     * Output binding to call onSave on the Upsert{className}Container
+     */
+    public onSave: (onSaveParams: { {camelCaseClassName}: Upsert{className}DTO }) => ng.IPromise<void>;
+    /**
+     * Presentable for Upsert{className}Ui
+     */
+    public presentable: IPresentableUpsert{className};
+
+    private readonly presenter: Upsert{className}Presenter;
+    private readonly unsubscribe = new Subject();
+
+    /**
+     *  Field with value used for registering the component llq-upsert-{componentNameKebabCased}-ui
+     */
+    public static componentName = "llqUpsert{className}Ui";
+
+    /**
+     *  Dependency injection annotations
+     */
+    public static $inject = [
+        "$mdDialog",
+        "$translate",
+        TOAST_MESSAGE_SERVICE_NAME
+    ];
+
+    constructor(
+        private readonly $mdDialog: ng.material.IDialogService,
+        private readonly $translate: ng.translate.ITranslateService,
+        private readonly toastMessageService: ToastMessageService
+    ) {
+        this.presenter = new Upsert{className}Presenter(this.$translate);
+        this.presenter.presentable$.pipe(
+            takeUntil(this.unsubscribe)
+        ).subscribe((presentable: IPresentableUpsert{className}) => {
+            this.presentable = presentable;
+        });
+    }
+
+    /**
+     * Life-cycle hook which is called by angular when the component is destroyed and will get rid of any subscribes made on observables
+     */
+    public $onDestroy(): void {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+    }
+
+    /**
+     * Life-cycle hook which is called by angular when a change occurs for any bindings assigned to the component
+     * @returns: does not return anything
+     */
+    public $onChanges(onChangesObj: ng.IOnChangesObject): void {
+        const upsert{className} = extractChangeValue<Upsert{className}DTO>(onChangesObj.upsert{className});
+        const isEdit = extractChangeValue<boolean>(onChangesObj.isEdit);
+        this.presenter.createPresentable(this.presentable, upsert{className}, isEdit);
+    }
+
+    /**
+     * Method cancel cancels the dialog
+     */
+    public cancel(): void {
+        this.$mdDialog.cancel();
+    }
+
+    /**
+     * Method ok will check for valid data if the data was valid send the data to the container to handle the save
+     */
+    public ok(): ng.IPromise<Upsert{className}DTO | void> {
+        if (this.form.$invalid) {
+            this.form.$setSubmitted();
+            return this.toastMessageService.showInfo("TOAST_MSG_FORM_INVALID").then(() => undefined);
+        }
+        return this.onSave({ {camelCaseClassName}: this.presentable.{camelCaseClassName} }).then(() => this.$mdDialog.hide());
+    }
+}
+
+angular.module({appname}).component(Upsert{className}Ui.componentName, {
+    controller: Upsert{className}Ui,
+    templateUrl: TEMPLATE_PATH_UPSERT_{componentNameConstantCased}_UI,
+    bindings: {
+        upsert{className}: "<",
+        isEdit: "<",
+        onSave: "&"
+    }
+});

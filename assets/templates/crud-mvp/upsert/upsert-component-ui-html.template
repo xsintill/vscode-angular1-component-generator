@@ -1,0 +1,45 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h1 translate="{{$ctrl.presentable.dialogTitle}}"
+            flex></h1>
+        <md-button class="md-icon-button"
+                   aria-label="dummy"
+                   ng-click="$ctrl.cancel()">
+            <md-icon class="icon-current"
+                     md-svg-icon="x"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+
+<md-dialog-content class="llq-padding">
+    <form layout="column"
+          name="$ctrl.form"
+          ng-submit="$ctrl.ok()"
+          novalidate>
+
+        <md-input-container>
+            <label translate="NAME"></label>
+            <input type="text"
+                   name="name"
+                   ng-model="$ctrl.presentable.{camelCaseClassName}.Name"
+                   required
+                   md-autofocus
+                   maxlength="50"
+                   md-maxlength="50">
+            <ng-messages for="($ctrl.form.name.$touched || $ctrl.form.$submitted) && $ctrl.form.name.$error"
+                         md-auto-hide="false">
+                <ng-messages-include src="{{::$ctrl.validationMessagesPath}}"></ng-messages-include>
+            </ng-messages>
+        </md-input-container>
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions layout="row">
+    <md-button md-theme="default"
+               ng-click="$ctrl.cancel()"
+               translate="CANCEL"></md-button>
+    <md-button type="submit"
+               class="md-raised md-primary"
+               llq-click-once="$ctrl.ok()"
+               translate="SAVE"></md-button>
+</md-dialog-actions>

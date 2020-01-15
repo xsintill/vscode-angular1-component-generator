@@ -1,0 +1,4 @@
+<llq-{componentNameKebabCased}-ui {kebabCasePluralSubject}="$ctrl.data"
+                                  on-delete="$ctrl.delete(id)"
+                                  on-refresh="$ctrl.refresh()"
+                                  on-get-nr-of-elements-for-{componentNameKebabCased}="$ctrl.getNrOfElementsFor{className}(id)"></llq-{componentNameKebabCased}-ui>

@@ -1,0 +1,58 @@
+import { Observable, Subject } from "rxjs";
+
+import { Upsert{className}DTO } from "app/server-models/DTO/Upsert{className}DTO";
+import { _Upsert{className}DTO } from "app/server-models/Factories/dto.factory";
+import { IPresentableUpsert{className} } from "./upsert-{componentNameKebabCased}.type";
+
+/**
+ *  Presenter for Upsert{className}
+ */
+export class Upsert{className}Presenter {
+
+    private readonly presentable: Subject<IPresentableUpsert{className}> = new Subject();
+    /**
+     * Observable for IPresentableUpsert{className}
+     */
+    public presentable$: Observable<IPresentableUpsert{className}> = this.presentable.asObservable();
+
+    constructor(private readonly $translate: ng.translate.ITranslateService) {
+    }
+
+    /**
+     * Method createPresentable will create a new presentable based on the given parameters
+     * @param previousPresentable
+     * @param {pluralSubject}
+     * @param searchText
+     */
+    public createPresentable(previousPresentable: IPresentableUpsert{className}, {camelCaseClassName}: Upsert{className}DTO, isEdit: boolean): void {
+        const presentable = this.determineDefaultOrPreviousState(previousPresentable);
+
+        if ({camelCaseClassName}) {
+            presentable.{camelCaseClassName} = { ...{camelCaseClassName} };
+        }
+        if (isEdit !== undefined && isEdit) {
+            presentable.dialogTitle = this.$translate.instant("EDIT_{constantCaseClassName}");
+        } else if (isEdit !== undefined && !isEdit) {
+            presentable.dialogTitle = this.$translate.instant("ADD_{constantCaseClassName}");
+        }
+        this.presentable.next(presentable);
+    }
+
+    private determineDefaultOrPreviousState(previousState: IPresentableUpsert{className}): IPresentableUpsert{className} {
+        return (previousState === undefined) ?
+            { ...this.getDefaultPresentableValues() } :
+            { ...previousState };
+    }
+
+    private getDefaultPresentableValues(): IPresentableUpsert{className} {
+        const presentableState: Partial<IPresentableUpsert{className}> = {
+            {camelCaseClassName}: {
+                ..._Upsert{className}DTO.create(),
+                Id: 0,
+                Name: ""
+            },
+            dialogTitle: ""
+        };
+        return presentableState as Required<IPresentableUpsert{className}>;
+    }
+}

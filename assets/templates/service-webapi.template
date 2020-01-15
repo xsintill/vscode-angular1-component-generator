@@ -7,6 +7,9 @@ import { {serviceNameConstantCase}_SERVICE_NAME } from "./{serviceNameKebabCased
  *   Class for service {serviceName}
  */
 export class {serviceName}Service<TSelectAll, TSelectIndividual, TUpsert> {
+    /**
+     *  Dependency injection annotations
+     */
     public static $inject = [
         "$http"
     ];
@@ -20,6 +23,10 @@ export class {serviceName}Service<TSelectAll, TSelectIndividual, TUpsert> {
         return `${WEBAPI}` /*add the webapi controller route here*/;
     }
 
+    /**
+     * Method get which requests a get on the webapi to retrieve all {pluralSubject} if no id was provided or 1 {camelCaseClassName} which has the provided id
+     * @param id
+     */
     public get(id?: number): ng.IPromise<TSelectAll | TSelectIndividual> {
         if (!id) {
             return this.$http.get<TSelectAll>(this.getUrl()).then(
@@ -31,18 +38,30 @@ export class {serviceName}Service<TSelectAll, TSelectIndividual, TUpsert> {
         );
     }
 
+    /**
+     * Method put will add a new {className} to the backend
+     * @param value
+     */
     public put(value: TUpsert): ng.IPromise<number> {
         return this.$http.put<number>(this.getUrl(), value).then(
             (response: ng.IHttpResponse<number>) => response.data
         );
     }
 
+    /**
+     * Method post which requests a post on the webapi for a new {className}
+     * @param value
+     */
     public post(value: TUpsert): ng.IPromise<number> {
         return this.$http.post<number>(this.getUrl(), value).then(
             (response: ng.IHttpResponse<number>) => response.data
         );
     }
 
+    /**
+     * Method delete which requests a delete on the webapi for a {className}
+     * @param id
+     */
     public delete(id: number): ng.IPromise<number> {
         return this.$http.delete<void>(`${this.getUrl()}/${id}`).then(() => null);
     }

@@ -8,6 +8,9 @@ export const {serviceNameConstantCase}_SERVICE_NAME = "{serviceName}Service";
  *   Class for service {serviceName}
  */
 export class {serviceName}Service {
+    /**
+     *  Dependency injection annotations
+     */
     public static $inject = [
     ];
 

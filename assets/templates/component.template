@@ -13,6 +13,9 @@ export const TEMPLATE_PATH_{componentNameConstantCased} = `{currentpath}/llq-{co
      */
     public static componentName = "llq{className}";
 
+    /**
+     *  Dependency injection annotations
+     */
     public static $inject = [
         /*put your injectables here*/
     ];

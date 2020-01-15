@@ -1,0 +1,47 @@
+<div layout="column"
+     class="llq-height-100"
+     ng-class="{'llq-padding-8': !$ctrl.$mdMedia('xs')}"
+     ng-cloak>
+    <md-white-frame layout="column"
+                    class="llq-max-page-width llq-width-100 llq-white-bg llq-height-100"
+                    ng-class="{'md-whiteframe-1dp': !$ctrl.$mdMedia('xs')}"
+                    style="box-sizing: content-box">
+        <div layout="row"
+             layout-align="center center"
+             class="llq-padding">
+            <llq-search search-method="$ctrl.searchWith(searchText)"
+                        progressicon="$ctrl.loadingData">
+            </llq-search>
+            <span flex></span>
+            <md-button class="md-primary md-raised add-button-size"
+                       ng-click="$ctrl.add()">
+                <md-icon md-svg-src="plus"></md-icon>
+            </md-button>
+        </div>
+        <md-divider></md-divider>
+        <llq-empty-state layout
+                         layout-align="center center"
+                         ng-if="$ctrl.presentable.showEmptyState"
+                         svg-src="../../../assets/images/empty-state/{componentNameKebabCased}-empty-state.svg"
+                         main-title="NO_{componentNameConstantCased}_CREATED"
+                         class="llq-max-page-width llq-height-100">
+        </llq-empty-state>
+        <llq-no-data-alert ng-if="!$ctrl.presentable.showEmptyState"
+                           class="llq-no-result-bg-white llq-margin-l"
+                           data="$ctrl.presentable.view{pascalCasePluralSubject}"></llq-no-data-alert>
+        <md-content ng-if="!$ctrl.presentable.showEmptyState"
+                    class="llq-white-bg">
+            <md-list>
+                <md-list-item ng-repeat="{camelCaseClassName} in $ctrl.presentable.view{pascalCasePluralSubject}"
+                              ng-click="$ctrl.edit({camelCaseClassName})">
+                    <p>{{{camelCaseClassName}.Name}}</p>
+                    <llq-more-actions-menu class="md-secondary">
+                        <llq-md-item-menu llq-on-click="$ctrl.delete({camelCaseClassName})"
+                                          label="dummy"
+                                          text="DELETE"></llq-md-item-menu>
+                    </llq-more-actions-menu>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-white-frame>
+</div>

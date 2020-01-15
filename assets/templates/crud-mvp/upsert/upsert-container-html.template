@@ -1,0 +1,6 @@
+<md-dialog class="llq-max-big-dialog-width llq-width-100">
+    <llq-upsert-{componentNameKebabCased}-ui class="llq-dialog-scroll-fix" 
+                                             is-edit="$ctrl.isEdit()"
+                                             upsert-{componentNameKebabCased}="$ctrl.data"
+                                             on-save="$ctrl.save({camelCaseClassName})"></llq-{componentNameKebabCased}-ui>
+</md-dialog>

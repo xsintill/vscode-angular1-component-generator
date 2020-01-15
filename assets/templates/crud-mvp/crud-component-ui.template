@@ -1,0 +1,167 @@
+import "./{componentNameKebabCased}.ui.scss";
+
+import angular from "angular";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+
+import { STATE_SETTINGS_OVERVIEW } from "app/areas/settings/settings.const";
+import { {className}DTO } from "app/server-models/DTO/{className}DTO";
+import { LLQAPP_NAME } from "app/shared/constants/application.const";
+import { extractChangeValue } from "app/shared/on-change-object/on-change-object-helper";
+import { HEADER_NAVIGATOR_SERVICE_NAME, HeaderNavigatorService } from "app/shared/services/header-navigator.service";
+import { PAGE_TITLE_{componentNameConstantCased}, TEMPLATE_PATH_{componentNameConstantCased}_UI } from "./{componentNameKebabCased}.const";
+import { {className}Presenter } from "./{componentNameKebabCased}.presenter";
+import { IPresentable{className} } from "./{componentNameKebabCased}.type";
+import { TEMPLATE_PATH_UPSERT_{componentNameConstantCased}_CONTAINER } from "./upsert-{componentNameKebabCased}/upsert-{componentNameKebabCased}.const";
+import { Upsert{className}Container } from "./upsert-{componentNameKebabCased}/upsert-{componentNameKebabCased}.container";
+
+/**
+ *  View component llq-{componentNameKebabCased}-ui
+ */
+export class {className}Ui {
+    /**
+     * Presentable for {className}Ui
+     */
+    public presentable: IPresentable{className};
+
+    private readonly presenter: {className}Presenter;
+    private readonly unsubscribe = new Subject();
+    private readonly onDelete: (deleteParams: { id: number }) => ng.IPromise<void>;
+    private readonly onRefresh: () => ng.IPromise<void>;
+    private readonly onGetNrOfElementsFor{className}: (params: { id: number }) => ng.IPromise<number>;
+
+    /**
+     *  Field with value used for registering the component llq-{componentNameKebabCased}-ui
+     */
+    public static componentName = "llq{className}Ui";
+
+    /**
+     *  Dependency injection annotations
+     */
+    public static $inject = [
+        "$mdDialog",
+        "$translate",
+        HEADER_NAVIGATOR_SERVICE_NAME,
+        "$mdMedia"
+    ];
+
+    constructor(
+        private readonly $mdDialog: ng.material.IDialogService,
+        private readonly $translate: ng.translate.ITranslateService,
+        private readonly headerNavService: HeaderNavigatorService,
+        //used in template
+        private readonly $mdMedia: ng.material.IMedia
+    ) {
+        this.presenter = new {className}Presenter();
+        this.presenter.presentable$.pipe(
+            takeUntil(this.unsubscribe)
+        ).subscribe((presentable: IPresentable{className}) => {
+            this.presentable = presentable;
+        });
+    }
+
+    /**
+     * Life-cycle hook which is called by angular when initialization for the component starts
+     * @returns: does not return anything
+     */
+    public $onInit(): void {
+        this.headerNavService.config.title = PAGE_TITLE_{componentNameConstantCased};
+        this.headerNavService.config.state = STATE_SETTINGS_OVERVIEW;
+    }
+
+    /**
+     * Life-cycle hook which is called by angular when the component is destroyed
+     * @returns: does not return anything
+     */
+    public $onDestroy(): void {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+    }
+
+    /**
+     * Life-cycle hook which is called by angular when a change occurs for any bindings assigned to the component
+     * @returns: does not return anything
+     */
+    public $onChanges(onChangesObj: ng.IOnChangesObject): void {
+        const {pluralSubject} = extractChangeValue<{className}DTO[]>(onChangesObj.{camelCaseClassName});
+        this.presenter.createPresentable(this.presentable, {pluralSubject}, undefined);
+    }
+
+    /**
+     * Method delete will show a confirm dialog and when user gives permission to delete refreshes the data
+     */
+    public delete({camelCaseClassName}: {className}DTO): ng.IPromise<void> {
+        return this.onGetNrOfElementsFor{className}({ id: {camelCaseClassName}.Id }).then((nrOfElements: number) => {
+            const confirm = this.createConfirmDialog({camelCaseClassName}.Name, nrOfElements);
+            return this.$mdDialog.show(confirm).then(() => this.handleDelete({camelCaseClassName}));
+        });
+    }
+
+    /**
+     * Method edit will show the edit {className} dialog and when successful refreshes the data
+     */
+    public edit({camelCaseClassName}: {className}DTO): void {
+        this.$mdDialog.show({
+            controller: Upsert{className}Container,
+            controllerAs: "$ctrl",
+            templateUrl: TEMPLATE_PATH_UPSERT_{componentNameConstantCased}_CONTAINER,
+            fullscreen: true,
+            locals: {
+                id: {camelCaseClassName}.Id
+            }
+        }).then(() => this.onRefresh());
+    }
+
+    /**
+     * Method add will show the add {className} dialog and when successful refreshes the data
+     */
+    public add(): void {
+        this.$mdDialog.show({
+            controller: Upsert{className}Container,
+            controllerAs: "$ctrl",
+            templateUrl: TEMPLATE_PATH_UPSERT_{componentNameConstantCased}_CONTAINER,
+            fullscreen: true,
+            locals: {
+                id: 0
+            }
+        }).then(() => this.onRefresh());
+    }
+
+    /**
+     * Method searchWith will search on local data only
+     */
+    public searchWith(searchText: string): void {
+        this.presenter.createPresentable(this.presentable, undefined, searchText);
+    }
+
+    private handleDelete({camelCaseClassName}: {className}DTO): void | PromiseLike<never> | PromiseLike<void> {
+        return this.onDelete({ id: {camelCaseClassName}.Id }).then(() => {
+            this.onRefresh();
+        });
+    }
+
+    private createConfirmDialog({camelCaseClassName}Name: string, nrOfElements: number): ng.material.IConfirmDialog {
+        const contentText = nrOfElements === 0
+            ? "DELETE_UNUSED_{componentNameConstantCased}_CONFIRM_TEXT"
+            : "DELETE_USED_{componentNameConstantCased}_CONFIRM_TEXT";
+        const contentObject = nrOfElements === 0
+            ? { {camelCaseClassName}Name: {camelCaseClassName}Name }
+            : { {camelCaseClassName}Name: {camelCaseClassName}Name, nrOfElements: nrOfElements };
+        return this.$mdDialog.confirm()
+            .title(this.$translate.instant("DELETE_{componentNameConstantCased}_CONFIRM_TITLE"))
+            .textContent(this.$translate.instant(contentText, contentObject))
+            .cancel(this.$translate.instant("CANCEL"))
+            .ok(this.$translate.instant("DELETE"));
+    }
+}
+
+angular.module({appname}).component({className}Ui.componentName, {
+    controller: {className}Ui,
+    templateUrl: TEMPLATE_PATH_{componentNameConstantCased}_UI,
+    bindings: {
+        {pluralSubject}: "<",
+        onRefresh: "&",
+        onDelete: "&",
+        onGetNrOfElementsFor{className}: "&"
+    }
+});
