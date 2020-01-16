@@ -1,8 +1,20 @@
 import { {className}DTO } from "app/server-models/DTO/{className}DTO";
 
 export interface IPresentable{className} {
+    /**
+     * The original list of {className}
+     */
     {pluralSubject}: {className}DTO[];
+    /**
+     * The list of {className} to be displayed(can change because of searchterms)
+     */
     view{pascalCasePluralSubject}: {className}DTO[];
+    /**
+     * Indicator so the template knows if an ampty state needs to be shown
+     */    
     showEmptyState: boolean;
+    /**
+     * the searchterm provided by the user
+     */    
     searchText: string;
 }

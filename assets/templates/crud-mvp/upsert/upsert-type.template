@@ -1,6 +1,12 @@
 import { Upsert{className}DTO } from "app/server-models/DTO/Upsert{className}DTO";
 
 export interface IPresentableUpsert{className} {
+    /**
+     * Property which holds the {className} to be edited or added
+     */
     {camelCaseClassName}: Upsert{className}DTO;
+    /**
+     * The dialog title to display in the add/edit dialog
+     */    
     dialogTitle: string;
 }
