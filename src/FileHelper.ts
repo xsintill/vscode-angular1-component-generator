@@ -227,6 +227,7 @@ export class FileHelper {
             .replace(/{componentNameKebabCased}/g, changeCase.paramCase(componentName))
             .replace(/{componentNameConstantCased}/g, changeCase.constantCase(componentName))
             .replace(/{className}/g, `${changeCase.pascalCase(componentName)}`)
+            .replace(/{constantCaseClassName}/g, `${changeCase.constantCase(componentName)}`)
             .replace(/{pluralSubject}/g, pluralize(changeCase.camelCase(componentName)))
             .replace(/{pascalCasedPluralSubject}/g, pluralize(changeCase.pascalCase(componentName)))
             .replace(/{camelCaseClassName}/g, `${changeCase.camelCase(componentName)}`);

@@ -1,4 +1,4 @@
-import "./{serviceFileName}.container.scss";
+import "./upsert-{serviceFileName}.container.scss";
 
 import angular from "angular";
 
@@ -7,7 +7,7 @@ import { {appname} } from "app/shared/constants/application.const";
 import { {serviceNameConstantCased}_SERVICE_NAME } from "../{serviceFileName}.const";
 import { TEMPLATE_PATH_UPSERT_{componentNameConstantCased} } from "./upsert-{serviceFileName}.const";
 //Next import is needed to prevent Unknown provider: <ServiceName>ServiceProvider <- <ServiceName>Service and still move the consts to it's own file
-import "./{serviceFileName}.service";
+import "../{serviceFileName}.service";
 import { {className}Service } from "../{serviceFileName}.service";
 import "./upsert-{serviceFileName}.ui";
 
@@ -20,7 +20,7 @@ export class Upsert{containerClassName} {
     /**
      *  Field with value used for registering the component llq-upsert-{serviceFileName}
      */
-    public static componentName = "llq{className}";
+    public static componentName = "llqUpsert{className}";
 
     /**
      *  Dependency injection annotations
