@@ -6,4 +6,4 @@ export const TEMPLATE_PATH_{componentNameConstantCased}_CONTAINER =
     `{currentpath}/{serviceFileName}.container.html`;
 
 export const {serviceNameConstantCased}_SERVICE_NAME = "{serviceName}Service";
-export const PAGE_TITLE_{componentNameConstantCased} = "{componentNameConstantCased}";
+export const PAGE_TITLE_{componentNameConstantCased} = "PAGE_TITLE_{componentNameConstantCased}";
