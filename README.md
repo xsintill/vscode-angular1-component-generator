@@ -1,12 +1,20 @@
 # Angular 1 File Generation Extension for VS Code
 
 ## Description
-Extension lets you create the following angular files:
+Extension lets you create the following angular files or patterns:
 - `Components`
+- `Config routes`
+- `Controller Tests`
+- `Dialog Controllers`
 - `Directives`
+- `Filters`
+- `Providers`
 - `Services`
 - `Tests`
-- `Config routes`
+- `MVP Patterns`
+- `MVP Patterns with CRUD`
+
+"New Component", "New Config Route", "New Controller Test", "New Dialog Controller", "New Directive", "New Filter", "New Provider", "New Service", "New test", "New MVP Pattern" or "New MVP Pattern with CRUD"
 
 Command "New component" creates the following files: 
 - [path]/[component name]/`component-name.component.ts`
@@ -17,7 +25,7 @@ or if not configured alongside
 - [test folder]/[path]/[component name]/`component-name.test.ts` 
 
 
-Command "New service" creates the following file:
+Command "New service" creates the following files:
 - [path]/`service-name.service.ts`
 - [path]/`service-name.test.ts`  
 or if not configured alongside
@@ -32,13 +40,44 @@ Command "New test" creates the following file:
 Command "New config route" creates the following file:
 - [path]/`config-route-name.config.route.ts`
 
+Command "New MVP Pattern" creates the following files:
+- [path]/[component name]/[component name]`.const.ts`
+- [path]/[component name]/[component name]`.container.html`
+- [path]/[component name]/[component name]`.container.scss`
+- [path]/[component name]/[component name]`.container.ts`
+- [path]/[component name]/[component name]`.presenter.ts`
+- [path]/[component name]/[component name]`.type.ts`
+- [path]/[component name]/[component name]`.ui.html`
+- [path]/[component name]/[component name]`.ui.scss`
+- [path]/[component name]/[component name]`.ui.ts`
+
+Command "New MVP Pattern with CRUD" creates the following files:
+- [path]/[component name in plural form]/[component name]`.const.ts`
+- [path]/[component name in plural form]/[component name]`.container.html`
+- [path]/[component name in plural form]/[component name]`.container.scss`
+- [path]/[component name in plural form]/[component name]`.container.ts`
+- [path]/[component name in plural form]/[component name]`.presenter.ts`
+- [path]/[component name in plural form]/[component name]`.type.ts`
+- [path]/[component name in plural form]/[component name]`.ui.html`
+- [path]/[component name in plural form]/[component name]`.ui.scss`
+- [path]/[component name in plural form]/[component name]`.ui.ts`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.const.ts`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.container.html`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.container.scss`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.container.ts`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.presenter.ts`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.type.ts`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.ui.html`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.ui.scss`
+- [path]/[component name in plural form]/upsert-[component name]/[component name]`.ui.ts`
+
 
 ## Usage
 
-- Right click on the file or folder in the explorer
-- Select "New Component", "New service", "New test", "New directive" or "New config route" 
-- Enter namespace name in the pop up in camelCase
-- Enter the name for the component, service, test, directive or config route in the pop up in camelCase 
+- Right click on the file or folder in the vscode explorer
+- Select "New Component", "New Config Route", "New Controller Test", "New Dialog Controller", "New Directive", "New Filter", "New Provider", "New Service", "New test", "New MVP Pattern" or "New MVP Pattern with CRUD"
+- Enter namespace name in the pop up in camelCase 
+- Enter the name for the component, config route, controller test, dialog controller, filter, provider, service,  test, directive in the pop up in camelCase. Make sure this is singular and not plural form when using the MVP commands
 
 
 ![Use Extension](assets/tutorial/createComponent.gif)
