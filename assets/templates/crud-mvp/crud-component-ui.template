@@ -83,7 +83,7 @@ export class {className}Ui {
      * @returns: does not return anything
      */
     public $onChanges(onChangesObj: ng.IOnChangesObject): void {
-        const {pluralSubject} = extractChangeValue<{className}DTO[]>(onChangesObj.{camelCaseClassName});
+        const {pluralSubject} = extractChangeValue<{className}DTO[]>(onChangesObj.{pluralSubject});
         this.presenter.createPresentable(this.presentable, {pluralSubject}, undefined);
     }
 
