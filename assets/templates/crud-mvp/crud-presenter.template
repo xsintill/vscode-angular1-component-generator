@@ -32,8 +32,8 @@ export class {className}Presenter {
 
     private handle{className}Change(presentable: IPresentable{className}, {pluralSubject}: {className}DTO[]): void {
         if ({pluralSubject}) {
-            presentable.{pluralSubject} = _.cloneDeep({pluralSubject});
-            presentable.view{pascalCasedPluralSubject} = _.sortBy({pluralSubject}, "Name");
+            presentable.{pluralSubject} = _.sortBy({pluralSubject}, "Name");
+            presentable.view{pascalCasedPluralSubject} = [...presentable.{pluralSubject}];
             presentable.showEmptyState = ({pluralSubject}) ? {pluralSubject}.length === 0 : true;
         }
     }
@@ -43,12 +43,15 @@ export class {className}Presenter {
             if (searchText || searchText === "") {
                 presentable.searchText = searchText;
             }
-            presentable.view{pascalCasedPluralSubject} = _.filter(
-                presentable.{pluralSubject},
-                ({camelCaseClassName}: {className}DTO) => {camelCaseClassName}.Name.toLowerCase().includes(presentable.searchText.toLowerCase())
+            presentable.view{pascalCasedPluralSubject} = 
+                _.filter(
+                    presentable.{pluralSubject},
+                    ({camelCaseClassName}: {className}DTO) => 
+                        {camelCaseClassName}.Name.toLowerCase().includes(presentable.searchText.toLowerCase())
+                )
             );
         } else {
-            presentable.view{pascalCasedPluralSubject} = _.cloneDeep(_.sortBy(presentable.{pluralSubject}));
+            presentable.view{pascalCasedPluralSubject} = [...presentable.{pluralSubject}];
         }
     }
 
