@@ -5,7 +5,7 @@ import { {appname} } from "app/shared/constants/application.const";
 export const {serviceNameConstantCase}_SERVICE_NAME = "{serviceName}Service";
 
 /**
- *   Class for service {serviceName}
+ *  Class for service {serviceName}
  */
 export class {serviceName}Service {
     /**

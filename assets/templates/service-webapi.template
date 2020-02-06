@@ -4,7 +4,7 @@ import { {appname}, WEBAPI } from "app/shared/constants/application.const";
 import { {serviceNameConstantCase}_SERVICE_NAME } from "./{serviceNameKebabCased}.const";
 
 /**
- *   Class for service {serviceName}
+ *  Class for service {serviceName}
  */
 export class {serviceName}Service<TSelectAll, TSelectIndividual, TUpsert> {
     /**

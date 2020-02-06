@@ -44,6 +44,10 @@ export class {containerClassName} {
     //     });
     // }
 
+    /**
+     * Life-cycle hook which is called by angular when initialization for the component starts
+     * @returns: does not return anything
+     */
     public $onInit(): void {
         /*put your code here*/
     }

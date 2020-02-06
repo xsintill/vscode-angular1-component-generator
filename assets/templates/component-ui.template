@@ -42,10 +42,18 @@ export class {className}Ui {
         });
     }
 
+    /**
+     * Life-cycle hook which is called by angular when initialization for the component starts
+     * @returns: does not return anything
+     */
     public $onInit(): void {
         /*put your code here*/
     }
 
+    /**
+     * Lifecycle hook which is called by angular when the component is destroyed
+     * @returns: does not return anything
+     */
     public $onDestroy(): void {
         this.unsubscribe.next();
         this.unsubscribe.complete();

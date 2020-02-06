@@ -33,6 +33,7 @@ export class {className}Presenter {
             { ...this.getDefaultPresentableValues() } :
             { ...previousState };
     }
+
     private getDefaultPresentableValues(): IPresentable{className} {
         const presentableState: Partial<IPresentable{className}> = {
             // Put the IPresentable{className} properties here you need defaults for
