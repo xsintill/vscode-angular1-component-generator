@@ -1,12 +1,14 @@
 import angular from "angular";
 
+import { {serviceName}DTO } from "app/server-models/DTO/{serviceName}DTO";
+import { Upsert{serviceName}DTO } from "app/server-models/DTO/Upsert{serviceName}DTO";
 import { {appname}, WEBAPI } from "app/shared/constants/application.const";
 import { {serviceNameConstantCase}_SERVICE_NAME } from "./{serviceNameKebabCased}.const";
 
 /**
  *  Class for service {serviceName}
  */
-export class {serviceName}Service<TSelectAll, TSelectIndividual, TUpsert> {
+export class {serviceName}Service {
     /**
      *  Dependency injection annotations
      */
@@ -20,46 +22,46 @@ export class {serviceName}Service<TSelectAll, TSelectIndividual, TUpsert> {
     }
 
     private getUrl(): string {
-        return `${WEBAPI}` /*add the webapi controller route here*/;
+        return `${WEBAPI}{serviceName}` /*add the webapi controller route here*/;
     }
 
     /**
      * Method get which requests a get on the webapi to retrieve all {pluralSubject} if no id was provided or 1 {camelCaseClassName} which has the provided id
      * @param id
      */
-    public get(id?: number): ng.IPromise<TSelectAll | TSelectIndividual> {
+    public get(id?: number): ng.IPromise<{serviceName}DTO[] | Upsert{serviceName}DTO> {
         if (!id) {
-            return this.$http.get<TSelectAll>(this.getUrl()).then(
-                (response: ng.IHttpResponse<TSelectAll>) => response.data
+            return this.$http.get<{serviceName}DTO[]>(this.getUrl()).then(
+                (response: ng.IHttpResponse<{serviceName}DTO[]>) => response.data
             );
         }
-        return this.$http.get<TSelectIndividual>(`${this.getUrl()}/${id}`).then(
-            (response: ng.IHttpResponse<TSelectIndividual>) => response.data
+        return this.$http.get<Upsert{serviceName}DTO>(`${this.getUrl()}/${id}`).then(
+            (response: ng.IHttpResponse<Upsert{serviceName}DTO>) => response.data
         );
     }
 
     /**
-     * Method put will add a new {className} to the backend
+     * Method put will add a new {serviceName} to the backend
      * @param value
      */
-    public put(value: TUpsert): ng.IPromise<number> {
+    public put(value: Upsert{serviceName}DTO): ng.IPromise<number> {
         return this.$http.put<number>(this.getUrl(), value).then(
             (response: ng.IHttpResponse<number>) => response.data
         );
     }
 
     /**
-     * Method post which requests a post on the webapi for a new {className}
+     * Method post which requests a post on the webapi for a new {serviceName}
      * @param value
      */
-    public post(value: TUpsert): ng.IPromise<number> {
+    public post(value: Upsert{serviceName}DTO): ng.IPromise<number> {
         return this.$http.post<number>(this.getUrl(), value).then(
             (response: ng.IHttpResponse<number>) => response.data
         );
     }
 
     /**
-     * Method delete which requests a delete on the webapi for a {className}
+     * Method delete which requests a delete on the webapi for a {serviceName}
      * @param id
      */
     public delete(id: number): ng.IPromise<number> {

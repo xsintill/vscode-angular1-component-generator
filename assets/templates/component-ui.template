@@ -4,6 +4,7 @@ import angular from "angular";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { {className}DTO } from "app/server-models/DTO/{className}DTO";
 import { LLQAPP_NAME } from "app/shared/constants/application.const";
 import { extractChangeValue } from "app/shared/on-change-object/on-change-object-helper";
 import { TEMPLATE_PATH_{componentNameConstantCased}_UI } from "./{componentNameKebabCased}.const";
@@ -66,9 +67,9 @@ export class {className}Ui {
      * @returns: does not return anything
      */
     public $onChanges(onChangesObj: ng.IOnChangesObject): void {
-        const {camelCaseClassName}: IPresentable{className} = extractChangeValue<string>(onChangesObj.{camelCaseClassName});
+        const {camelCaseClassName}: {className}DTO[] = extractChangeValue<{className}DTO[]>(onChangesObj.{camelCaseClassName});
 
-        this.presenter.createPresentable({camelCaseClassName});
+        this.presenter.createPresentable(this.presentable, {camelCaseClassName});
     }
 }
 

@@ -14,7 +14,7 @@ import "./{serviceFileName}.ui";
  *  Container component llq-{serviceFileName}
  */
 export class {containerClassName} {
-    // public data: {className}DTO;
+    // public data: {className}DTO[];
     /**
      *  Field with value used for registering the component llq-{serviceFileName}
      */
@@ -28,8 +28,7 @@ export class {containerClassName} {
     ];
 
     constructor(
-        private readonly {camelCasedClassName}Service:
-            {className}Service<{className}SelectAllDTO, {className}SelectIndividualDTO, {className}UpsertDTO>
+        private readonly {camelCasedClassName}Service: {className}Service
     ) {
     }
 
