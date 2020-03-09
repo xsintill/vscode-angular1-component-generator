@@ -10,7 +10,7 @@ import { IPresentable{className} } from "./{componentNameKebabCased}.type";
 export class {className}Presenter {
 
     private readonly presentable: Subject<IPresentable{className}> = new Subject();
-     /**
+    /**
      * Observable for IPresentable{className}
      */
     public presentable$: Observable<IPresentable{className}> = this.presentable.asObservable();
