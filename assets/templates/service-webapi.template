@@ -21,7 +21,7 @@ export class {serviceName}Service {
     ) {
     }
 
-    private getUrl(): string {
+    private get url: string {
         return `${WEBAPI}{serviceName}` /*add the webapi controller route here*/;
     }
 
@@ -31,11 +31,11 @@ export class {serviceName}Service {
      */
     public get(id?: number): ng.IPromise<{serviceName}DTO[] | Upsert{serviceName}DTO> {
         if (!id) {
-            return this.$http.get<{serviceName}DTO[]>(this.getUrl()).then(
+            return this.$http.get<{serviceName}DTO[]>(this.url).then(
                 (response: ng.IHttpResponse<{serviceName}DTO[]>) => response.data
             );
         }
-        return this.$http.get<Upsert{serviceName}DTO>(`${this.getUrl()}/${id}`).then(
+        return this.$http.get<Upsert{serviceName}DTO>(`${this.url}/${id}`).then(
             (response: ng.IHttpResponse<Upsert{serviceName}DTO>) => response.data
         );
     }
@@ -45,7 +45,7 @@ export class {serviceName}Service {
      * @param value
      */
     public put(value: Upsert{serviceName}DTO): ng.IPromise<number> {
-        return this.$http.put<number>(this.getUrl(), value).then(
+        return this.$http.put<number>(this.url, value).then(
             (response: ng.IHttpResponse<number>) => response.data
         );
     }
@@ -55,7 +55,7 @@ export class {serviceName}Service {
      * @param value
      */
     public post(value: Upsert{serviceName}DTO): ng.IPromise<number> {
-        return this.$http.post<number>(this.getUrl(), value).then(
+        return this.$http.post<number>(this.url, value).then(
             (response: ng.IHttpResponse<number>) => response.data
         );
     }
@@ -65,7 +65,7 @@ export class {serviceName}Service {
      * @param id
      */
     public delete(id: number): ng.IPromise<number> {
-        return this.$http.delete<void>(`${this.getUrl()}/${id}`).then(() => null);
+        return this.$http.delete<void>(`${this.url}/${id}`).then(() => null);
     }
 }
 angular.module({appname}).service({serviceNameConstantCase}_SERVICE_NAME, {serviceName}Service);
